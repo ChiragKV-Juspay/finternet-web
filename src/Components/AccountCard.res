@@ -1,12 +1,6 @@
 @react.component
 let make = () => {
-  <img
-    src="/CapitalMarket.svg"
-    //    width="1200" height="100"
-
-    alt="Description of image"
-    className="w-full h-auto max-w-xs md:max-w-md lg:max-w-lg"
-  />
+  <img src="/CapitalMarket.svg" alt="Description of image" />
 
   //   <div className="border rounded-2xl pt-10 pb-7 px-6">
   //     <div className="h-full justify-between bg-yellow-200 ">

@@ -1,6 +1,6 @@
 @react.component
 let make = (~onNavigateToEnterPin) => {
-  <div className="flex flex-col h-full justify-between ">
+  <div className="flex flex-col h-full justify-between  ">
     <img
       src="/EnterAmountTop.svg"
       alt="Description of image"
@@ -52,12 +52,9 @@ let make = (~onNavigateToEnterPin) => {
         </svg>
       </div>
       <input
-        // type="tel"
         placeholder="Enter amount"
         className="flex-1 p-2 text-base outline-none  rounded-lg w-4/5 text-sm"
-        // style="border: none;"
       />
-      // <div className="font-medium text-base"> {React.string("Enter you mobile number")} </div>
     </div>
     <img
       src="/ExchangeRates.svg"
@@ -68,10 +65,6 @@ let make = (~onNavigateToEnterPin) => {
       className=" bg-[#00B76A] text-white rounded-lg w-full h-10" onClick={onNavigateToEnterPin}>
       {React.string("Proceed")}
     </button>
-    <img
-      src="/KeypadIphone.svg"
-      alt="Description of image"
-      className="w-full h-auto max-w-xs md:max-w-md lg:max-w-lg"
-    />
+    <img src="/KeypadIphone.svg" alt="Description of image" />
   </div>
 }

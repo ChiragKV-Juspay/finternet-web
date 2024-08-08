@@ -6,10 +6,8 @@ let make = (~onNavigateToEnterAmount) => {
       <img src="/SendingToHeader.svg" alt="Description of image" />
     </div>
     <input
-      // type="tel"
       placeholder="Enter mobile number/name/account"
       className=" p-2 text-base border border-[#E6E6E6]  rounded-lg text-sm"
-      // style="border: none;"
     />
     <div>
       <img src="/RecentTransactionsHeader.svg" alt="Description of image" />

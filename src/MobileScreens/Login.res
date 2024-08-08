@@ -2,7 +2,6 @@
 let make = (~onNavigateToHome) => {
   <div className="flex flex-col h-full justify-between">
     <div>
-      // <img src="/WelcomeHeader.svg" alt="Description of image"  />
       <div>
         <div className="font-bold text-4xl text-[#00B76A]"> {React.string("Hey!")} </div>
         <div className="mt-10 ">
@@ -70,12 +69,9 @@ let make = (~onNavigateToHome) => {
             </svg>
           </div>
           <input
-            // type="tel"
             placeholder="Enter your mobile number"
             className="flex-1 p-2 text-base outline-none  rounded-lg w-4/5 text-sm"
-            // style="border: none;"
           />
-          // <div className="font-medium text-base"> {React.string("Enter you mobile number")} </div>
         </div>
         <div className="font-light text-sm">
           {React.string("An OTP will be sent to the linked mobile number for verification")}
@@ -111,19 +107,5 @@ let make = (~onNavigateToHome) => {
       </button>
       <SecuredByFinterest />
     </div>
-    // <div className="mt-4">
-    //   <button
-    //     className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-    //     onClick={_ => onNavigateToLogin()}>
-    //     {React.string("Go to Profile")}
-    //   </button>
-    //   <button
-    //     className="ml-2 p-2 bg-green-500 text-white rounded hover:bg-green-600"
-    //     // onClick={() => onNavigateToSettings()}>
-    //     // onClick={onNavigateToSettings()}
-    //   >
-    //     {React.string("Go to Settings")}
-    //   </button>
-    // </div>
   </div>
 }
