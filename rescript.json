@@ -10,7 +10,7 @@
   },
   "suffix": ".res.mjs",
   "jsx": { "version": 4, "mode": "automatic" },
-  "bs-dependencies": ["@rescript/core", "@rescript/react"], 
+  "bs-dependencies": ["@rescript/core", "@rescript/react","@rescript-mui/material"], 
   "bsc-flags": [
     "-open RescriptCore"
   ]
