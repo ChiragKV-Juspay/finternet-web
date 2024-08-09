@@ -123,7 +123,7 @@ let make = () => {
       <div className="self-center"> {React.string("Playground")} </div>
     </div>
     <div className="flex flex-col h-full w-1/5 justify-center gap-4">
-      <div className="bg-white h-4/5 self-center w-full p-4 shadow-lg rounded-lg   ">
+      <div className="bg-white h-4/5 self-center w-full p-4 shadow-lg rounded-lg   overflow-auto ">
         {renderContent()}
       </div>
       <div className=" flex flex-row justify-around text-xl text-gray-400">

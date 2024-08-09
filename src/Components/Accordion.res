@@ -59,15 +59,100 @@ let make = (
   let prettyTransactionResult = stringifyWithSpacing(transactionResult, None, Some(2))
   let prettyPostBody = stringifyWithSpacing(bodyJson, None, Some(2))
 
+  // <div>
+  //   {userData != Js.Json.null || userAssets != Js.Json.null || transactionsHistory != Js.Json.null
+  //     ? <Mui.Accordion>
+  //         <Mui.AccordionSummary
+  //           expandIcon={<ExpandMoreIcon />} ariaControls="panel1-content" id="panel1-header">
+  //           {React.string("Fetch User Details")}
+  //         </Mui.AccordionSummary>
+  //         <Mui.AccordionDetails>
+  //           <Mui.Accordion className="w-11/12 ">
+  //             <Mui.AccordionSummary
+  //               expandIcon={<ExpandMoreIcon />} ariaControls="panel2-content" id="panel2-header">
+  //               {React.string("GET user")}
+  //             </Mui.AccordionSummary>
+  //             <Mui.AccordionDetails className="text-sm">
+  //               <pre className="whitespace-pre-wrap"> {React.string(prettyJson)} </pre>
+  //             </Mui.AccordionDetails>
+  //           </Mui.Accordion>
+  //           <Mui.Accordion className="w-11/12 ">
+  //             <Mui.AccordionSummary
+  //               expandIcon={<ExpandMoreIcon />} ariaControls="panel2-content" id="panel2-header">
+  //               {React.string("GET assets")}
+  //             </Mui.AccordionSummary>
+  //             <Mui.AccordionDetails>
+  //               <pre className="whitespace-pre-wrap"> {React.string(prettyAssets)} </pre>
+  //             </Mui.AccordionDetails>
+  //           </Mui.Accordion>
+  //           <Mui.Accordion className="w-11/12 ">
+  //             <Mui.AccordionSummary
+  //               expandIcon={<ExpandMoreIcon />} ariaControls="panel2-content" id="panel2-header">
+  //               {React.string("GET transactionsList")}
+  //             </Mui.AccordionSummary>
+  //             <Mui.AccordionDetails>
+  //               <pre className="whitespace-pre-wrap">
+  //                 {React.string(prettyTransactionsHistory)}
+  //               </pre>
+  //             </Mui.AccordionDetails>
+  //           </Mui.Accordion>
+  //         </Mui.AccordionDetails>
+  //       </Mui.Accordion>
+  //     : React.null}
+  //   {showAuthInitiated
+  //     ? <Mui.Accordion>
+  //         <Mui.AccordionSummary
+  //           expandIcon={<ExpandMoreIcon />} ariaControls="panel1-content" id="panel1-header">
+  //           {React.string("Auth Initiated (Wallet)")}
+  //         </Mui.AccordionSummary>
+  //         <Mui.AccordionDetails className="text-sm">
+  //           {React.string("Transaction signed through the wallet")}
+  //         </Mui.AccordionDetails>
+  //       </Mui.Accordion>
+  //     : React.null}
+  //   {showTransactionConfirm
+  //     ? <Mui.Accordion>
+  //         <Mui.AccordionSummary
+  //           expandIcon={<ExpandMoreIcon />} ariaControls="panel1-content" id="panel1-header">
+  //           {React.string("Confirm Transaction")}
+  //         </Mui.AccordionSummary>
+  //         <Mui.AccordionDetails>
+  //           <Mui.Accordion className="w-11/12 ">
+  //             <Mui.AccordionSummary
+  //               expandIcon={<ExpandMoreIcon />} ariaControls="panel2-content" id="panel2-header">
+  //               {React.string(
+  //                 "POST https://finternet-app-api.shuttleapp.rs/v1/users/exampleUserId/assets/123/asset:transfer",
+  //               )}
+  //             </Mui.AccordionSummary>
+  //             <Mui.AccordionDetails className="text-sm">
+  //               <pre className="whitespace-pre-wrap"> {React.string(prettyPostBody)} </pre>
+  //             </Mui.AccordionDetails>
+  //           </Mui.Accordion>
+  //         </Mui.AccordionDetails>
+  //       </Mui.Accordion>
+  //     : React.null}
+  //   {transactionResult != Js.Json.null
+  //     ? <Mui.Accordion>
+  //         <Mui.AccordionSummary
+  //           expandIcon={<ExpandMoreIcon />} ariaControls="panel1-content" id="panel1-header">
+  //           {React.string("GET Transaction Details")}
+  //         </Mui.AccordionSummary>
+  //         <Mui.AccordionDetails className="text-sm">
+  //           <pre className="whitespace-pre-wrap"> {React.string(prettyTransactionResult)} </pre>
+  //         </Mui.AccordionDetails>
+  //       </Mui.Accordion>
+  //     : React.null}
+  // </div>
+
   <div>
-    {userData != Js.Json.null || userAssets != Js.Json.null || transactionsHistory != Js.Json.null
-      ? <Mui.Accordion>
-          <Mui.AccordionSummary
-            expandIcon={<ExpandMoreIcon />} ariaControls="panel1-content" id="panel1-header">
-            {React.string("Fetch User Details")}
-          </Mui.AccordionSummary>
-          <Mui.AccordionDetails>
-            <Mui.Accordion className="w-11/12 ">
+    <Mui.Accordion>
+      <Mui.AccordionSummary
+        expandIcon={<ExpandMoreIcon />} ariaControls="panel1-content" id="panel1-header">
+        {React.string("Fetch User Details")}
+      </Mui.AccordionSummary>
+      <Mui.AccordionDetails>
+        {userData != Js.Json.null
+          ? <Mui.Accordion className="w-11/12 ">
               <Mui.AccordionSummary
                 expandIcon={<ExpandMoreIcon />} ariaControls="panel2-content" id="panel2-header">
                 {React.string("GET user")}
@@ -76,7 +161,9 @@ let make = (
                 <pre className="whitespace-pre-wrap"> {React.string(prettyJson)} </pre>
               </Mui.AccordionDetails>
             </Mui.Accordion>
-            <Mui.Accordion className="w-11/12 ">
+          : React.null}
+        {userAssets != Js.Json.null
+          ? <Mui.Accordion className="w-11/12 ">
               <Mui.AccordionSummary
                 expandIcon={<ExpandMoreIcon />} ariaControls="panel2-content" id="panel2-header">
                 {React.string("GET assets")}
@@ -85,7 +172,9 @@ let make = (
                 <pre className="whitespace-pre-wrap"> {React.string(prettyAssets)} </pre>
               </Mui.AccordionDetails>
             </Mui.Accordion>
-            <Mui.Accordion className="w-11/12 ">
+          : React.null}
+        {transactionsHistory != Js.Json.null
+          ? <Mui.Accordion className="w-11/12 ">
               <Mui.AccordionSummary
                 expandIcon={<ExpandMoreIcon />} ariaControls="panel2-content" id="panel2-header">
                 {React.string("GET transactionsList")}
@@ -96,9 +185,9 @@ let make = (
                 </pre>
               </Mui.AccordionDetails>
             </Mui.Accordion>
-          </Mui.AccordionDetails>
-        </Mui.Accordion>
-      : React.null}
+          : React.null}
+      </Mui.AccordionDetails>
+    </Mui.Accordion>
     {showAuthInitiated
       ? <Mui.Accordion>
           <Mui.AccordionSummary

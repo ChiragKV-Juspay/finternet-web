@@ -66,17 +66,17 @@ function Accordion$1(props) {
   var prettyPostBody = JSON.stringify(bodyJson, undefined, 2);
   return JsxRuntime.jsxs("div", {
               children: [
-                Caml_obj.notequal(userData, null) || Caml_obj.notequal(userAssets, null) || Caml_obj.notequal(transactionsHistory, null) ? JsxRuntime.jsxs(Accordion, {
-                        children: [
-                          JsxRuntime.jsx(AccordionSummary, {
-                                "aria-controls": "panel1-content",
-                                id: "panel1-header",
-                                children: "Fetch User Details",
-                                expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                              }),
-                          JsxRuntime.jsxs(AccordionDetails, {
-                                children: [
-                                  JsxRuntime.jsxs(Accordion, {
+                JsxRuntime.jsxs(Accordion, {
+                      children: [
+                        JsxRuntime.jsx(AccordionSummary, {
+                              "aria-controls": "panel1-content",
+                              id: "panel1-header",
+                              children: "Fetch User Details",
+                              expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
+                            }),
+                        JsxRuntime.jsxs(AccordionDetails, {
+                              children: [
+                                Caml_obj.notequal(userData, null) ? JsxRuntime.jsxs(Accordion, {
                                         className: "w-11/12 ",
                                         children: [
                                           JsxRuntime.jsx(AccordionSummary, {
@@ -93,8 +93,8 @@ function Accordion$1(props) {
                                                         }))
                                               })
                                         ]
-                                      }),
-                                  JsxRuntime.jsxs(Accordion, {
+                                      }) : null,
+                                Caml_obj.notequal(userAssets, null) ? JsxRuntime.jsxs(Accordion, {
                                         className: "w-11/12 ",
                                         children: [
                                           JsxRuntime.jsx(AccordionSummary, {
@@ -110,8 +110,8 @@ function Accordion$1(props) {
                                                         }))
                                               })
                                         ]
-                                      }),
-                                  JsxRuntime.jsxs(Accordion, {
+                                      }) : null,
+                                Caml_obj.notequal(transactionsHistory, null) ? JsxRuntime.jsxs(Accordion, {
                                         className: "w-11/12 ",
                                         children: [
                                           JsxRuntime.jsx(AccordionSummary, {
@@ -127,11 +127,11 @@ function Accordion$1(props) {
                                                         }))
                                               })
                                         ]
-                                      })
-                                ]
-                              })
-                        ]
-                      }) : null,
+                                      }) : null
+                              ]
+                            })
+                      ]
+                    }),
                 props.showAuthInitiated ? JsxRuntime.jsxs(Accordion, {
                         children: [
                           JsxRuntime.jsx(AccordionSummary, {

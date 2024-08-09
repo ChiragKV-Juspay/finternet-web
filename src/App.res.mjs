@@ -237,7 +237,7 @@ function App(props) {
                       children: [
                         JsxRuntime.jsx("div", {
                               children: renderContent(),
-                              className: "bg-white h-4/5 self-center w-full p-4 shadow-lg rounded-lg   "
+                              className: "bg-white h-4/5 self-center w-full p-4 shadow-lg rounded-lg   overflow-auto "
                             }),
                         JsxRuntime.jsxs("div", {
                               children: [
