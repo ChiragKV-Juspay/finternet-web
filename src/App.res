@@ -82,6 +82,17 @@ let make = () => {
 
     let attestationResponse = await SimpleWebAuthnTypes.startRegistration(json)
     Console.log(attestationResponse)
+    let registerFinishResponse = await fetch(
+      "https://webauthn-fin-production.up.railway.app/api/passkey/registerFinish",
+      {
+        method: #POST,
+        body: attestationResponse->Js.Json.stringifyAny->Belt.Option.getExn->Body.string,
+        headers: Headers.fromObject({
+          "Content-type": "application/json",
+        }),
+      },
+    )
+    Console.log(registerFinishResponse)
   }
   let fetchUserTransactionsHistory = async () => {
     let historyEndpoint = `https://finternet-app-api.shuttleapp.rs/v1/users/exampleUserId/assets/123/history`

@@ -149,6 +149,14 @@ function App(props) {
     var json = await response.json();
     var attestationResponse = await Browser.startRegistration(json);
     console.log(attestationResponse);
+    var registerFinishResponse = await fetch("https://webauthn-fin-production.up.railway.app/api/passkey/registerFinish", {
+          method: "POST",
+          body: Caml_option.some(Belt_Option.getExn(JSON.stringify(attestationResponse))),
+          headers: Caml_option.some(new Headers({
+                    "Content-type": "application/json"
+                  }))
+        });
+    console.log(registerFinishResponse);
   };
   var fetchUserTransactionsHistory = async function () {
     var response = await fetch("https://finternet-app-api.shuttleapp.rs/v1/users/exampleUserId/assets/123/history");
@@ -318,7 +326,7 @@ function App(props) {
               RE_EXN_ID: "Match_failure",
               _1: [
                 "App.res",
-                186,
+                197,
                 4
               ],
               Error: new Error()
@@ -338,7 +346,7 @@ function App(props) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "App.res",
-              220,
+              231,
               11
             ],
             Error: new Error()
