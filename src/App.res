@@ -153,9 +153,18 @@ let make = () => {
   let handleNavigateToVerfiyIdentity = () => {
     setCurrentOnboardingScreen(_ => FaceID)
 
-    simpleWebShit()->ignore
-    setCurrentOnboardingScreen(_ => VerifyIdentity)
+    // simpleWebShit()->ignore
+    // setCurrentOnboardingScreen(_ => VerifyIdentity)
+
+    simpleWebShit()
+    ->Promise.then(_ => {
+      // After the process is complete, navigate to VerifyIdentity
+      setCurrentOnboardingScreen(_ => VerifyIdentity)
+      Js.Promise.resolve() // Return a resolved promise
+    })
+    ->ignore
   }
+
   let handleNavigateToQRScreen = () => {
     setCurrentOnboardingScreen(_ => QRScreen)
   }

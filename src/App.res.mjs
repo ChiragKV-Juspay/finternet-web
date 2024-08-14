@@ -221,9 +221,11 @@ function App(props) {
     setCurrentOnboardingScreen(function (param) {
           return "FaceID";
         });
-    simpleWebShit();
-    setCurrentOnboardingScreen(function (param) {
-          return "VerifyIdentity";
+    simpleWebShit().then(function () {
+          setCurrentOnboardingScreen(function (param) {
+                return "VerifyIdentity";
+              });
+          return Promise.resolve();
         });
   };
   var handleNavigateToQRScreen = function () {
@@ -329,7 +331,7 @@ function App(props) {
               RE_EXN_ID: "Match_failure",
               _1: [
                 "App.res",
-                199,
+                208,
                 4
               ],
               Error: new Error()
@@ -349,7 +351,7 @@ function App(props) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "App.res",
-              233,
+              242,
               11
             ],
             Error: new Error()
