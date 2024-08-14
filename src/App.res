@@ -151,16 +151,18 @@ let make = () => {
     setShowAuthInitiated(_ => true)
   }
   let handleNavigateToVerfiyIdentity = () => {
-    let blah = simpleWebShit()
+    setCurrentOnboardingScreen(_ => FaceID)
+
+    simpleWebShit()->ignore
     setCurrentOnboardingScreen(_ => VerifyIdentity)
   }
-  let handleNavigateToFaceID = () => {
-    setCurrentOnboardingScreen(_ => FaceID)
-  }
-
   let handleNavigateToQRScreen = () => {
     setCurrentOnboardingScreen(_ => QRScreen)
   }
+
+  // let handleNavigateToQRScreen = () => {
+  //   setCurrentOnboardingScreen(_ => QRScreen)
+  // }
 
   let renderTransferContent = () => {
     switch currentTransferScreen {
@@ -180,8 +182,8 @@ let make = () => {
     switch currentOnboardingScreen {
     | OnboardingLogin =>
       <OnboardingLogin onNavigateToVerifyIdentity={_ => handleNavigateToVerfiyIdentity()} />
-    | VerifyIdentity => <VerifyIdentity onNavigateToFaceID={_ => handleNavigateToFaceID()} />
     | FaceID => <FaceID onNavigateToQRScreen={_ => handleNavigateToQRScreen} />
+    | VerifyIdentity => <VerifyIdentity onNavigateToQRScreen={_ => handleNavigateToQRScreen()} />
     | QRScreen =>
       <QRScreen
         onNavigateToLinkBankAccount={_ => setCurrentOnboardingScreen(_ => LinkBankAccount)}

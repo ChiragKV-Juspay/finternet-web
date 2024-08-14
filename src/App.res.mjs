@@ -218,6 +218,9 @@ function App(props) {
         });
   };
   var handleNavigateToVerfiyIdentity = function () {
+    setCurrentOnboardingScreen(function (param) {
+          return "FaceID";
+        });
     simpleWebShit();
     setCurrentOnboardingScreen(function (param) {
           return "VerifyIdentity";
@@ -285,9 +288,9 @@ function App(props) {
                     });
       case "VerifyIdentity" :
           return JsxRuntime.jsx(VerifyIdentity.make, {
-                      onNavigateToFaceID: (function () {
+                      onNavigateToQRScreen: (function () {
                           setCurrentOnboardingScreen(function (param) {
-                                return "FaceID";
+                                return "QRScreen";
                               });
                         })
                     });
@@ -326,7 +329,7 @@ function App(props) {
               RE_EXN_ID: "Match_failure",
               _1: [
                 "App.res",
-                197,
+                199,
                 4
               ],
               Error: new Error()
@@ -346,7 +349,7 @@ function App(props) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "App.res",
-              231,
+              233,
               11
             ],
             Error: new Error()
