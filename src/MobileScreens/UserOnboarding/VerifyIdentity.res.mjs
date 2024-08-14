@@ -4,7 +4,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 import * as SecuredByFinterest from "../../Components/SecuredByFinterest.res.mjs";
 
 function VerifyIdentity(props) {
-  var onNavigateToQRScreen = props.onNavigateToQRScreen;
+  var onNavigateToFaceID = props.onNavigateToFaceID;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsxs("div", {
@@ -122,7 +122,7 @@ function VerifyIdentity(props) {
                               children: "Get Started",
                               className: " bg-[#00B76A] text-white rounded-lg w-full h-10",
                               onClick: (function (param) {
-                                  onNavigateToQRScreen();
+                                  onNavigateToFaceID();
                                 })
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {})

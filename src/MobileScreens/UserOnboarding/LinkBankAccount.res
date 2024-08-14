@@ -1,5 +1,5 @@
 @react.component
-let make = () => {
+let make = (~onNavigateToBankAccountLinked) => {
   <div className="flex flex-col h-full justify-between">
     <div className="flex flex-col gap-10">
       <div className="flex flex-row gap-2">
@@ -17,8 +17,7 @@ let make = () => {
     <div className="flex flex-col gap-4">
       <button
         className=" bg-[#00B76A] text-white rounded-lg w-full h-10"
-        // onClick={_ => onNavigateToFaceID()}
-      >
+        onClick={_ => onNavigateToBankAccountLinked()}>
         {React.string("Complete")}
       </button>
       <SecuredByFinterest />

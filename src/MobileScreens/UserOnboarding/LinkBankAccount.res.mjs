@@ -4,6 +4,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 import * as SecuredByFinterest from "../../Components/SecuredByFinterest.res.mjs";
 
 function LinkBankAccount(props) {
+  var onNavigateToBankAccountLinked = props.onNavigateToBankAccountLinked;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsxs("div", {
@@ -45,7 +46,10 @@ function LinkBankAccount(props) {
                       children: [
                         JsxRuntime.jsx("button", {
                               children: "Complete",
-                              className: " bg-[#00B76A] text-white rounded-lg w-full h-10"
+                              className: " bg-[#00B76A] text-white rounded-lg w-full h-10",
+                              onClick: (function (param) {
+                                  onNavigateToBankAccountLinked();
+                                })
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {})
                       ],

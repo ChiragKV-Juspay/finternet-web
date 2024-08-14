@@ -36,7 +36,7 @@ let make = (~openDrawer, ~setOpenDrawer, ~handleDrawerSelection) => {
     <div role="presentation" onClick={_ => setOpenDrawer(_ => false)}>
       <Mui.Box>
         {renderSection("Money use cases", moneyUseCases)}
-        {renderSection("Property use cases", propertyUseCases)}
+        {renderSection("Property use cases (Coming Soon)", propertyUseCases)}
       </Mui.Box>
     </div>
 

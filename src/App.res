@@ -12,6 +12,7 @@ type onboardingScreens =
   | FaceID
   | QRScreen
   | LinkBankAccount
+  | BankAccountLinked
 
 @react.component
 let make = () => {
@@ -25,7 +26,16 @@ let make = () => {
   let (transactionResult, setTransactionResult) = React.useState(() => Js.Json.null)
   let (showAuthInitiated, setShowAuthInitiated) = React.useState(_ => false)
   let (showTransactionConfirm, setShowTrasactionConfirm) = React.useState(_ => false)
+  let (registerStartResponse, setRegisterStartResponse) = React.useState(() => Js.Json.null)
+  let (attestation, setAttestation) = React.useState(() => Js.Json.null)
+
   let (openDrawer, setOpenDrawer) = React.useState(_ => false)
+
+  React.useEffect(() => {
+    Console.log("njacsjascjn")
+    Console.log(registerStartResponse)
+    None
+  }, [registerStartResponse])
 
   let handlePrevScreen = () => {
     switch currentTransferScreen {
@@ -48,6 +58,29 @@ let make = () => {
     | TransactionCompleted => ()
     }
   }
+
+  let handlePrevOnboardingScreen = () => {
+    switch currentOnboardingScreen {
+    | OnboardingLogin => ()
+    | VerifyIdentity => setCurrentOnboardingScreen(_ => OnboardingLogin)
+    | FaceID => setCurrentOnboardingScreen(_ => VerifyIdentity)
+    | QRScreen => setCurrentOnboardingScreen(_ => FaceID)
+    | LinkBankAccount => setCurrentOnboardingScreen(_ => QRScreen)
+    | BankAccountLinked => setCurrentOnboardingScreen(_ => LinkBankAccount)
+    }
+  }
+
+  let handleNextOnboardingScreen = () => {
+    switch currentOnboardingScreen {
+    | OnboardingLogin => setCurrentOnboardingScreen(_ => VerifyIdentity)
+    | VerifyIdentity => setCurrentOnboardingScreen(_ => FaceID)
+    | FaceID => setCurrentOnboardingScreen(_ => QRScreen)
+    | QRScreen => setCurrentOnboardingScreen(_ => LinkBankAccount)
+    | LinkBankAccount => setCurrentOnboardingScreen(_ => BankAccountLinked)
+    | BankAccountLinked => ()
+    }
+  }
+
   let fetchData = async () => {
     let endpoint = `https://finternet-app-api.shuttleapp.rs/v1/users/exampleUserId`
     let response = await Fetch.get(endpoint)
@@ -64,10 +97,10 @@ let make = () => {
     setUserAssets(_ => json)
   }
 
-  let simpleWebShit = async () => {
+  let simpleWebAuthn = async () => {
     open Fetch
     // https://webauthn-fin-production.up.railway.app/api/passkey/registerStart
-    let transferBody = {"username": "1234"}
+    let transferBody = {"username": "arnab.d"}
     let response = await fetch(
       "https://webauthn-fin-production.up.railway.app/api/passkey/registerStart",
       {
@@ -79,8 +112,11 @@ let make = () => {
       },
     )
     let json = await response->Fetch.Response.json
+    setRegisterStartResponse(_ => json)
 
     let attestationResponse = await SimpleWebAuthnTypes.startRegistration(json)
+    setAttestation(_ => attestationResponse)
+
     Console.log(attestationResponse)
     let registerFinishResponse = await fetch(
       "https://webauthn-fin-production.up.railway.app/api/passkey/registerFinish",
@@ -151,27 +187,18 @@ let make = () => {
     setShowAuthInitiated(_ => true)
   }
   let handleNavigateToVerfiyIdentity = () => {
+    setCurrentOnboardingScreen(_ => VerifyIdentity)
+  }
+
+  let handleNavigateToFaceID = () => {
     setCurrentOnboardingScreen(_ => FaceID)
-
-    // simpleWebShit()->ignore
-    // setCurrentOnboardingScreen(_ => VerifyIdentity)
-
-    simpleWebShit()
+    simpleWebAuthn()
     ->Promise.then(_ => {
-      // After the process is complete, navigate to VerifyIdentity
-      setCurrentOnboardingScreen(_ => VerifyIdentity)
-      Js.Promise.resolve() // Return a resolved promise
+      setCurrentOnboardingScreen(_ => QRScreen)
+      Js.Promise.resolve()
     })
     ->ignore
   }
-
-  let handleNavigateToQRScreen = () => {
-    setCurrentOnboardingScreen(_ => QRScreen)
-  }
-
-  // let handleNavigateToQRScreen = () => {
-  //   setCurrentOnboardingScreen(_ => QRScreen)
-  // }
 
   let renderTransferContent = () => {
     switch currentTransferScreen {
@@ -191,16 +218,17 @@ let make = () => {
     switch currentOnboardingScreen {
     | OnboardingLogin =>
       <OnboardingLogin onNavigateToVerifyIdentity={_ => handleNavigateToVerfiyIdentity()} />
-    | FaceID => <FaceID onNavigateToQRScreen={_ => handleNavigateToQRScreen} />
-    | VerifyIdentity => <VerifyIdentity onNavigateToQRScreen={_ => handleNavigateToQRScreen()} />
+    | VerifyIdentity => <VerifyIdentity onNavigateToFaceID={_ => handleNavigateToFaceID()} />
+    | FaceID => <FaceID />
     | QRScreen =>
       <QRScreen
         onNavigateToLinkBankAccount={_ => setCurrentOnboardingScreen(_ => LinkBankAccount)}
       />
     | LinkBankAccount =>
       <LinkBankAccount
-      // onNavigateToLinkBankAccount={_ => setCurrentTransferScreen(_ => Home)}
+        onNavigateToBankAccountLinked={_ => setCurrentOnboardingScreen(_ => BankAccountLinked)}
       />
+    | BankAccountLinked => <BankAccountLinked />
     }
   }
   let handleDrawerSelection = selectedOption => {
@@ -221,7 +249,7 @@ let make = () => {
   <div>
     <div
       //  className="absolute top-4 left-4 flex flex-row gap-1"
-      className="flex bg-red-200 ">
+      className="flex justify-between items-center px-10 py-2 shadow">
       <div className="flex">
         <img
           src="/finternetLogo.png"
@@ -231,7 +259,10 @@ let make = () => {
         />
         <div className="self-center"> {React.string("Playground")} </div>
       </div>
-      <Mui.Icon baseClassName="GitHubIcon" />
+      // <GitHubIcon />
+      <a href="https://github.com/finternet-io" target="_blank" rel="noopener noreferrer">
+        <GitHubIcon />
+      </a>
     </div>
     <div className="flex justify-center  h-screen w-screen flex-row  jc p-4  font-space-grotesk ">
       <div className="flex flex-col h-full w-1/5 justify-center gap-4">
@@ -244,26 +275,53 @@ let make = () => {
           | "Domestic Money Transfer" => renderTransferContent()
           }}
         </div>
-        <div className=" flex flex-row justify-around text-xl text-gray-400">
-          <button onClick={_ => handlePrevScreen()}> {React.string("<")} </button>
-          <button onClick={_ => handleNextScreen()}> {React.string(">")} </button>
+        <div className="flex flex-row justify-around text-xl text-gray-400">
+          <button
+            onClick={_ => {
+              switch selectedOption {
+              | "User Onboarding" => handlePrevOnboardingScreen()
+              | "Domestic Money Transfer" => handlePrevScreen()
+              }
+            }}>
+            {React.string("<")}
+          </button>
+          <button
+            onClick={_ => {
+              switch selectedOption {
+              | "User Onboarding" => handleNextOnboardingScreen()
+              | "Domestic Money Transfer" => handleNextScreen()
+              }
+            }}>
+            {React.string(">")}
+          </button>
         </div>
       </div>
       <div
         className="ml-4 p-4  bg-gray-100 rounded-lg w-3/5 h-full flex flex-col gap-3 overflow-auto">
-        <div className="text-2xl"> {React.string("Domestic Transfer Activity Log")} </div>
-        {userData != Js.Json.null
-          ? <Accordion
-              userData={userData}
-              transactionsHistory={transactionsHistory}
-              userAssets={userAssets}
-              showAuthInitiated={showAuthInitiated}
-              showTransactionConfirm={showTransactionConfirm}
-              transactionResult={transactionResult}
-            />
-          : <div className="text-sm">
-              {React.string("Initiate transaction to view activity logs")}
-            </div>}
+        <div className="text-2xl">
+          {switch selectedOption {
+          | "User Onboarding" => React.string("User Onboarding Activity Log (WIP)")
+          | "Domestic Money Transfer" => React.string("Domestic Transfer Activity Log")
+          }}
+          // {React.string("Domestic Transfer Activity Log")}
+        </div>
+        // {userData != Js.Json.null
+        // ?
+        <Accordion
+          userData={userData}
+          transactionsHistory={transactionsHistory}
+          userAssets={userAssets}
+          showAuthInitiated={showAuthInitiated}
+          showTransactionConfirm={showTransactionConfirm}
+          transactionResult={transactionResult}
+          flowType={selectedOption}
+          registerStartResponse={registerStartResponse}
+          attestation={attestation}
+        />
+        // :
+        //  <div className="text-sm">
+        // {React.string("Initiate transaction to view activity logs")}
+        // </div>}
       </div>
       // <Drawer />
 

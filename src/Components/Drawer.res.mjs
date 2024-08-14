@@ -62,7 +62,7 @@ function Drawer$1(props) {
         children: JsxRuntime.jsxs(Box, {
               children: [
                 renderSection("Money use cases", moneyUseCases),
-                renderSection("Property use cases", propertyUseCases)
+                renderSection("Property use cases (Coming Soon)", propertyUseCases)
               ]
             }),
         role: "presentation",

@@ -7,7 +7,8 @@ function FaceID(props) {
               children: JsxRuntime.jsx("img", {
                     alt: "Description of image",
                     src: "/FaceID.svg"
-                  })
+                  }),
+              className: "flex h-full w-full"
             });
 }
 

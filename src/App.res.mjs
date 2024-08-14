@@ -5,19 +5,19 @@ import * as Login from "./MobileScreens/DomesticMoneyTransfer/Login.res.mjs";
 import * as React from "react";
 import * as Drawer from "./Components/Drawer.res.mjs";
 import * as FaceID from "./MobileScreens/UserOnboarding/FaceID.res.mjs";
-import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as EnterPin from "./MobileScreens/DomesticMoneyTransfer/EnterPin.res.mjs";
 import * as QRScreen from "./MobileScreens/UserOnboarding/QRScreen.res.mjs";
 import * as Transfer from "./MobileScreens/DomesticMoneyTransfer/Transfer.res.mjs";
 import * as Accordion from "./Components/Accordion.res.mjs";
+import * as GitHubIcon from "./Icons/GitHubIcon.res.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as EnterAmount from "./MobileScreens/DomesticMoneyTransfer/EnterAmount.res.mjs";
 import * as VerifyIdentity from "./MobileScreens/UserOnboarding/VerifyIdentity.res.mjs";
 import * as LinkBankAccount from "./MobileScreens/UserOnboarding/LinkBankAccount.res.mjs";
 import * as OnboardingLogin from "./MobileScreens/UserOnboarding/OnboardingLogin.res.mjs";
+import * as BankAccountLinked from "./MobileScreens/UserOnboarding/BankAccountLinked.res.mjs";
 import * as JsxRuntime from "react/jsx-runtime";
-import Icon from "@mui/material/Icon";
 import * as TransactionCompleted from "./MobileScreens/DomesticMoneyTransfer/TransactionCompleted.res.mjs";
 import * as Browser from "@simplewebauthn/browser";
 
@@ -36,11 +36,11 @@ function App(props) {
         return "User Onboarding";
       });
   var setSelectedOption = match$2[1];
+  var selectedOption = match$2[0];
   var match$3 = React.useState(function () {
         return null;
       });
   var setUserData = match$3[1];
-  var userData = match$3[0];
   var match$4 = React.useState(function () {
         return null;
       });
@@ -62,9 +62,22 @@ function App(props) {
       });
   var setShowTrasactionConfirm = match$8[1];
   var match$9 = React.useState(function () {
+        return null;
+      });
+  var setRegisterStartResponse = match$9[1];
+  var registerStartResponse = match$9[0];
+  var match$10 = React.useState(function () {
+        return null;
+      });
+  var setAttestation = match$10[1];
+  var match$11 = React.useState(function () {
         return false;
       });
-  var setOpenDrawer = match$9[1];
+  var setOpenDrawer = match$11[1];
+  React.useEffect((function () {
+          console.log("njacsjascjn");
+          console.log(registerStartResponse);
+        }), [registerStartResponse]);
   var handlePrevScreen = function () {
     switch (currentTransferScreen) {
       case "Login" :
@@ -119,6 +132,60 @@ function App(props) {
       
     }
   };
+  var handlePrevOnboardingScreen = function () {
+    switch (currentOnboardingScreen) {
+      case "OnboardingLogin" :
+          return ;
+      case "VerifyIdentity" :
+          return setCurrentOnboardingScreen(function (param) {
+                      return "OnboardingLogin";
+                    });
+      case "FaceID" :
+          return setCurrentOnboardingScreen(function (param) {
+                      return "VerifyIdentity";
+                    });
+      case "QRScreen" :
+          return setCurrentOnboardingScreen(function (param) {
+                      return "FaceID";
+                    });
+      case "LinkBankAccount" :
+          return setCurrentOnboardingScreen(function (param) {
+                      return "QRScreen";
+                    });
+      case "BankAccountLinked" :
+          return setCurrentOnboardingScreen(function (param) {
+                      return "LinkBankAccount";
+                    });
+      
+    }
+  };
+  var handleNextOnboardingScreen = function () {
+    switch (currentOnboardingScreen) {
+      case "OnboardingLogin" :
+          return setCurrentOnboardingScreen(function (param) {
+                      return "VerifyIdentity";
+                    });
+      case "VerifyIdentity" :
+          return setCurrentOnboardingScreen(function (param) {
+                      return "FaceID";
+                    });
+      case "FaceID" :
+          return setCurrentOnboardingScreen(function (param) {
+                      return "QRScreen";
+                    });
+      case "QRScreen" :
+          return setCurrentOnboardingScreen(function (param) {
+                      return "LinkBankAccount";
+                    });
+      case "LinkBankAccount" :
+          return setCurrentOnboardingScreen(function (param) {
+                      return "BankAccountLinked";
+                    });
+      case "BankAccountLinked" :
+          return ;
+      
+    }
+  };
   var fetchData = async function () {
     var response = await fetch("https://finternet-app-api.shuttleapp.rs/v1/users/exampleUserId");
     var json = await response.json();
@@ -135,9 +202,9 @@ function App(props) {
                 return json;
               });
   };
-  var simpleWebShit = async function () {
+  var simpleWebAuthn = async function () {
     var transferBody = {
-      username: "1234"
+      username: "arnab.d"
     };
     var response = await fetch("https://webauthn-fin-production.up.railway.app/api/passkey/registerStart", {
           method: "POST",
@@ -147,7 +214,13 @@ function App(props) {
                   }))
         });
     var json = await response.json();
+    setRegisterStartResponse(function (param) {
+          return json;
+        });
     var attestationResponse = await Browser.startRegistration(json);
+    setAttestation(function (param) {
+          return attestationResponse;
+        });
     console.log(attestationResponse);
     var registerFinishResponse = await fetch("https://webauthn-fin-production.up.railway.app/api/passkey/registerFinish", {
           method: "POST",
@@ -217,20 +290,15 @@ function App(props) {
           return true;
         });
   };
-  var handleNavigateToVerfiyIdentity = function () {
+  var handleNavigateToFaceID = function () {
     setCurrentOnboardingScreen(function (param) {
           return "FaceID";
         });
-    simpleWebShit().then(function () {
+    simpleWebAuthn().then(function () {
           setCurrentOnboardingScreen(function (param) {
-                return "VerifyIdentity";
+                return "QRScreen";
               });
           return Promise.resolve();
-        });
-  };
-  var handleNavigateToQRScreen = function () {
-    setCurrentOnboardingScreen(function (param) {
-          return "QRScreen";
         });
   };
   var renderTransferContent = function () {
@@ -285,23 +353,19 @@ function App(props) {
       case "OnboardingLogin" :
           return JsxRuntime.jsx(OnboardingLogin.make, {
                       onNavigateToVerifyIdentity: (function () {
-                          handleNavigateToVerfiyIdentity();
+                          setCurrentOnboardingScreen(function (param) {
+                                return "VerifyIdentity";
+                              });
                         })
                     });
       case "VerifyIdentity" :
           return JsxRuntime.jsx(VerifyIdentity.make, {
-                      onNavigateToQRScreen: (function () {
-                          setCurrentOnboardingScreen(function (param) {
-                                return "QRScreen";
-                              });
+                      onNavigateToFaceID: (function () {
+                          handleNavigateToFaceID();
                         })
                     });
       case "FaceID" :
-          return JsxRuntime.jsx(FaceID.make, {
-                      onNavigateToQRScreen: (function (param) {
-                          return handleNavigateToQRScreen;
-                        })
-                    });
+          return JsxRuntime.jsx(FaceID.make, {});
       case "QRScreen" :
           return JsxRuntime.jsx(QRScreen.make, {
                       onNavigateToLinkBankAccount: (function () {
@@ -311,7 +375,15 @@ function App(props) {
                         })
                     });
       case "LinkBankAccount" :
-          return JsxRuntime.jsx(LinkBankAccount.make, {});
+          return JsxRuntime.jsx(LinkBankAccount.make, {
+                      onNavigateToBankAccountLinked: (function () {
+                          setCurrentOnboardingScreen(function (param) {
+                                return "BankAccountLinked";
+                              });
+                        })
+                    });
+      case "BankAccountLinked" :
+          return JsxRuntime.jsx(BankAccountLinked.make, {});
       
     }
   };
@@ -331,7 +403,7 @@ function App(props) {
               RE_EXN_ID: "Match_failure",
               _1: [
                 "App.res",
-                208,
+                236,
                 4
               ],
               Error: new Error()
@@ -339,7 +411,7 @@ function App(props) {
     }
   };
   var tmp;
-  switch (match$2[0]) {
+  switch (selectedOption) {
     case "Domestic Money Transfer" :
         tmp = renderTransferContent();
         break;
@@ -351,7 +423,26 @@ function App(props) {
             RE_EXN_ID: "Match_failure",
             _1: [
               "App.res",
-              242,
+              273,
+              11
+            ],
+            Error: new Error()
+          };
+  }
+  var tmp$1;
+  switch (selectedOption) {
+    case "Domestic Money Transfer" :
+        tmp$1 = "Domestic Transfer Activity Log";
+        break;
+    case "User Onboarding" :
+        tmp$1 = "User Onboarding Activity Log (WIP)";
+        break;
+    default:
+      throw {
+            RE_EXN_ID: "Match_failure",
+            _1: [
+              "App.res",
+              302,
               11
             ],
             Error: new Error()
@@ -380,11 +471,14 @@ function App(props) {
                               ],
                               className: "flex"
                             }),
-                        JsxRuntime.jsx(Icon, {
-                              baseClassName: "GitHubIcon"
+                        JsxRuntime.jsx("a", {
+                              children: JsxRuntime.jsx(GitHubIcon.make, {}),
+                              href: "https://github.com/finternet-io",
+                              rel: "noopener noreferrer",
+                              target: "_blank"
                             })
                       ],
-                      className: "flex bg-red-200 "
+                      className: "flex justify-between items-center px-10 py-2 shadow"
                     }),
                 JsxRuntime.jsxs("div", {
                       children: [
@@ -399,17 +493,47 @@ function App(props) {
                                         JsxRuntime.jsx("button", {
                                               children: "<",
                                               onClick: (function (param) {
-                                                  handlePrevScreen();
+                                                  switch (selectedOption) {
+                                                    case "Domestic Money Transfer" :
+                                                        return handlePrevScreen();
+                                                    case "User Onboarding" :
+                                                        return handlePrevOnboardingScreen();
+                                                    default:
+                                                      throw {
+                                                            RE_EXN_ID: "Match_failure",
+                                                            _1: [
+                                                              "App.res",
+                                                              281,
+                                                              14
+                                                            ],
+                                                            Error: new Error()
+                                                          };
+                                                  }
                                                 })
                                             }),
                                         JsxRuntime.jsx("button", {
                                               children: ">",
                                               onClick: (function (param) {
-                                                  handleNextScreen();
+                                                  switch (selectedOption) {
+                                                    case "Domestic Money Transfer" :
+                                                        return handleNextScreen();
+                                                    case "User Onboarding" :
+                                                        return handleNextOnboardingScreen();
+                                                    default:
+                                                      throw {
+                                                            RE_EXN_ID: "Match_failure",
+                                                            _1: [
+                                                              "App.res",
+                                                              290,
+                                                              14
+                                                            ],
+                                                            Error: new Error()
+                                                          };
+                                                  }
                                                 })
                                             })
                                       ],
-                                      className: " flex flex-row justify-around text-xl text-gray-400"
+                                      className: "flex flex-row justify-around text-xl text-gray-400"
                                     })
                               ],
                               className: "flex flex-col h-full w-1/5 justify-center gap-4"
@@ -417,25 +541,25 @@ function App(props) {
                         JsxRuntime.jsxs("div", {
                               children: [
                                 JsxRuntime.jsx("div", {
-                                      children: "Domestic Transfer Activity Log",
+                                      children: tmp$1,
                                       className: "text-2xl"
                                     }),
-                                Caml_obj.notequal(userData, null) ? JsxRuntime.jsx(Accordion.make, {
-                                        userData: userData,
-                                        userAssets: match$5[0],
-                                        transactionsHistory: match$4[0],
-                                        showAuthInitiated: match$7[0],
-                                        showTransactionConfirm: match$8[0],
-                                        transactionResult: match$6[0]
-                                      }) : JsxRuntime.jsx("div", {
-                                        children: "Initiate transaction to view activity logs",
-                                        className: "text-sm"
-                                      })
+                                JsxRuntime.jsx(Accordion.make, {
+                                      userData: match$3[0],
+                                      userAssets: match$5[0],
+                                      transactionsHistory: match$4[0],
+                                      showAuthInitiated: match$7[0],
+                                      showTransactionConfirm: match$8[0],
+                                      transactionResult: match$6[0],
+                                      flowType: selectedOption,
+                                      registerStartResponse: registerStartResponse,
+                                      attestation: match$10[0]
+                                    })
                               ],
                               className: "ml-4 p-4  bg-gray-100 rounded-lg w-3/5 h-full flex flex-col gap-3 overflow-auto"
                             }),
                         JsxRuntime.jsx(Drawer.make, {
-                              openDrawer: match$9[0],
+                              openDrawer: match$11[0],
                               setOpenDrawer: setOpenDrawer,
                               handleDrawerSelection: handleDrawerSelection
                             })

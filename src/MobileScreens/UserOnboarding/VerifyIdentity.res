@@ -1,5 +1,5 @@
 @react.component
-let make = (~onNavigateToQRScreen) => {
+let make = (~onNavigateToFaceID) => {
   <div className="flex flex-col h-full justify-between">
     <div className="flex flex-col gap-10">
       <div className="flex flex-row justify-between">
@@ -63,7 +63,7 @@ let make = (~onNavigateToQRScreen) => {
     <div className="flex flex-col gap-4">
       <button
         className=" bg-[#00B76A] text-white rounded-lg w-full h-10"
-        onClick={_ => onNavigateToQRScreen()}>
+        onClick={_ => onNavigateToFaceID()}>
         {React.string("Get Started")}
       </button>
       <SecuredByFinterest />
