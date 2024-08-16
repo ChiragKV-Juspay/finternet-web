@@ -3,6 +3,7 @@
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as AccordionItem from "./AccordionItem.res.mjs";
 import * as ExpandMoreIcon from "../Icons/ExpandMoreIcon.res.mjs";
 import * as JsxRuntime from "react/jsx-runtime";
 import Accordion from "@mui/material/Accordion";
@@ -166,7 +167,6 @@ function Accordion$1(props) {
   var prettyKeyGenResponse0 = JSON.stringify(keygenResponseJson0, undefined, 2);
   var prettyKeyGenResponse1 = JSON.stringify(keygenResponseJson1, undefined, 2);
   var prettyKeyGenResponse2 = JSON.stringify(keygenResponseJson2, undefined, 2);
-  console.log(prettyRegisterStartResponse + "1");
   var accordionContent;
   switch (props.flowType) {
     case "Domestic Money Transfer" :
@@ -242,66 +242,31 @@ function Accordion$1(props) {
                                     })
                               ]
                             }),
-                        props.showAuthInitiated ? JsxRuntime.jsxs(Accordion, {
-                                children: [
-                                  JsxRuntime.jsx(AccordionSummary, {
-                                        "aria-controls": "panel1-content",
-                                        id: "panel1-header",
-                                        children: "Auth Initiated (Wallet)",
-                                        expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                                      }),
-                                  JsxRuntime.jsx(AccordionDetails, {
-                                        className: "text-sm",
-                                        children: "Transaction signed through the wallet"
-                                      })
-                                ]
+                        props.showAuthInitiated ? JsxRuntime.jsx(AccordionItem.make, {
+                                summary: "Auth Initiated (Wallet)",
+                                detailsContent: "Transaction signed through the wallet",
+                                summaryClassName: "",
+                                detailsClassName: "text-sm"
                               }) : null,
-                        props.showTransactionConfirm ? JsxRuntime.jsxs(Accordion, {
-                                children: [
-                                  JsxRuntime.jsx(AccordionSummary, {
-                                        "aria-controls": "panel1-content",
-                                        id: "panel1-header",
-                                        children: "Confirm Transaction",
-                                        expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                                      }),
-                                  JsxRuntime.jsx(AccordionDetails, {
-                                        children: Caml_option.some(JsxRuntime.jsxs(Accordion, {
-                                                  className: "w-11/12 ",
-                                                  children: [
-                                                    JsxRuntime.jsx(AccordionSummary, {
-                                                          "aria-controls": "panel2-content",
-                                                          id: "panel2-header",
-                                                          children: "POST https://finternet-app-api.shuttleapp.rs/v1/users/exampleUserId/assets/123/asset:transfer",
-                                                          expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                                                        }),
-                                                    JsxRuntime.jsx(AccordionDetails, {
-                                                          className: "text-sm",
-                                                          children: Caml_option.some(JsxRuntime.jsx("pre", {
-                                                                    children: prettyPostBody,
-                                                                    className: "whitespace-pre-wrap"
-                                                                  }))
-                                                        })
-                                                  ]
-                                                }))
-                                      })
-                                ]
+                        props.showTransactionConfirm ? JsxRuntime.jsx(AccordionItem.make, {
+                                summary: "Confirm Transaction",
+                                detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                      summary: "POST https://finternet-app-api.shuttleapp.rs/v1/users/exampleUserId/assets/123/asset:transfer",
+                                      detailsContent: JsxRuntime.jsx("pre", {
+                                            children: prettyPostBody,
+                                            className: "whitespace-pre-wrap"
+                                          }),
+                                      detailsClassName: "text-sm"
+                                    }),
+                                summaryClassName: ""
                               }) : null,
-                        Caml_obj.notequal(transactionResult, null) ? JsxRuntime.jsxs(Accordion, {
-                                children: [
-                                  JsxRuntime.jsx(AccordionSummary, {
-                                        "aria-controls": "panel1-content",
-                                        id: "panel1-header",
-                                        children: "GET Transaction Details",
-                                        expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                                      }),
-                                  JsxRuntime.jsx(AccordionDetails, {
-                                        className: "text-sm",
-                                        children: Caml_option.some(JsxRuntime.jsx("pre", {
-                                                  children: prettyTransactionResult,
-                                                  className: "whitespace-pre-wrap"
-                                                }))
-                                      })
-                                ]
+                        Caml_obj.notequal(transactionResult, null) ? JsxRuntime.jsx(AccordionItem.make, {
+                                summary: "GET Transaction Details",
+                                detailsContent: JsxRuntime.jsx("pre", {
+                                      children: prettyTransactionResult,
+                                      className: "whitespace-pre-wrap"
+                                    }),
+                                detailsClassName: "text-sm"
                               }) : null
                       ]
                     })
@@ -314,168 +279,81 @@ function Accordion$1(props) {
                       className: "text-sm text-gray-500"
                     }) : JsxRuntime.jsxs("div", {
                       children: [
-                        Caml_obj.notequal(registerStartResponse, null) ? JsxRuntime.jsxs(Accordion, {
-                                children: [
-                                  JsxRuntime.jsx(AccordionSummary, {
-                                        "aria-controls": "panel1-content",
-                                        id: "panel1-header",
-                                        children: "User Register",
-                                        expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                                      }),
-                                  JsxRuntime.jsx(AccordionDetails, {
-                                        children: Caml_option.some(JsxRuntime.jsxs(Accordion, {
-                                                  className: "w-11/12 ",
-                                                  children: [
-                                                    JsxRuntime.jsx(AccordionSummary, {
-                                                          "aria-controls": "panel2-content",
-                                                          id: "panel2-header",
-                                                          children: Caml_option.some(JsxRuntime.jsxs("div", {
-                                                                    children: [
-                                                                      "POST https://selfnode.codecrane.com/auth-0/registerStart",
-                                                                      JsxRuntime.jsx("br", {}),
-                                                                      "POST https://selfnode.codecrane.com/auth-1/registerStart",
-                                                                      JsxRuntime.jsx("br", {}),
-                                                                      "POST https://selfnode.codecrane.com/auth-2/registerStart"
-                                                                    ]
-                                                                  })),
-                                                          expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                                                        }),
-                                                    JsxRuntime.jsx(AccordionDetails, {
-                                                          className: "text-sm",
-                                                          children: Caml_option.some(JsxRuntime.jsx("pre", {
-                                                                    children: prettyRegisterStartResponse,
-                                                                    className: "whitespace-pre-wrap"
-                                                                  }))
-                                                        })
-                                                  ]
-                                                }))
-                                      })
-                                ]
+                        Caml_obj.notequal(registerStartResponse, null) ? JsxRuntime.jsx(AccordionItem.make, {
+                                summary: "User Register",
+                                detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                      summary: JsxRuntime.jsxs("div", {
+                                            children: [
+                                              "POST https://selfnode.codecrane.com/auth-0/registerStart",
+                                              JsxRuntime.jsx("br", {}),
+                                              "POST https://selfnode.codecrane.com/auth-1/registerStart",
+                                              JsxRuntime.jsx("br", {}),
+                                              "POST https://selfnode.codecrane.com/auth-2/registerStart"
+                                            ]
+                                          }),
+                                      detailsContent: JsxRuntime.jsx("pre", {
+                                            children: prettyRegisterStartResponse,
+                                            className: "whitespace-pre-wrap"
+                                          }),
+                                      detailsClassName: "text-sm"
+                                    })
                               }) : null,
                         Caml_obj.notequal(attestation, null) ? JsxRuntime.jsxs("div", {
                                 children: [
-                                  JsxRuntime.jsxs(Accordion, {
-                                        children: [
-                                          JsxRuntime.jsx(AccordionSummary, {
-                                                "aria-controls": "panel1-content",
-                                                id: "panel1-header",
-                                                children: "User Register Finish",
-                                                expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                                              }),
-                                          JsxRuntime.jsx(AccordionDetails, {
-                                                children: Caml_option.some(JsxRuntime.jsxs(Accordion, {
-                                                          className: "w-11/12 ",
-                                                          children: [
-                                                            JsxRuntime.jsx(AccordionSummary, {
-                                                                  "aria-controls": "panel2-content",
-                                                                  id: "panel2-header",
-                                                                  children: Caml_option.some(JsxRuntime.jsxs("div", {
-                                                                            children: [
-                                                                              "POST https://selfnode.codecrane.com/auth-0/registerFinish",
-                                                                              JsxRuntime.jsx("br", {}),
-                                                                              "POST https://selfnode.codecrane.com/auth-1/registerFinish",
-                                                                              JsxRuntime.jsx("br", {}),
-                                                                              "POST https://selfnode.codecrane.com/auth-2/registerFinish"
-                                                                            ]
-                                                                          })),
-                                                                  expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                                                                }),
-                                                            JsxRuntime.jsx(AccordionDetails, {
-                                                                  className: "text-sm overflow-auto",
-                                                                  children: Caml_option.some(JsxRuntime.jsx("pre", {
-                                                                            children: prettyAttestation,
-                                                                            className: "whitespace-pre-wrap"
-                                                                          }))
-                                                                })
-                                                          ]
-                                                        }))
-                                              })
-                                        ]
+                                  JsxRuntime.jsx(AccordionItem.make, {
+                                        summary: "User Register Finish",
+                                        detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                              summary: JsxRuntime.jsxs("div", {
+                                                    children: [
+                                                      "POST https://selfnode.codecrane.com/auth-0/registerFinish",
+                                                      JsxRuntime.jsx("br", {}),
+                                                      "POST https://selfnode.codecrane.com/auth-1/registerFinish",
+                                                      JsxRuntime.jsx("br", {}),
+                                                      "POST https://selfnode.codecrane.com/auth-2/registerFinish"
+                                                    ]
+                                                  }),
+                                              detailsContent: JsxRuntime.jsx("pre", {
+                                                    children: prettyAttestation,
+                                                    className: "whitespace-pre-wrap"
+                                                  }),
+                                              detailsClassName: "text-sm overflow-auto"
+                                            })
                                       }),
-                                  JsxRuntime.jsxs(Accordion, {
-                                        children: [
-                                          JsxRuntime.jsx(AccordionSummary, {
-                                                "aria-controls": "panel1-content",
-                                                id: "panel1-header",
-                                                children: "Verify JWT",
-                                                expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                                              }),
-                                          JsxRuntime.jsx(AccordionDetails, {
-                                                children: Caml_option.some(JsxRuntime.jsxs(Accordion, {
-                                                          className: "w-11/12 ",
-                                                          children: [
-                                                            JsxRuntime.jsx(AccordionSummary, {
-                                                                  "aria-controls": "panel2-content",
-                                                                  id: "panel2-header",
-                                                                  children: "POST https://selfnode.codecrane.com/auth-0/verify_google_jwt",
-                                                                  expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                                                                }),
-                                                            JsxRuntime.jsx(AccordionDetails, {
-                                                                  className: "text-sm ",
-                                                                  children: Caml_option.some(JsxRuntime.jsx("pre", {
-                                                                            children: prettyJwtBody,
-                                                                            className: "whitespace-pre-wrap"
-                                                                          }))
-                                                                })
-                                                          ]
-                                                        }))
-                                              })
-                                        ]
+                                  JsxRuntime.jsx(AccordionItem.make, {
+                                        summary: "Verify JWT",
+                                        detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                              summary: "POST https://selfnode.codecrane.com/auth-0/verify_google_jwt",
+                                              detailsContent: JsxRuntime.jsx("pre", {
+                                                    children: prettyJwtBody,
+                                                    className: "whitespace-pre-wrap"
+                                                  }),
+                                              detailsClassName: "text-sm"
+                                            })
                                       }),
-                                  JsxRuntime.jsxs(Accordion, {
-                                        children: [
-                                          JsxRuntime.jsx(AccordionSummary, {
-                                                "aria-controls": "panel1-content",
-                                                id: "panel1-header",
-                                                children: "Generate Public Key",
-                                                expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                                              }),
-                                          JsxRuntime.jsx(AccordionDetails, {
-                                                children: Caml_option.some(JsxRuntime.jsxs(Accordion, {
-                                                          className: "w-11/12 ",
-                                                          children: [
-                                                            JsxRuntime.jsx(AccordionSummary, {
-                                                                  "aria-controls": "panel2-content",
-                                                                  id: "panel2-header",
-                                                                  children: Caml_option.some(JsxRuntime.jsxs("div", {
-                                                                            children: [
-                                                                              "POST https://selfnode.codecrane.com/party-0/v1/keygen",
-                                                                              JsxRuntime.jsx("br", {}),
-                                                                              "POST https://selfnode.codecrane.com/party-1/v1/keygen",
-                                                                              JsxRuntime.jsx("br", {}),
-                                                                              "POST https://selfnode.codecrane.com/party-2/v1/keygen"
-                                                                            ]
-                                                                          })),
-                                                                  expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
-                                                                }),
-                                                            JsxRuntime.jsx(AccordionDetails, {
-                                                                  className: "text-sm ",
-                                                                  children: Caml_option.some(JsxRuntime.jsxs("div", {
-                                                                            children: [
-                                                                              "Keygen response from party-0:",
-                                                                              JsxRuntime.jsx("pre", {
-                                                                                    children: prettyKeyGenResponse0,
-                                                                                    className: "whitespace-pre-wrap"
-                                                                                  }),
-                                                                              JsxRuntime.jsx("br", {}),
-                                                                              "Keygen response from party-1:",
-                                                                              JsxRuntime.jsx("pre", {
-                                                                                    children: prettyKeyGenResponse1,
-                                                                                    className: "whitespace-pre-wrap"
-                                                                                  }),
-                                                                              JsxRuntime.jsx("br", {}),
-                                                                              "Keygen response from party-2:",
-                                                                              JsxRuntime.jsx("pre", {
-                                                                                    children: prettyKeyGenResponse2,
-                                                                                    className: "whitespace-pre-wrap"
-                                                                                  })
-                                                                            ]
-                                                                          }))
-                                                                })
-                                                          ]
-                                                        }))
-                                              })
-                                        ]
+                                  JsxRuntime.jsx(AccordionItem.make, {
+                                        summary: "Generate Public Key",
+                                        detailsContent: JsxRuntime.jsxs("div", {
+                                              children: [
+                                                "Keygen response from party-0:",
+                                                JsxRuntime.jsx("pre", {
+                                                      children: prettyKeyGenResponse0,
+                                                      className: "whitespace-pre-wrap"
+                                                    }),
+                                                JsxRuntime.jsx("br", {}),
+                                                "Keygen response from party-1:",
+                                                JsxRuntime.jsx("pre", {
+                                                      children: prettyKeyGenResponse1,
+                                                      className: "whitespace-pre-wrap"
+                                                    }),
+                                                JsxRuntime.jsx("br", {}),
+                                                "Keygen response from party-2:",
+                                                JsxRuntime.jsx("pre", {
+                                                      children: prettyKeyGenResponse2,
+                                                      className: "whitespace-pre-wrap"
+                                                    })
+                                              ]
+                                            }),
+                                        detailsClassName: "text-sm"
                                       })
                                 ]
                               }) : null
@@ -499,4 +377,4 @@ export {
   toJsonKeyGenResponse ,
   make ,
 }
-/* ExpandMoreIcon Not a pure module */
+/* AccordionItem Not a pure module */

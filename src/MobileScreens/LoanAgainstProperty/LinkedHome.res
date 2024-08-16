@@ -1,6 +1,6 @@
 @react.component
-let make = (~onNavigateToFaceID) => {
-  <div className="flex flex-col h-full justify-between">
+let make = (~onNavigateToLoanSteps) => {
+  <div className="flex flex-col h-full justify-between ">
     <div className="flex flex-col gap-10">
       <div className="flex flex-row justify-between">
         <svg
@@ -52,19 +52,24 @@ let make = (~onNavigateToFaceID) => {
           />
         </svg>
       </div>
-      <div className="">
-        <div className="font-bold text-xl"> {React.string("Create account on the Finternet")} </div>
-        <div className="font-light text-sm mt-4"> {React.string("Follow the below steps")} </div>
+      <div className="flex flex-col gap-4 ">
+        <img src="/nandanAccountCard.svg" alt="Description of image" />
+        <div className=" text-[#595959] text-xs px-2"> {React.string("Linked Property")} </div>
+        //   <button
+        //     className=" bg-[#00B76A] text-white rounded-lg w-full h-10"
+        //     onClick={_ => onNavigateToFaceID()}>
+        //     {React.string("Get Started")}
+        //   </button>
+        <img src="/PropertyCard.svg" alt="Description of image" />
+        <div className=" text-[#595959] text-xs px-2"> {React.string("Financial Services")} </div>
+        <CardWithButton
+          title="Apply for loan?"
+          description="Access quick financing by leveraging your property today!"
+          buttonColor="#00B76A"
+          onClick={_ => onNavigateToLoanSteps()}
+        />
       </div>
-      <img src="/VerifyIdentityStepper.svg" alt="Description of image" />
     </div>
-    <div className="flex flex-col gap-4">
-      <button
-        className=" bg-[#00B76A] text-white rounded-lg w-full h-10"
-        onClick={_ => onNavigateToFaceID()}>
-        {React.string("Get Started")}
-      </button>
-      <SecuredByFinterest />
-    </div>
+    <SecuredByFinterest />
   </div>
 }

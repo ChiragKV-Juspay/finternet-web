@@ -6,6 +6,12 @@ type domesticMoneyTransferScreens =
   | Transfer
   | TransactionCompleted
 
+type finternetOnboardingScreens =
+  | OnboardingLogin
+  | VerifyIdentity
+  | FaceID
+  | QRScreen
+
 type onboardingScreens =
   | OnboardingLogin
   | VerifyIdentity
@@ -14,11 +20,27 @@ type onboardingScreens =
   | LinkBankAccount
   | BankAccountLinked
 
+type loanAgainstPropertyScreens =
+  | PropertyHome
+  | LinkProperty
+  | LinkedHome
+  | LoanSteps
+  | SelectBankForLoan
+  | FillLoanApplication
+  | LinkCredentials
+  | CheckEligibility
+  | LoanSanctionedSuccessfully
+
 @react.component
 let make = () => {
   let (currentOnboardingScreen, setCurrentOnboardingScreen) = React.useState(_ => OnboardingLogin)
   let (currentTransferScreen, setCurrentTransferScreen) = React.useState(_ => Login)
-  let (selectedOption, setSelectedOption) = React.useState(_ => "User Onboarding")
+  let (currentLoanAgainstPropertyScreen, setCurrentLoanAgainstPropertyScreen) = React.useState(_ =>
+    PropertyHome
+  )
+  let (currentFinternetScreen, setCurrentFinternetScreen) = React.useState(_ => OnboardingLogin)
+
+  let (selectedOption, setSelectedOption) = React.useState(_ => "Hello World!")
 
   let (userData, setUserData) = React.useState(() => Js.Json.null)
   let (transactionsHistory, setTransactionsHistory) = React.useState(() => Js.Json.null)
@@ -29,13 +51,11 @@ let make = () => {
   let (registerStartResponse, setRegisterStartResponse) = React.useState(() => Js.Json.null)
   let (attestation, setAttestation) = React.useState(() => Js.Json.null)
 
-  let (openDrawer, setOpenDrawer) = React.useState(_ => false)
+  let (isCollapsed, setIsCollapsed) = React.useState(_ => false)
 
-  React.useEffect(() => {
-    Console.log("njacsjascjn")
-    Console.log(registerStartResponse)
-    None
-  }, [registerStartResponse])
+  let toggleCollapse = () => {
+    setIsCollapsed(prev => !prev)
+  }
 
   let handlePrevScreen = () => {
     switch currentTransferScreen {
@@ -81,6 +101,35 @@ let make = () => {
     }
   }
 
+  let handlePrevLoanAgainstPropertyScreen = () => {
+    switch currentLoanAgainstPropertyScreen {
+    | PropertyHome => ()
+    | LinkProperty => setCurrentLoanAgainstPropertyScreen(_ => PropertyHome)
+    | LinkedHome => setCurrentLoanAgainstPropertyScreen(_ => LinkProperty)
+    | LoanSteps => setCurrentLoanAgainstPropertyScreen(_ => LinkedHome)
+    | SelectBankForLoan => setCurrentLoanAgainstPropertyScreen(_ => LoanSteps)
+    | FillLoanApplication => setCurrentLoanAgainstPropertyScreen(_ => SelectBankForLoan)
+    | LinkCredentials => setCurrentLoanAgainstPropertyScreen(_ => FillLoanApplication)
+    | CheckEligibility => setCurrentLoanAgainstPropertyScreen(_ => LinkCredentials)
+    | LoanSanctionedSuccessfully => setCurrentLoanAgainstPropertyScreen(_ => CheckEligibility)
+    }
+  }
+
+  let handleNextLoanAgainstPropertyScreen = () => {
+    switch currentLoanAgainstPropertyScreen {
+    | PropertyHome => setCurrentLoanAgainstPropertyScreen(_ => LinkProperty)
+    | LinkProperty => setCurrentLoanAgainstPropertyScreen(_ => LinkedHome)
+    | LinkedHome => setCurrentLoanAgainstPropertyScreen(_ => LoanSteps)
+    | LoanSteps => setCurrentLoanAgainstPropertyScreen(_ => SelectBankForLoan)
+    | SelectBankForLoan => setCurrentLoanAgainstPropertyScreen(_ => FillLoanApplication)
+    | FillLoanApplication => setCurrentLoanAgainstPropertyScreen(_ => LinkCredentials)
+    | LinkCredentials => setCurrentLoanAgainstPropertyScreen(_ => CheckEligibility)
+    | CheckEligibility => setCurrentLoanAgainstPropertyScreen(_ => LoanSanctionedSuccessfully)
+
+    | LoanSanctionedSuccessfully => ()
+    }
+  }
+
   let fetchData = async () => {
     let endpoint = `https://finternet-app-api.shuttleapp.rs/v1/users/exampleUserId`
     let response = await Fetch.get(endpoint)
@@ -117,7 +166,7 @@ let make = () => {
     let attestationResponse = await SimpleWebAuthnTypes.startRegistration(json)
     setAttestation(_ => attestationResponse)
 
-    Console.log(attestationResponse)
+    // Console.log(attestationResponse)
     let registerFinishResponse = await fetch(
       "https://webauthn-fin-production.up.railway.app/api/passkey/registerFinish",
       {
@@ -128,7 +177,7 @@ let make = () => {
         }),
       },
     )
-    Console.log(registerFinishResponse)
+    // Console.log(registerFinishResponse)
   }
   let fetchUserTransactionsHistory = async () => {
     let historyEndpoint = `https://finternet-app-api.shuttleapp.rs/v1/users/exampleUserId/assets/123/history`
@@ -138,13 +187,6 @@ let make = () => {
 
     setTransactionsHistory(_ => json)
   }
-  let handleNavigateToHome = () => {
-    setCurrentTransferScreen(_ => Home)
-    fetchData()->ignore
-    fetchUserTransactionsHistory()->ignore
-    fetchUserAssets()->ignore
-  }
-
   let performTransfer = () => {
     let postTransfer = async () => {
       open Fetch
@@ -177,6 +219,13 @@ let make = () => {
 
     postTransfer()->ignore
   }
+  let handleNavigateToHome = () => {
+    setCurrentTransferScreen(_ => Home)
+    fetchData()->ignore
+    fetchUserTransactionsHistory()->ignore
+    fetchUserAssets()->ignore
+  }
+
   let handleNavigateToTransactionCompleted = () => {
     setCurrentTransferScreen(_ => TransactionCompleted)
     setShowTrasactionConfirm(_ => true)
@@ -231,32 +280,106 @@ let make = () => {
     | BankAccountLinked => <BankAccountLinked />
     }
   }
-  let handleDrawerSelection = selectedOption => {
-    Console.log(selectedOption)
-    switch selectedOption {
-    | "User Onboarding" =>
-      // setCurrentOnboardingScreen(_ => OnboardingLogin)
-      setSelectedOption(_ => "User Onboarding")
-    | "Domestic Money Transfer" =>
-      // setCurrentTransferScreen(_ => Login)
-      setSelectedOption(_ => "Domestic Money Transfer")
+  let renderFinternetOnboardingContent = () => {
+    switch currentOnboardingScreen {
+    | OnboardingLogin =>
+      <OnboardingLogin onNavigateToVerifyIdentity={_ => handleNavigateToVerfiyIdentity()} />
+    | VerifyIdentity => <VerifyIdentity onNavigateToFaceID={_ => handleNavigateToFaceID()} />
+    | FaceID => <FaceID />
+    | QRScreen =>
+      <QRScreen
+        onNavigateToLinkBankAccount={_ => setCurrentOnboardingScreen(_ => LinkBankAccount)}
+      />
     }
   }
 
-  let handleLogoClick = () => {
-    setOpenDrawer(_ => true)
+  let renderLoanAgainstPropertyContent = () => {
+    switch currentLoanAgainstPropertyScreen {
+    | PropertyHome =>
+      <PropertyHome
+        onNavigateToLinkProperty={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkProperty)}
+      />
+    | LinkProperty =>
+      <LinkProperty
+        onNavigateToLinkedHome={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkedHome)}
+      />
+    | LinkedHome =>
+      <LinkedHome
+        onNavigateToLoanSteps={_ => setCurrentLoanAgainstPropertyScreen(_ => LoanSteps)}
+      />
+    | LoanSteps =>
+      <LoanSteps
+        onNavigateToSelectBankForLoan={_ =>
+          setCurrentLoanAgainstPropertyScreen(_ => SelectBankForLoan)}
+      />
+    | SelectBankForLoan =>
+      <SelectBankForLoan
+        onNavigateToFillLoanApplication={_ =>
+          setCurrentLoanAgainstPropertyScreen(_ => FillLoanApplication)}
+      />
+    | FillLoanApplication =>
+      <FillLoanApplication
+        onNavigateToLinkCredentials={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkCredentials)}
+      />
+    | LinkCredentials =>
+      <LinkCredentials
+        onNavigateToFillLoanApplication={_ =>
+          setCurrentLoanAgainstPropertyScreen(_ => CheckEligibility)}
+      />
+    | CheckEligibility =>
+      <CheckEligibility
+        onNavigateToLinkCredentials={_ =>
+          setCurrentLoanAgainstPropertyScreen(_ => LoanSanctionedSuccessfully)}
+      />
+    // | FillLoanApplication =>
+    //   <FillLoanApplication
+    //     onNavigateToLoanSanctioned={_ =>
+    //       setCurrentLoanAgainstPropertyScreen(_ => LoanSactionedSuccessfully)}
+    //   />
+    | LoanSanctionedSuccessfully =>
+      <LoanSanctionedSuccessfully
+        onNavigateToPropertyHome={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkedHome)}
+      />
+    | _ => <div> {React.string("Unexpected Screen")} </div>
+    }
   }
+
+  let handleDrawerSelection = selectedOption => {
+    switch selectedOption {
+    | "User Onboarding" => setSelectedOption(_ => "User Onboarding")
+    | "Domestic Money Transfer" => setSelectedOption(_ => "Domestic Money Transfer")
+    | "Loan Against Property" => setSelectedOption(_ => "Loan Against Property")
+    | "Finternet Onboarding" => setSelectedOption(_ => "Finternet Onboarding")
+
+    | "Hello World!" => setSelectedOption(_ => "Hello World!")
+    | _ => Js.log("Unexpected drawer selection: " ++ selectedOption)
+    }
+  }
+
+  let renderContent = () => {
+    switch selectedOption {
+    | "User Onboarding" => renderOnboardingContent()
+    | "Domestic Money Transfer" => renderTransferContent()
+    | "Loan Against Property" => renderLoanAgainstPropertyContent()
+    | "Finternet Onboarding" => renderFinternetOnboardingContent()
+
+    | "Hello World" =>
+      <div className="h-full w-full flex justify-center items-center text-2xl">
+        {React.string("Welcome to the Home Page")}
+      </div>
+    | _ =>
+      Js.log("Unhandled case in renderContent: " ++ selectedOption)
+      React.null
+    }
+  }
+
   <div>
     <div
       //  className="absolute top-4 left-4 flex flex-row gap-1"
-      className="flex justify-between items-center px-10 py-2 shadow">
+      className="flex justify-between items-center px-10 py-2 shadow ">
+      // className="fixed top-0 left-0 w-full flex justify-between items-center px-10 py-2 shadow bg-white z-50">
       <div className="flex">
-        <img
-          src="/finternetLogo.png"
-          alt="Description of image"
-          className="h-10 w-10"
-          onClick={_ => handleLogoClick()}
-        />
+        <img src="/finternetLogo.png" alt="Description of image" className="h-10 w-10" />
         <div className="self-center"> {React.string("Playground")} </div>
       </div>
       // <GitHubIcon />
@@ -264,72 +387,103 @@ let make = () => {
         <GitHubIcon />
       </a>
     </div>
-    <div className="flex justify-center  h-screen w-screen flex-row  jc p-4  font-space-grotesk ">
-      <div className="flex flex-col h-full w-1/5 justify-center gap-4">
-        <div
-          className="bg-white h-4/5 self-center w-full p-4 shadow-lg rounded-lg   overflow-auto ">
-          // {renderTransferContent()}
-          // {renderOnboardingContent()}
-          {switch selectedOption {
-          | "User Onboarding" => renderOnboardingContent()
-          | "Domestic Money Transfer" => renderTransferContent()
-          }}
-        </div>
-        <div className="flex flex-row justify-around text-xl text-gray-400">
-          <button
-            onClick={_ => {
-              switch selectedOption {
-              | "User Onboarding" => handlePrevOnboardingScreen()
-              | "Domestic Money Transfer" => handlePrevScreen()
-              }
-            }}>
-            {React.string("<")}
-          </button>
-          <button
-            onClick={_ => {
-              switch selectedOption {
-              | "User Onboarding" => handleNextOnboardingScreen()
-              | "Domestic Money Transfer" => handleNextScreen()
-              }
-            }}>
-            {React.string(">")}
-          </button>
-        </div>
+    <div
+      className="flex flex-col sm:flex-row  h-screen w-screen font-space-grotesk justify-between ">
+      <div className="mr-10">
+        <Drawer handleDrawerSelection={handleDrawerSelection} selectedOption={selectedOption} />
       </div>
-      <div
-        className="ml-4 p-4  bg-gray-100 rounded-lg w-3/5 h-full flex flex-col gap-3 overflow-auto">
-        <div className="text-2xl">
-          {switch selectedOption {
-          | "User Onboarding" => React.string("User Onboarding Activity Log (WIP)")
-          | "Domestic Money Transfer" => React.string("Domestic Transfer Activity Log")
-          }}
-          // {React.string("Domestic Transfer Activity Log")}
-        </div>
-        // {userData != Js.Json.null
-        // ?
-        <Accordion
-          userData={userData}
-          transactionsHistory={transactionsHistory}
-          userAssets={userAssets}
-          showAuthInitiated={showAuthInitiated}
-          showTransactionConfirm={showTransactionConfirm}
-          transactionResult={transactionResult}
-          flowType={selectedOption}
-          registerStartResponse={registerStartResponse}
-          attestation={attestation}
-        />
-        // :
-        //  <div className="text-sm">
-        // {React.string("Initiate transaction to view activity logs")}
-        // </div>}
-      </div>
+      {selectedOption == "Hello World!"
+        ? <div className="flex flex-col h-full w-full  items-center  my-40">
+            <img src="/finternetLogo.png" alt="Description of image" className=" h-4/12 w-1/12" />
+            <div className="w-5/12 text-center ">
+              {React.string(
+                "Welcome to the Finternet playground. Explore use cases that demonstrate how the Finternet unlocks transactability across assets. ",
+              )}
+            </div>
+          </div>
+        : <>
+            <div className="flex flex-col h-full w-4/5 sm:w-1/5  my-4 gap-4 ">
+              // <div className="relative w-full flex justify-center items-center p-4">
+              //   <div className="bg-white p-4 shadow-lg rounded-lg overflow-auto w-full max-w-[360px]">
+              <div
+                className="bg-white h-4/5 self-center w-full p-4 border  shadow-lg rounded-lg overflow-auto ">
+                {renderContent()}
+              </div>
+              <div className="flex flex-row justify-around text-xl text-gray-400">
+                <button
+                  onClick={_ => {
+                    switch selectedOption {
+                    | "User Onboarding" => handlePrevOnboardingScreen()
+                    | "Domestic Money Transfer" => handlePrevScreen()
+                    | "Loan Against Property" => handlePrevLoanAgainstPropertyScreen()
+                    | _ => Js.log("Unhandled case in renderContent: " ++ selectedOption)
+                    }
+                  }}>
+                  {React.string("<")}
+                </button>
+                <button
+                  onClick={_ => {
+                    switch selectedOption {
+                    | "User Onboarding" => handleNextOnboardingScreen()
+                    | "Domestic Money Transfer" => handleNextScreen()
+                    | "Loan Against Property" => handleNextLoanAgainstPropertyScreen()
+                    | _ => Js.log("Unhandled case in renderContent: " ++ selectedOption)
+                    }
+                  }}>
+                  {React.string(">")}
+                </button>
+              </div>
+            </div>
+            // <div
+            //   className="ml-4 p-4  bg-gray-100 rounded-lg w-3/5 h-full flex flex-col gap-3 overflow-auto ">
+            {isCollapsed
+              ? {
+                  <div className="mr-5">
+                    <button onClick={_ => setIsCollapsed(_ => false)}>
+                      {React.string("<<<")}
+                    </button>
+                  </div>
+                }
+              : <div
+                  className="ml-4 p-4 bg-gray-100 rounded-lg w-4/5 md:w-2/5 md:h-5/6 flex flex-col gap-3 overflow-auto my-4 mr-10">
+                  <div className="flex flex-row w-full justify-end">
+                    <button onClick={_ => setIsCollapsed(_ => true)}> {React.string("x")} </button>
+                  </div>
+                  <div className="text-2xl">
+                    {switch selectedOption {
+                    | "User Onboarding" => React.string("User Onboarding Activity Log (WIP)")
+                    | "Domestic Money Transfer" => React.string("Domestic Transfer Activity Log")
+                    | "Loan Against Property" => React.string("Loan Against Property Activity Log")
+                    | "Finternet Onboarding" => React.string("Finternet Onboarding Activity Log")
+                    | _ => React.string("Unexpected Screen")
+                    }}
+                    // {React.string("Domestic Transfer Activity Log")}
+                  </div>
+                  // {userData != Js.Json.null
+                  // ?
+                  <Accordion
+                    userData={userData}
+                    transactionsHistory={transactionsHistory}
+                    userAssets={userAssets}
+                    showAuthInitiated={showAuthInitiated}
+                    showTransactionConfirm={showTransactionConfirm}
+                    transactionResult={transactionResult}
+                    flowType={selectedOption}
+                    registerStartResponse={registerStartResponse}
+                    attestation={attestation}
+                  />
+                </div>}
+            // :
+            //  <div className="text-sm">
+            // {React.string("Initiate transaction to view activity logs")}
+            // </div>}
+          </>}
       // <Drawer />
-
-      <Drawer
-        openDrawer={openDrawer}
-        setOpenDrawer={setOpenDrawer}
-        handleDrawerSelection={handleDrawerSelection}
-      />
     </div>
+    // <Drawer
+    //   openDrawer={openDrawer}
+    //   setOpenDrawer={setOpenDrawer}
+    //   handleDrawerSelection={handleDrawerSelection}
+    // />
   </div>
 }

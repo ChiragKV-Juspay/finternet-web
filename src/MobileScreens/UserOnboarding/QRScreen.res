@@ -59,13 +59,13 @@ let make = (~onNavigateToLinkBankAccount) => {
           {React.string("Account Address")}
         </div>
         <div className="flex flex-row justify-between">
-          <div className=" text-base "> {React.string("arnab.d@unifiedledger1")} </div>
+          <div className=" text-base ">
+            {React.string("nandan@finternet
+")}
+          </div>
           <img src="/CopyIcon.svg" alt="Description of image" />
         </div>
       </div>
-      //   <img
-      //     src="/AccountAddressWithCopy.svg" alt="Description of image" className="w-4/5 self-center"
-      //   />
       <img src="/QRCode.svg" alt="Description of image" className="w-11/12 self-center" />
       <div className="font-light text-[#797979] text-base">
         {React.string("Welcome to the Finternet!")}

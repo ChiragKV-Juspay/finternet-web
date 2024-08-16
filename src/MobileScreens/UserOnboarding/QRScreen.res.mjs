@@ -109,7 +109,7 @@ function QRScreen(props) {
                                 JsxRuntime.jsxs("div", {
                                       children: [
                                         JsxRuntime.jsx("div", {
-                                              children: "arnab.d@unifiedledger1",
+                                              children: "nandan@finternet\n",
                                               className: " text-base "
                                             }),
                                         JsxRuntime.jsx("img", {
