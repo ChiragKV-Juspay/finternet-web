@@ -6,7 +6,7 @@ import * as SecuredByFinterest from "../../Components/SecuredByFinterest.res.mjs
 import Checkbox from "@mui/material/Checkbox";
 
 function OnboardingLogin(props) {
-  var onNavigateToVerifyIdentity = props.onNavigateToVerifyIdentity;
+  var handleNavigate = props.handleNavigate;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsxs("div", {
@@ -162,7 +162,7 @@ function OnboardingLogin(props) {
                               children: "Verify",
                               className: " bg-[#00B76A] text-white rounded-lg w-full h-12",
                               onClick: (function (param) {
-                                  onNavigateToVerifyIdentity();
+                                  handleNavigate();
                                 })
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {})

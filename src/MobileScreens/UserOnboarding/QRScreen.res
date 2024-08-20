@@ -1,5 +1,5 @@
 @react.component
-let make = (~onNavigateToLinkBankAccount=?) => {
+let make = (~handleNavigate=?) => {
   <div className="flex flex-col h-full gap-7">
     <Header />
     <div className="font-bold text-lg"> {React.string("Identity verified successfully!")} </div>
@@ -24,7 +24,7 @@ let make = (~onNavigateToLinkBankAccount=?) => {
       <button
         className=" bg-[#00B76A] text-white text-xs rounded-lg w-3/5 h-10"
         onClick={_ =>
-          switch onNavigateToLinkBankAccount {
+          switch handleNavigate {
           | Some(callback) => callback()
           | None => Js.log("No navigation function provided")
           }}>

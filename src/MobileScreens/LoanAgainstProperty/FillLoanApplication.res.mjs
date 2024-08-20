@@ -108,7 +108,7 @@ function FillLoanApplication(props) {
                         JsxRuntime.jsx("button", {
                               children: "Next",
                               className: " bg-[#00B76A] text-white rounded-lg w-full h-10",
-                              onClick: props.onNavigateToLinkCredentials
+                              onClick: props.handleNavigate
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {})
                       ],

@@ -3,7 +3,7 @@
 import * as JsxRuntime from "react/jsx-runtime";
 
 function BankAccountCard(props) {
-  var onNavigateToReceiversList = props.onNavigateToReceiversList;
+  var handleNavigate = props.handleNavigate;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsx("img", {
@@ -22,7 +22,7 @@ function BankAccountCard(props) {
                               children: "Transfer",
                               className: "bg-[#00B76A] text-white rounded-lg m-5 h-10 w-32 ",
                               onClick: (function (param) {
-                                  onNavigateToReceiversList();
+                                  handleNavigate();
                                 })
                             })
                       ],

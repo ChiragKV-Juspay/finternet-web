@@ -5,7 +5,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 import * as SecuredByFinterest from "../../Components/SecuredByFinterest.res.mjs";
 
 function CreateAccount(props) {
-  var onNavigateToFaceID = props.onNavigateToFaceID;
+  var handleNavigate = props.handleNavigate;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsxs("div", {
@@ -37,7 +37,7 @@ function CreateAccount(props) {
                               children: "Get Started",
                               className: " bg-[#00B76A] text-white rounded-lg w-full h-10",
                               onClick: (function (param) {
-                                  onNavigateToFaceID();
+                                  handleNavigate();
                                 })
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {})

@@ -6,7 +6,7 @@ import * as TransactionsList from "../../Components/TransactionsList.res.mjs";
 import * as JsxRuntime from "react/jsx-runtime";
 
 function Home(props) {
-  var onNavigateToReceiversList = props.onNavigateToReceiversList;
+  var handleNavigate = props.handleNavigate;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsxs("div", {
@@ -102,8 +102,8 @@ function Home(props) {
                       className: "my-2"
                     }),
                 JsxRuntime.jsx(BankAccountCard.make, {
-                      onNavigateToReceiversList: (function () {
-                          onNavigateToReceiversList();
+                      handleNavigate: (function () {
+                          handleNavigate();
                         })
                     }),
                 JsxRuntime.jsx("div", {

@@ -1,5 +1,5 @@
 @react.component
-let make = (~onNavigateToHome) => {
+let make = (~handleNavigate) => {
   <div className="flex flex-col h-full justify-between">
     <div>
       <div>
@@ -98,8 +98,7 @@ let make = (~onNavigateToHome) => {
         </div>
       </div>
       <button
-        className=" bg-[#00B76A] text-white rounded-lg w-full h-12"
-        onClick={_ => onNavigateToHome()}>
+        className=" bg-[#00B76A] text-white rounded-lg w-full h-12" onClick={_ => handleNavigate()}>
         {React.string("Verify")}
       </button>
       <SecuredByFinterest />
@@ -108,7 +107,7 @@ let make = (~onNavigateToHome) => {
 }
 
 // @react.component
-// let make = (~onNavigateToHome) => {
+// let make = (~handleNavigate) => {
 //   <div className="flex flex-col h-full justify-between">
 //     <div>
 //       <div>
@@ -173,7 +172,7 @@ let make = (~onNavigateToHome) => {
 //       </div>
 //       <button
 //         className="bg-[#00B76A] text-white rounded-lg w-full h-[10vw]"
-//         onClick={_ => onNavigateToHome()}>
+//         onClick={_ => handleNavigate()}>
 //         {React.string("Verify")}
 //       </button>
 //       <SecuredByFinterest />

@@ -6,7 +6,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 import * as SecuredByFinterest from "../../Components/SecuredByFinterest.res.mjs";
 
 function LinkProperty(props) {
-  var onNavigateToLinkedHome = props.onNavigateToLinkedHome;
+  var handleNavigate = props.handleNavigate;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsxs("div", {
@@ -62,7 +62,7 @@ function LinkProperty(props) {
                               children: "Proceed",
                               className: " bg-[#00B76A] text-white rounded-lg w-full h-10",
                               onClick: (function (param) {
-                                  onNavigateToLinkedHome();
+                                  handleNavigate();
                                 })
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {})

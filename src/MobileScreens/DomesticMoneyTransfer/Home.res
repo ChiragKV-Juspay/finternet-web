@@ -1,5 +1,5 @@
 @react.component
-let make = (~onNavigateToReceiversList) => {
+let make = (~handleNavigate) => {
   <div>
     <div className="flex flex-row justify-between">
       <svg
@@ -53,7 +53,7 @@ let make = (~onNavigateToReceiversList) => {
     </div>
     <AccountCard />
     <div className="my-2"> {React.string("Bank Accounts")} </div>
-    <BankAccountCard onNavigateToReceiversList={_ => onNavigateToReceiversList()} />
+    <BankAccountCard handleNavigate={_ => handleNavigate()} />
     <div className="my-2"> {React.string("All Transactions")} </div>
     <TransactionsList />
   </div>

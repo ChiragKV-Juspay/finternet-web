@@ -42,7 +42,7 @@ function App(props) {
   var setCurrentTransferScreen = match$1[1];
   var currentTransferScreen = match$1[0];
   var match$2 = React.useState(function () {
-        return "PropertyHome";
+        return "SelectBankForLoan";
       });
   var setCurrentLoanAgainstPropertyScreen = match$2[1];
   var currentLoanAgainstPropertyScreen = match$2[0];
@@ -52,7 +52,7 @@ function App(props) {
   var setCurrentFinternetOnboardingScreen = match$3[1];
   var currentFinternetOnboardingScreen = match$3[0];
   var match$4 = React.useState(function () {
-        return "Hello World!";
+        return "Loan Against Property";
       });
   var setSelectedOption = match$4[1];
   var selectedOption = match$4[0];
@@ -104,17 +104,27 @@ function App(props) {
           return setCurrentTransferScreen(function (param) {
                       return "Transfer";
                     });
-      case "EnterPin" :
+      case "FaceID" :
           return setCurrentTransferScreen(function (param) {
                       return "EnterAmount";
                     });
+      case "EnterPin" :
+          throw {
+                RE_EXN_ID: "Match_failure",
+                _1: [
+                  "App.res",
+                  64,
+                  4
+                ],
+                Error: new Error()
+              };
       case "Transfer" :
           return setCurrentTransferScreen(function (param) {
                       return "Home";
                     });
       case "TransactionCompleted" :
           return setCurrentTransferScreen(function (param) {
-                      return "EnterPin";
+                      return "FaceID";
                     });
       
     }
@@ -131,12 +141,22 @@ function App(props) {
                     });
       case "EnterAmount" :
           return setCurrentTransferScreen(function (param) {
-                      return "EnterPin";
+                      return "FaceID";
                     });
-      case "EnterPin" :
+      case "FaceID" :
           return setCurrentTransferScreen(function (param) {
                       return "TransactionCompleted";
                     });
+      case "EnterPin" :
+          throw {
+                RE_EXN_ID: "Match_failure",
+                _1: [
+                  "App.res",
+                  76,
+                  4
+                ],
+                Error: new Error()
+              };
       case "Transfer" :
           return setCurrentTransferScreen(function (param) {
                       return "EnterAmount";
@@ -222,7 +242,7 @@ function App(props) {
                 RE_EXN_ID: "Match_failure",
                 _1: [
                   "App.res",
-                  106,
+                  110,
                   4
                 ],
                 Error: new Error()
@@ -252,7 +272,7 @@ function App(props) {
                 RE_EXN_ID: "Match_failure",
                 _1: [
                   "App.res",
-                  115,
+                  119,
                   4
                 ],
                 Error: new Error()
@@ -356,7 +376,7 @@ function App(props) {
   };
   var simpleWebAuthn = async function () {
     var transferBody = {
-      username: "arnab.d"
+      username: "arnab.b"
     };
     var response = await fetch("https://webauthn-fin-production.up.railway.app/api/passkey/registerStart", {
           method: "POST",
@@ -432,34 +452,65 @@ function App(props) {
         });
     performTransfer();
   };
-  var handleNavigateToEnterPin = function () {
-    setCurrentTransferScreen(function (param) {
-          return "EnterPin";
-        });
-    setShowAuthInitiated(function (param) {
-          return true;
-        });
-  };
-  var handleNavigateToFaceID = function (isFinternetOnboardingOpt) {
-    var isFinternetOnboarding = isFinternetOnboardingOpt !== undefined ? isFinternetOnboardingOpt : false;
-    if (isFinternetOnboarding) {
-      setCurrentFinternetOnboardingScreen(function (param) {
-            return "FaceID";
-          });
-    } else {
-      setCurrentOnboardingScreen(function (param) {
-            return "FaceID";
-          });
+  var handleNavigateToFaceID = function (flow) {
+    switch (flow) {
+      case "FinternetOnboarding" :
+          setCurrentFinternetOnboardingScreen(function (param) {
+                return "FaceID";
+              });
+          break;
+      case "Onboarding" :
+          setCurrentOnboardingScreen(function (param) {
+                return "FaceID";
+              });
+          break;
+      case "Transfer" :
+          setShowAuthInitiated(function (param) {
+                return true;
+              });
+          setCurrentTransferScreen(function (param) {
+                return "FaceID";
+              });
+          break;
+      default:
+        throw {
+              RE_EXN_ID: "Match_failure",
+              _1: [
+                "App.res",
+                278,
+                4
+              ],
+              Error: new Error()
+            };
     }
     simpleWebAuthn().then(function () {
-          if (isFinternetOnboarding) {
-            setCurrentFinternetOnboardingScreen(function (param) {
-                  return "QRScreen";
-                });
-          } else {
-            setCurrentOnboardingScreen(function (param) {
-                  return "QRScreen";
-                });
+          switch (flow) {
+            case "FinternetOnboarding" :
+                setCurrentFinternetOnboardingScreen(function (param) {
+                      return "QRScreen";
+                    });
+                break;
+            case "Onboarding" :
+                setCurrentOnboardingScreen(function (param) {
+                      return "QRScreen";
+                    });
+                break;
+            case "Transfer" :
+                handleNavigateToTransactionCompleted();
+                setCurrentTransferScreen(function (param) {
+                      return "TransactionCompleted";
+                    });
+                break;
+            default:
+              throw {
+                    RE_EXN_ID: "Match_failure",
+                    _1: [
+                      "App.res",
+                      288,
+                      6
+                    ],
+                    Error: new Error()
+                  };
           }
           return Promise.resolve();
         });
@@ -468,13 +519,13 @@ function App(props) {
     switch (currentTransferScreen) {
       case "Login" :
           return JsxRuntime.jsx(Login.make, {
-                      onNavigateToHome: (function () {
+                      handleNavigate: (function () {
                           handleNavigateToHome();
                         })
                     });
       case "Home" :
           return JsxRuntime.jsx(Home.make, {
-                      onNavigateToReceiversList: (function () {
+                      handleNavigate: (function () {
                           setCurrentTransferScreen(function (param) {
                                 return "Transfer";
                               });
@@ -482,19 +533,21 @@ function App(props) {
                     });
       case "EnterAmount" :
           return JsxRuntime.jsx(EnterAmount.make, {
-                      onNavigateToEnterPin: (function (param) {
-                          handleNavigateToEnterPin();
+                      handleNavigate: (function (param) {
+                          handleNavigateToFaceID("Transfer");
                         })
                     });
+      case "FaceID" :
+          return JsxRuntime.jsx(FaceID.make, {});
       case "EnterPin" :
           return JsxRuntime.jsx(EnterPin.make, {
-                      onNavigateToTransactionCompleted: (function (param) {
+                      handleNavigate: (function (param) {
                           handleNavigateToTransactionCompleted();
                         })
                     });
       case "Transfer" :
           return JsxRuntime.jsx(Transfer.make, {
-                      onNavigateToEnterAmount: (function (param) {
+                      handleNavigate: (function (param) {
                           setCurrentTransferScreen(function (param) {
                                 return "EnterAmount";
                               });
@@ -502,7 +555,7 @@ function App(props) {
                     });
       case "TransactionCompleted" :
           return JsxRuntime.jsx(TransactionCompleted.make, {
-                      onNavigateToHome: (function (param) {
+                      handleNavigate: (function (param) {
                           setCurrentTransferScreen(function (param) {
                                 return "Home";
                               });
@@ -515,7 +568,7 @@ function App(props) {
     switch (currentOnboardingScreen) {
       case "OnboardingLogin" :
           return JsxRuntime.jsx(OnboardingLogin.make, {
-                      onNavigateToVerifyIdentity: (function () {
+                      handleNavigate: (function () {
                           setCurrentOnboardingScreen(function (param) {
                                 return "CreateAccount";
                               });
@@ -523,15 +576,15 @@ function App(props) {
                     });
       case "CreateAccount" :
           return JsxRuntime.jsx(CreateAccount.make, {
-                      onNavigateToFaceID: (function () {
-                          handleNavigateToFaceID(undefined);
+                      handleNavigate: (function () {
+                          handleNavigateToFaceID("Onboarding");
                         })
                     });
       case "FaceID" :
           return JsxRuntime.jsx(FaceID.make, {});
       case "QRScreen" :
           return JsxRuntime.jsx(QRScreen.make, {
-                      onNavigateToLinkBankAccount: (function () {
+                      handleNavigate: (function () {
                           setCurrentOnboardingScreen(function (param) {
                                 return "LinkBankAccount";
                               });
@@ -539,7 +592,7 @@ function App(props) {
                     });
       case "LinkBankAccount" :
           return JsxRuntime.jsx(LinkBankAccount.make, {
-                      onNavigateToBankAccountLinked: (function () {
+                      handleNavigate: (function () {
                           setCurrentOnboardingScreen(function (param) {
                                 return "BankAccountLinked";
                               });
@@ -554,7 +607,7 @@ function App(props) {
     switch (currentFinternetOnboardingScreen) {
       case "OnboardingLogin" :
           return JsxRuntime.jsx(OnboardingLogin.make, {
-                      onNavigateToVerifyIdentity: (function () {
+                      handleNavigate: (function () {
                           setCurrentFinternetOnboardingScreen(function (param) {
                                 return "CreateAccount";
                               });
@@ -562,8 +615,8 @@ function App(props) {
                     });
       case "CreateAccount" :
           return JsxRuntime.jsx(CreateAccount.make, {
-                      onNavigateToFaceID: (function () {
-                          handleNavigateToFaceID(true);
+                      handleNavigate: (function () {
+                          handleNavigateToFaceID("FinternetOnboarding");
                         })
                     });
       case "FaceID" :
@@ -576,7 +629,7 @@ function App(props) {
                 RE_EXN_ID: "Match_failure",
                 _1: [
                   "App.res",
-                  306,
+                  331,
                   4
                 ],
                 Error: new Error()
@@ -588,7 +641,7 @@ function App(props) {
     switch (currentLoanAgainstPropertyScreen) {
       case "PropertyHome" :
           return JsxRuntime.jsx(PropertyHome.make, {
-                      onNavigateToLinkProperty: (function () {
+                      handleNavigate: (function () {
                           setCurrentLoanAgainstPropertyScreen(function (param) {
                                 return "LinkProperty";
                               });
@@ -596,7 +649,7 @@ function App(props) {
                     });
       case "LinkProperty" :
           return JsxRuntime.jsx(LinkProperty.make, {
-                      onNavigateToLinkedHome: (function () {
+                      handleNavigate: (function () {
                           setCurrentLoanAgainstPropertyScreen(function (param) {
                                 return "LinkedHome";
                               });
@@ -604,7 +657,7 @@ function App(props) {
                     });
       case "LinkedHome" :
           return JsxRuntime.jsx(LinkedHome.make, {
-                      onNavigateToLoanSteps: (function () {
+                      handleNavigate: (function () {
                           setCurrentLoanAgainstPropertyScreen(function (param) {
                                 return "LoanSteps";
                               });
@@ -612,7 +665,7 @@ function App(props) {
                     });
       case "LoanSteps" :
           return JsxRuntime.jsx(LoanSteps.make, {
-                      onNavigateToSelectBankForLoan: (function () {
+                      handleNavigate: (function () {
                           setCurrentLoanAgainstPropertyScreen(function (param) {
                                 return "SelectBankForLoan";
                               });
@@ -620,7 +673,7 @@ function App(props) {
                     });
       case "SelectBankForLoan" :
           return JsxRuntime.jsx(SelectBankForLoan.make, {
-                      onNavigateToFillLoanApplication: (function () {
+                      handleNavigate: (function () {
                           setCurrentLoanAgainstPropertyScreen(function (param) {
                                 return "FillLoanApplication";
                               });
@@ -628,7 +681,7 @@ function App(props) {
                     });
       case "FillLoanApplication" :
           return JsxRuntime.jsx(FillLoanApplication.make, {
-                      onNavigateToLinkCredentials: (function (param) {
+                      handleNavigate: (function (param) {
                           setCurrentLoanAgainstPropertyScreen(function (param) {
                                 return "LinkCredentials";
                               });
@@ -636,7 +689,7 @@ function App(props) {
                     });
       case "LinkCredentials" :
           return JsxRuntime.jsx(LinkCredentials.make, {
-                      onNavigateToFillLoanApplication: (function () {
+                      handleNavigate: (function () {
                           setCurrentLoanAgainstPropertyScreen(function (param) {
                                 return "CheckEligibility";
                               });
@@ -644,7 +697,7 @@ function App(props) {
                     });
       case "CheckEligibility" :
           return JsxRuntime.jsx(CheckEligibility.make, {
-                      onNavigateToLinkCredentials: (function () {
+                      handleNavigate: (function () {
                           setCurrentLoanAgainstPropertyScreen(function (param) {
                                 return "LoanSanctionedSuccessfully";
                               });
@@ -652,7 +705,7 @@ function App(props) {
                     });
       case "LoanSanctionedSuccessfully" :
           return JsxRuntime.jsx(LoanSanctionedSuccessfully.make, {
-                      onNavigateToPropertyHome: (function () {
+                      handleNavigate: (function () {
                           setCurrentLoanAgainstPropertyScreen(function (param) {
                                 return "LinkedHome";
                               });
@@ -785,7 +838,7 @@ function App(props) {
                     attestation: match$12[0]
                   })
             ],
-            className: "ml-4 p-4 bg-gray-100 rounded-lg w-4/5 md:w-2/5 md:h-5/6 flex flex-col gap-3 overflow-auto my-4 mr-10"
+            className: "sm:ml-4 p-4 bg-gray-100 rounded-lg w-4/5 min-h-96 sm:self-auto self-center sm:w-2/5 sm:h-5/6 flex flex-col gap-3 overflow-auto my-4 sm:mr-10"
           });
     }
     tmp = JsxRuntime.jsxs(JsxRuntime.Fragment, {
@@ -794,7 +847,7 @@ function App(props) {
                   children: [
                     JsxRuntime.jsx("div", {
                           children: renderContent(),
-                          className: "bg-white h-4/5 self-center w-full p-4 border  shadow-lg rounded-lg overflow-auto "
+                          className: "bg-white h-full sm:h-4/5 self-center w-full p-4 border  shadow-lg rounded-lg overflow-auto "
                         }),
                     JsxRuntime.jsxs("div", {
                           children: [
@@ -838,7 +891,7 @@ function App(props) {
                           className: "flex flex-row justify-around text-xl text-gray-400"
                         })
                   ],
-                  className: "flex flex-col h-full w-4/5 sm:w-1/5  my-4 gap-4 "
+                  className: "flex flex-col sm:self-auto self-center min-h-[50rem] sm:min-h-full h-full w-4/5 sm:w-1/5  my-4 gap-4 "
                 }),
             tmp$1
           ]

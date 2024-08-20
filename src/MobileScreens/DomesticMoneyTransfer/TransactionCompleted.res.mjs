@@ -15,7 +15,7 @@ function TransactionCompleted(props) {
                         JsxRuntime.jsx("button", {
                               children: "Go to Home",
                               className: " bg-[#00B76A] text-white rounded-lg w-full h-10 text-sm",
-                              onClick: props.onNavigateToHome
+                              onClick: props.handleNavigate
                             }),
                         JsxRuntime.jsx("div", {
                               children: "View Transaction History",

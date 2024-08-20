@@ -179,7 +179,7 @@ let make = (
                         id="panel2-header">
                         {React.string("GET user")}
                       </Mui.AccordionSummary>
-                      <Mui.AccordionDetails className="text-sm">
+                      <Mui.AccordionDetails className="text-sm overflow-auto">
                         <pre className="whitespace-pre-wrap"> {React.string(prettyJson)} </pre>
                       </Mui.AccordionDetails>
                     </Mui.Accordion>
@@ -192,7 +192,7 @@ let make = (
                         id="panel2-header">
                         {React.string("GET assets")}
                       </Mui.AccordionSummary>
-                      <Mui.AccordionDetails>
+                      <Mui.AccordionDetails className="text-sm overflow-auto">
                         <pre className="whitespace-pre-wrap"> {React.string(prettyAssets)} </pre>
                       </Mui.AccordionDetails>
                     </Mui.Accordion>
@@ -205,7 +205,7 @@ let make = (
                         id="panel2-header">
                         {React.string("GET transactionsList")}
                       </Mui.AccordionSummary>
-                      <Mui.AccordionDetails>
+                      <Mui.AccordionDetails className="text-sm overflow-auto">
                         <pre className="whitespace-pre-wrap">
                           {React.string(prettyTransactionsHistory)}
                         </pre>
@@ -219,7 +219,7 @@ let make = (
                   summary={React.string("Auth Initiated (Wallet)")}
                   summaryClassName=""
                   detailsContent={React.string("Transaction signed through the wallet")}
-                  detailsClassName="text-sm"
+                  detailsClassName="text-sm overflow-auto"
                 />
               : React.null}
             {showTransactionConfirm
@@ -234,7 +234,7 @@ let make = (
                     detailsContent={<pre className="whitespace-pre-wrap">
                       {React.string(prettyPostBody)}
                     </pre>}
-                    detailsClassName="text-sm"
+                    detailsClassName="text-sm overflow-auto"
                   />}
                 />
               : React.null}
@@ -244,7 +244,7 @@ let make = (
                   detailsContent={<pre className="whitespace-pre-wrap">
                     {React.string(prettyTransactionResult)}
                   </pre>}
-                  detailsClassName="text-sm"
+                  detailsClassName="text-sm overflow-auto"
                 />
               : React.null}
           </div>}
@@ -273,7 +273,7 @@ let make = (
                     detailsContent={<pre className="whitespace-pre-wrap">
                       {React.string(prettyRegisterStartResponse)}
                     </pre>}
-                    detailsClassName="text-sm"
+                    detailsClassName="text-sm overflow-auto"
                   />}
                 />
               : React.null}
@@ -306,7 +306,7 @@ let make = (
                       detailsContent={<pre className="whitespace-pre-wrap">
                         {React.string(prettyJwtBody)}
                       </pre>}
-                      detailsClassName="text-sm"
+                      detailsClassName="text-sm overflow-auto"
                     />}
                   />
                   <AccordionItem
@@ -327,7 +327,7 @@ let make = (
                         {React.string(prettyKeyGenResponse2)}
                       </pre>
                     </div>}
-                    detailsClassName="text-sm"
+                    detailsClassName="text-sm overflow-auto"
                   />
                 </div>
               : React.null}

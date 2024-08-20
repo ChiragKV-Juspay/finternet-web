@@ -1,7 +1,7 @@
 @react.component
-let make = (~onNavigateToSelectBankForLoan) => {
+let make = (~handleNavigate) => {
   <div className="flex flex-col h-full justify-between">
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-5">
       <HeaderWithBack title="Get a Loan" />
       <div className="">
         <div className="font-bold text-xl"> {React.string("Apply for a loan")} </div>
@@ -13,8 +13,7 @@ let make = (~onNavigateToSelectBankForLoan) => {
     </div>
     <div className="flex flex-col gap-4">
       <button
-        className=" bg-[#00B76A] text-white rounded-lg w-full h-10"
-        onClick={_ => onNavigateToSelectBankForLoan()}>
+        className=" bg-[#00B76A] text-white rounded-lg w-full h-10" onClick={_ => handleNavigate()}>
         {React.string("Confirm")}
       </button>
       <SecuredByFinterest />

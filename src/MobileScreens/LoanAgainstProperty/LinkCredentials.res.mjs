@@ -5,7 +5,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 import * as SecuredByFinterest from "../../Components/SecuredByFinterest.res.mjs";
 
 function LinkCredentials(props) {
-  var onNavigateToFillLoanApplication = props.onNavigateToFillLoanApplication;
+  var handleNavigate = props.handleNavigate;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsxs("div", {
@@ -26,7 +26,7 @@ function LinkCredentials(props) {
                               children: "Next",
                               className: " bg-[#00B76A] text-white rounded-lg w-full h-10",
                               onClick: (function (param) {
-                                  onNavigateToFillLoanApplication();
+                                  handleNavigate();
                                 })
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {})

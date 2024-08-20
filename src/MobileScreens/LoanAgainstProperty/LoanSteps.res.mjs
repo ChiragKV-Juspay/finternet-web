@@ -5,7 +5,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 import * as SecuredByFinterest from "../../Components/SecuredByFinterest.res.mjs";
 
 function LoanSteps(props) {
-  var onNavigateToSelectBankForLoan = props.onNavigateToSelectBankForLoan;
+  var handleNavigate = props.handleNavigate;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsxs("div", {
@@ -31,7 +31,7 @@ function LoanSteps(props) {
                               src: "/LoanStepper.svg"
                             })
                       ],
-                      className: "flex flex-col gap-10"
+                      className: "flex flex-col gap-5"
                     }),
                 JsxRuntime.jsxs("div", {
                       children: [
@@ -39,7 +39,7 @@ function LoanSteps(props) {
                               children: "Confirm",
                               className: " bg-[#00B76A] text-white rounded-lg w-full h-10",
                               onClick: (function (param) {
-                                  onNavigateToSelectBankForLoan();
+                                  handleNavigate();
                                 })
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {})

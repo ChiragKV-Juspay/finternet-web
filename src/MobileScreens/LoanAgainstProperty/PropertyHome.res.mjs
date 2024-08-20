@@ -6,7 +6,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 import * as SecuredByFinterest from "../../Components/SecuredByFinterest.res.mjs";
 
 function PropertyHome(props) {
-  var onNavigateToLinkProperty = props.onNavigateToLinkProperty;
+  var handleNavigate = props.handleNavigate;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsxs("div", {
@@ -27,7 +27,7 @@ function PropertyHome(props) {
                                       description: "Link your property to apply for credit with collateral",
                                       buttonColor: "#00B76A",
                                       onClick: (function (param) {
-                                          onNavigateToLinkProperty();
+                                          handleNavigate();
                                         })
                                     }),
                                 JsxRuntime.jsx(CardWithButton.make, {
@@ -35,7 +35,7 @@ function PropertyHome(props) {
                                       description: "Access quick financing by leveraging your property today!",
                                       buttonColor: "#00B76A",
                                       onClick: (function (param) {
-                                          onNavigateToLinkProperty();
+                                          handleNavigate();
                                         })
                                     })
                               ],

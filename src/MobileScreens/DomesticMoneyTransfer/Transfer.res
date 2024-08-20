@@ -1,5 +1,5 @@
 @react.component
-let make = (~onNavigateToEnterAmount) => {
+let make = (~handleNavigate) => {
   <div className="flex flex-col h-full gap-4 ">
     <HeaderWithBack title="Transfer" />
     <div className="flex flex-col gap-1 my-3 ">
@@ -73,9 +73,7 @@ let make = (~onNavigateToEnterAmount) => {
       //   // <div className="font-medium text-base"> {React.string("Enter your mobile number")} </div>
       // </div>
       <div className="flex justify-end">
-        <button
-          className="bg-[#00B76A] text-white rounded-lg w-4/5 h-10"
-          onClick={onNavigateToEnterAmount}>
+        <button className="bg-[#00B76A] text-white rounded-lg w-4/5 h-10" onClick={handleNavigate}>
           {React.string("Proceed")}
         </button>
       </div>

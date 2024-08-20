@@ -1,5 +1,5 @@
 @react.component
-let make = (~onNavigateToBankAccountLinked) => {
+let make = (~handleNavigate) => {
   <div className="flex flex-col h-full justify-between">
     <div className="flex flex-col gap-10">
       <HeaderWithBack title="Bank" />
@@ -13,8 +13,7 @@ let make = (~onNavigateToBankAccountLinked) => {
     </div>
     <div className="flex flex-col gap-4">
       <button
-        className=" bg-[#00B76A] text-white rounded-lg w-full h-10"
-        onClick={_ => onNavigateToBankAccountLinked()}>
+        className=" bg-[#00B76A] text-white rounded-lg w-full h-10" onClick={_ => handleNavigate()}>
         {React.string("Complete")}
       </button>
       <SecuredByFinterest />

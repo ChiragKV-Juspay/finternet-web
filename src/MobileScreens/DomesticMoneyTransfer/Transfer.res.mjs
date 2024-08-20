@@ -42,7 +42,7 @@ function Transfer(props) {
                               children: JsxRuntime.jsx("button", {
                                     children: "Proceed",
                                     className: "bg-[#00B76A] text-white rounded-lg w-4/5 h-10",
-                                    onClick: props.onNavigateToEnterAmount
+                                    onClick: props.handleNavigate
                                   }),
                               className: "flex justify-end"
                             })

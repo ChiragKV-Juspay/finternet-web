@@ -1,5 +1,5 @@
 @react.component
-let make = (~onNavigateToTransactionCompleted) => {
+let make = (~handleNavigate) => {
   <div className="flex flex-col h-full justify-between ">
     <div className="flex flex-col h-full gap-6">
       <img
@@ -14,9 +14,7 @@ let make = (~onNavigateToTransactionCompleted) => {
       />
     </div>
     <div className="flex flex-col gap-4">
-      <button
-        className=" bg-[#E31837] text-white rounded-lg w-full h-10"
-        onClick={onNavigateToTransactionCompleted}>
+      <button className=" bg-[#E31837] text-white rounded-lg w-full h-10" onClick={handleNavigate}>
         {React.string("Confirm & Pay")}
       </button>
       <img

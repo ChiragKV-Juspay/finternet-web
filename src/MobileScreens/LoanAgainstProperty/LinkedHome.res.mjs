@@ -6,7 +6,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 import * as SecuredByFinterest from "../../Components/SecuredByFinterest.res.mjs";
 
 function LinkedHome(props) {
-  var onNavigateToLoanSteps = props.onNavigateToLoanSteps;
+  var handleNavigate = props.handleNavigate;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsxs("div", {
@@ -35,7 +35,7 @@ function LinkedHome(props) {
                                       description: "Access quick financing by leveraging your property today!",
                                       buttonColor: "#00B76A",
                                       onClick: (function (param) {
-                                          onNavigateToLoanSteps();
+                                          handleNavigate();
                                         })
                                     })
                               ],

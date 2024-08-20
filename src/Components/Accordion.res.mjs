@@ -196,7 +196,7 @@ function Accordion$1(props) {
                                                         expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
                                                       }),
                                                   JsxRuntime.jsx(AccordionDetails, {
-                                                        className: "text-sm",
+                                                        className: "text-sm overflow-auto",
                                                         children: Caml_option.some(JsxRuntime.jsx("pre", {
                                                                   children: prettyJson,
                                                                   className: "whitespace-pre-wrap"
@@ -214,6 +214,7 @@ function Accordion$1(props) {
                                                         expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
                                                       }),
                                                   JsxRuntime.jsx(AccordionDetails, {
+                                                        className: "text-sm overflow-auto",
                                                         children: Caml_option.some(JsxRuntime.jsx("pre", {
                                                                   children: prettyAssets,
                                                                   className: "whitespace-pre-wrap"
@@ -231,6 +232,7 @@ function Accordion$1(props) {
                                                         expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
                                                       }),
                                                   JsxRuntime.jsx(AccordionDetails, {
+                                                        className: "text-sm overflow-auto",
                                                         children: Caml_option.some(JsxRuntime.jsx("pre", {
                                                                   children: prettyTransactionsHistory,
                                                                   className: "whitespace-pre-wrap"
@@ -246,7 +248,7 @@ function Accordion$1(props) {
                                 summary: "Auth Initiated (Wallet)",
                                 detailsContent: "Transaction signed through the wallet",
                                 summaryClassName: "",
-                                detailsClassName: "text-sm"
+                                detailsClassName: "text-sm overflow-auto"
                               }) : null,
                         props.showTransactionConfirm ? JsxRuntime.jsx(AccordionItem.make, {
                                 summary: "Confirm Transaction",
@@ -256,7 +258,7 @@ function Accordion$1(props) {
                                             children: prettyPostBody,
                                             className: "whitespace-pre-wrap"
                                           }),
-                                      detailsClassName: "text-sm"
+                                      detailsClassName: "text-sm overflow-auto"
                                     }),
                                 summaryClassName: ""
                               }) : null,
@@ -266,7 +268,7 @@ function Accordion$1(props) {
                                       children: prettyTransactionResult,
                                       className: "whitespace-pre-wrap"
                                     }),
-                                detailsClassName: "text-sm"
+                                detailsClassName: "text-sm overflow-auto"
                               }) : null
                       ]
                     })
@@ -295,7 +297,7 @@ function Accordion$1(props) {
                                             children: prettyRegisterStartResponse,
                                             className: "whitespace-pre-wrap"
                                           }),
-                                      detailsClassName: "text-sm"
+                                      detailsClassName: "text-sm overflow-auto"
                                     })
                               }) : null,
                         Caml_obj.notequal(attestation, null) ? JsxRuntime.jsxs("div", {
@@ -327,7 +329,7 @@ function Accordion$1(props) {
                                                     children: prettyJwtBody,
                                                     className: "whitespace-pre-wrap"
                                                   }),
-                                              detailsClassName: "text-sm"
+                                              detailsClassName: "text-sm overflow-auto"
                                             })
                                       }),
                                   JsxRuntime.jsx(AccordionItem.make, {
@@ -353,7 +355,7 @@ function Accordion$1(props) {
                                                     })
                                               ]
                                             }),
-                                        detailsClassName: "text-sm"
+                                        detailsClassName: "text-sm overflow-auto"
                                       })
                                 ]
                               }) : null

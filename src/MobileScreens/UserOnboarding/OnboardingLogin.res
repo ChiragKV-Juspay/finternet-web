@@ -1,5 +1,5 @@
 @react.component
-let make = (~onNavigateToVerifyIdentity) => {
+let make = (~handleNavigate) => {
   <div className="flex flex-col h-full justify-between">
     <div>
       <div>
@@ -98,8 +98,7 @@ let make = (~onNavigateToVerifyIdentity) => {
         </div>
       </div>
       <button
-        className=" bg-[#00B76A] text-white rounded-lg w-full h-12"
-        onClick={_ => onNavigateToVerifyIdentity()}>
+        className=" bg-[#00B76A] text-white rounded-lg w-full h-12" onClick={_ => handleNavigate()}>
         {React.string("Verify")}
       </button>
       <SecuredByFinterest />

@@ -4,7 +4,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 import * as SecuredByFinterest from "../../Components/SecuredByFinterest.res.mjs";
 
 function LoanSanctionedSuccessfully(props) {
-  var onNavigateToPropertyHome = props.onNavigateToPropertyHome;
+  var handleNavigate = props.handleNavigate;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsx("img", {
@@ -17,7 +17,7 @@ function LoanSanctionedSuccessfully(props) {
                               children: "Go to Home",
                               className: " bg-[#00B76A] text-white rounded-lg w-full h-10 text-sm",
                               onClick: (function (param) {
-                                  onNavigateToPropertyHome();
+                                  handleNavigate();
                                 })
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {})

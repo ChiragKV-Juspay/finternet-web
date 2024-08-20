@@ -1,5 +1,5 @@
 @react.component
-let make = (~onNavigateToLinkedHome) => {
+let make = (~handleNavigate) => {
   <div className="flex flex-col h-full justify-between">
     <div className="flex flex-col gap-10">
       <HeaderWithBack title="Link Property" />
@@ -23,8 +23,7 @@ let make = (~onNavigateToLinkedHome) => {
     </div>
     <div className="flex flex-col gap-4">
       <button
-        className=" bg-[#00B76A] text-white rounded-lg w-full h-10"
-        onClick={_ => onNavigateToLinkedHome()}>
+        className=" bg-[#00B76A] text-white rounded-lg w-full h-10" onClick={_ => handleNavigate()}>
         {React.string("Proceed")}
       </button>
       <SecuredByFinterest />

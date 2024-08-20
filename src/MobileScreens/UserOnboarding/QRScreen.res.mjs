@@ -5,7 +5,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 import * as SecuredByFinterest from "../../Components/SecuredByFinterest.res.mjs";
 
 function QRScreen(props) {
-  var onNavigateToLinkBankAccount = props.onNavigateToLinkBankAccount;
+  var handleNavigate = props.handleNavigate;
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsx(Header.make, {}),
@@ -50,8 +50,8 @@ function QRScreen(props) {
                               children: "Link Bank Accounts",
                               className: " bg-[#00B76A] text-white text-xs rounded-lg w-3/5 h-10",
                               onClick: (function (param) {
-                                  if (onNavigateToLinkBankAccount !== undefined) {
-                                    return onNavigateToLinkBankAccount();
+                                  if (handleNavigate !== undefined) {
+                                    return handleNavigate();
                                   } else {
                                     console.log("No navigation function provided");
                                     return ;

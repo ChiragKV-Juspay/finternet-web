@@ -97,7 +97,7 @@ function EnterAmount(props) {
                         JsxRuntime.jsx("button", {
                               children: "Proceed",
                               className: " bg-[#00B76A] text-white rounded-lg w-full h-10",
-                              onClick: props.onNavigateToEnterPin
+                              onClick: props.handleNavigate
                             }),
                         JsxRuntime.jsx("img", {
                               alt: "Description of image",

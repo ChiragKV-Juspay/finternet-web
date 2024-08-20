@@ -25,7 +25,7 @@ function EnterPin(props) {
                         JsxRuntime.jsx("button", {
                               children: "Confirm & Pay",
                               className: " bg-[#E31837] text-white rounded-lg w-full h-10",
-                              onClick: props.onNavigateToTransactionCompleted
+                              onClick: props.handleNavigate
                             }),
                         JsxRuntime.jsx("img", {
                               className: "w-full h-auto max-w-xs md:max-w-md lg:max-w-lg",

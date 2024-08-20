@@ -1,5 +1,5 @@
 @react.component
-let make = (~onNavigateToFaceID) => {
+let make = (~handleNavigate) => {
   <div className="flex flex-col h-full justify-between">
     <div className="flex flex-col gap-10">
       <Header />
@@ -11,8 +11,7 @@ let make = (~onNavigateToFaceID) => {
     </div>
     <div className="flex flex-col gap-4">
       <button
-        className=" bg-[#00B76A] text-white rounded-lg w-full h-10"
-        onClick={_ => onNavigateToFaceID()}>
+        className=" bg-[#00B76A] text-white rounded-lg w-full h-10" onClick={_ => handleNavigate()}>
         {React.string("Get Started")}
       </button>
       <SecuredByFinterest />
