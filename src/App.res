@@ -34,7 +34,7 @@ type loanAgainstPropertyScreens =
 @react.component
 let make = () => {
   let (currentOnboardingScreen, setCurrentOnboardingScreen) = React.useState(_ => OnboardingLogin)
-  let (currentTransferScreen, setCurrentTransferScreen) = React.useState(_ => Transfer)
+  let (currentTransferScreen, setCurrentTransferScreen) = React.useState(_ => Login)
   let (currentLoanAgainstPropertyScreen, setCurrentLoanAgainstPropertyScreen) = React.useState(_ =>
     PropertyHome
   )
@@ -42,7 +42,7 @@ let make = () => {
     OnboardingLogin
   )
 
-  let (selectedOption, setSelectedOption) = React.useState(_ => "Domestic Money Transfer")
+  let (selectedOption, setSelectedOption) = React.useState(_ => "Hello World!")
 
   let (userData, setUserData) = React.useState(() => Js.Json.null)
   let (transactionsHistory, setTransactionsHistory) = React.useState(() => Js.Json.null)

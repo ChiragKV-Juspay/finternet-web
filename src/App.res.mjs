@@ -37,7 +37,7 @@ function App(props) {
   var setCurrentOnboardingScreen = match[1];
   var currentOnboardingScreen = match[0];
   var match$1 = React.useState(function () {
-        return "Transfer";
+        return "Login";
       });
   var setCurrentTransferScreen = match$1[1];
   var currentTransferScreen = match$1[0];
@@ -52,7 +52,7 @@ function App(props) {
   var setCurrentFinternetOnboardingScreen = match$3[1];
   var currentFinternetOnboardingScreen = match$3[0];
   var match$4 = React.useState(function () {
-        return "Domestic Money Transfer";
+        return "Hello World!";
       });
   var setSelectedOption = match$4[1];
   var selectedOption = match$4[0];

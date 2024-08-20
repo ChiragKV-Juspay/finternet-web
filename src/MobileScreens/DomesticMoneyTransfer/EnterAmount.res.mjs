@@ -92,17 +92,22 @@ function EnterAmount(props) {
                       alt: "Description of image",
                       src: "/ExchangeRates.svg"
                     }),
-                JsxRuntime.jsx("button", {
-                      children: "Proceed",
-                      className: " bg-[#00B76A] text-white rounded-lg w-full h-10",
-                      onClick: props.onNavigateToEnterPin
-                    }),
-                JsxRuntime.jsx("img", {
-                      alt: "Description of image",
-                      src: "/KeypadIphone.svg"
+                JsxRuntime.jsxs("div", {
+                      children: [
+                        JsxRuntime.jsx("button", {
+                              children: "Proceed",
+                              className: " bg-[#00B76A] text-white rounded-lg w-full h-10",
+                              onClick: props.onNavigateToEnterPin
+                            }),
+                        JsxRuntime.jsx("img", {
+                              alt: "Description of image",
+                              src: "/KeypadIphone.svg"
+                            })
+                      ],
+                      className: "flex flex-col gap-4"
                     })
               ],
-              className: "flex flex-col h-full justify-between  "
+              className: "flex flex-col h-full justify-between"
             });
 }
 
