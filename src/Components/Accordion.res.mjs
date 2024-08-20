@@ -125,7 +125,7 @@ function Accordion$1(props) {
     uuid: "[USER_EMAIL_PLACEHOLDER]"
   };
   var bodyJson = toJson({
-        sender: "arnab.d@unifiedledger1",
+        sender: "nandan@finternet",
         recipient: "ales@ledger",
         asset: {
           currency: "USD",

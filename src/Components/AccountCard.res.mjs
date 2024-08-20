@@ -5,7 +5,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 function AccountCard(props) {
   return JsxRuntime.jsx("img", {
               alt: "Description of image",
-              src: "/CapitalMarket.svg"
+              src: "/NandanCard.svg"
             });
 }
 
