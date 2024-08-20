@@ -58,7 +58,6 @@ let make = (~handleDrawerSelection, ~selectedOption) => {
       <div className="font-bold"> {React.string(title)} </div>
       {items
       ->Belt.Array.map(item => {
-        Console.log(selectedOption)
         <div
           key={item}
           className={"cursor-pointer p-2 rounded " ++

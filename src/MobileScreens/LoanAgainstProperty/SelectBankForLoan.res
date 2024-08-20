@@ -9,7 +9,7 @@ let make = (~onNavigateToFillLoanApplication) => {
         </div>
       </div>
       <div className="flex flex-col w-full my-7 ">
-        <input
+        <Input
           placeholder="Search bank"
           className=" p-3 border border-[#E6E6E6]  rounded-lg text-sm placeholder-text-sm mb-4"
         />

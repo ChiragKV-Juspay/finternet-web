@@ -17,7 +17,7 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as EnterAmount from "./MobileScreens/DomesticMoneyTransfer/EnterAmount.res.mjs";
 import * as LinkProperty from "./MobileScreens/LoanAgainstProperty/LinkProperty.res.mjs";
 import * as PropertyHome from "./MobileScreens/LoanAgainstProperty/PropertyHome.res.mjs";
-import * as VerifyIdentity from "./MobileScreens/UserOnboarding/VerifyIdentity.res.mjs";
+import * as CreateAccount from "./MobileScreens/UserOnboarding/CreateAccount.res.mjs";
 import * as LinkBankAccount from "./MobileScreens/UserOnboarding/LinkBankAccount.res.mjs";
 import * as LinkCredentials from "./MobileScreens/LoanAgainstProperty/LinkCredentials.res.mjs";
 import * as OnboardingLogin from "./MobileScreens/UserOnboarding/OnboardingLogin.res.mjs";
@@ -37,7 +37,7 @@ function App(props) {
   var setCurrentOnboardingScreen = match[1];
   var currentOnboardingScreen = match[0];
   var match$1 = React.useState(function () {
-        return "Login";
+        return "Transfer";
       });
   var setCurrentTransferScreen = match$1[1];
   var currentTransferScreen = match$1[0];
@@ -46,50 +46,52 @@ function App(props) {
       });
   var setCurrentLoanAgainstPropertyScreen = match$2[1];
   var currentLoanAgainstPropertyScreen = match$2[0];
-  React.useState(function () {
+  var match$3 = React.useState(function () {
         return "OnboardingLogin";
       });
-  var match$3 = React.useState(function () {
-        return "Hello World!";
-      });
-  var setSelectedOption = match$3[1];
-  var selectedOption = match$3[0];
+  var setCurrentFinternetOnboardingScreen = match$3[1];
+  var currentFinternetOnboardingScreen = match$3[0];
   var match$4 = React.useState(function () {
-        return null;
+        return "Domestic Money Transfer";
       });
-  var setUserData = match$4[1];
+  var setSelectedOption = match$4[1];
+  var selectedOption = match$4[0];
   var match$5 = React.useState(function () {
         return null;
       });
-  var setTransactionsHistory = match$5[1];
+  var setUserData = match$5[1];
   var match$6 = React.useState(function () {
         return null;
       });
-  var setUserAssets = match$6[1];
+  var setTransactionsHistory = match$6[1];
   var match$7 = React.useState(function () {
         return null;
       });
-  var setTransactionResult = match$7[1];
+  var setUserAssets = match$7[1];
   var match$8 = React.useState(function () {
-        return false;
+        return null;
       });
-  var setShowAuthInitiated = match$8[1];
+  var setTransactionResult = match$8[1];
   var match$9 = React.useState(function () {
         return false;
       });
-  var setShowTrasactionConfirm = match$9[1];
+  var setShowAuthInitiated = match$9[1];
   var match$10 = React.useState(function () {
-        return null;
+        return false;
       });
-  var setRegisterStartResponse = match$10[1];
+  var setShowTrasactionConfirm = match$10[1];
   var match$11 = React.useState(function () {
         return null;
       });
-  var setAttestation = match$11[1];
+  var setRegisterStartResponse = match$11[1];
   var match$12 = React.useState(function () {
+        return null;
+      });
+  var setAttestation = match$12[1];
+  var match$13 = React.useState(function () {
         return false;
       });
-  var setIsCollapsed = match$12[1];
+  var setIsCollapsed = match$13[1];
   var handlePrevScreen = function () {
     switch (currentTransferScreen) {
       case "Login" :
@@ -148,13 +150,13 @@ function App(props) {
     switch (currentOnboardingScreen) {
       case "OnboardingLogin" :
           return ;
-      case "VerifyIdentity" :
+      case "CreateAccount" :
           return setCurrentOnboardingScreen(function (param) {
                       return "OnboardingLogin";
                     });
       case "FaceID" :
           return setCurrentOnboardingScreen(function (param) {
-                      return "VerifyIdentity";
+                      return "CreateAccount";
                     });
       case "QRScreen" :
           return setCurrentOnboardingScreen(function (param) {
@@ -175,9 +177,9 @@ function App(props) {
     switch (currentOnboardingScreen) {
       case "OnboardingLogin" :
           return setCurrentOnboardingScreen(function (param) {
-                      return "VerifyIdentity";
+                      return "CreateAccount";
                     });
-      case "VerifyIdentity" :
+      case "CreateAccount" :
           return setCurrentOnboardingScreen(function (param) {
                       return "FaceID";
                     });
@@ -195,6 +197,66 @@ function App(props) {
                     });
       case "BankAccountLinked" :
           return ;
+      
+    }
+  };
+  var handlePrevFinternetOnboardingScreen = function () {
+    switch (currentFinternetOnboardingScreen) {
+      case "OnboardingLogin" :
+          return ;
+      case "CreateAccount" :
+          return setCurrentFinternetOnboardingScreen(function (param) {
+                      return "OnboardingLogin";
+                    });
+      case "FaceID" :
+          return setCurrentFinternetOnboardingScreen(function (param) {
+                      return "CreateAccount";
+                    });
+      case "QRScreen" :
+          return setCurrentFinternetOnboardingScreen(function (param) {
+                      return "FaceID";
+                    });
+      case "LinkBankAccount" :
+      case "BankAccountLinked" :
+          throw {
+                RE_EXN_ID: "Match_failure",
+                _1: [
+                  "App.res",
+                  106,
+                  4
+                ],
+                Error: new Error()
+              };
+      
+    }
+  };
+  var handleNextFinternetOnboardingScreen = function () {
+    switch (currentFinternetOnboardingScreen) {
+      case "OnboardingLogin" :
+          return setCurrentFinternetOnboardingScreen(function (param) {
+                      return "CreateAccount";
+                    });
+      case "CreateAccount" :
+          return setCurrentFinternetOnboardingScreen(function (param) {
+                      return "FaceID";
+                    });
+      case "FaceID" :
+          return setCurrentFinternetOnboardingScreen(function (param) {
+                      return "QRScreen";
+                    });
+      case "QRScreen" :
+          return ;
+      case "LinkBankAccount" :
+      case "BankAccountLinked" :
+          throw {
+                RE_EXN_ID: "Match_failure",
+                _1: [
+                  "App.res",
+                  115,
+                  4
+                ],
+                Error: new Error()
+              };
       
     }
   };
@@ -378,14 +440,27 @@ function App(props) {
           return true;
         });
   };
-  var handleNavigateToFaceID = function () {
-    setCurrentOnboardingScreen(function (param) {
-          return "FaceID";
-        });
+  var handleNavigateToFaceID = function (isFinternetOnboardingOpt) {
+    var isFinternetOnboarding = isFinternetOnboardingOpt !== undefined ? isFinternetOnboardingOpt : false;
+    if (isFinternetOnboarding) {
+      setCurrentFinternetOnboardingScreen(function (param) {
+            return "FaceID";
+          });
+    } else {
+      setCurrentOnboardingScreen(function (param) {
+            return "FaceID";
+          });
+    }
     simpleWebAuthn().then(function () {
-          setCurrentOnboardingScreen(function (param) {
-                return "QRScreen";
-              });
+          if (isFinternetOnboarding) {
+            setCurrentFinternetOnboardingScreen(function (param) {
+                  return "QRScreen";
+                });
+          } else {
+            setCurrentOnboardingScreen(function (param) {
+                  return "QRScreen";
+                });
+          }
           return Promise.resolve();
         });
   };
@@ -442,14 +517,14 @@ function App(props) {
           return JsxRuntime.jsx(OnboardingLogin.make, {
                       onNavigateToVerifyIdentity: (function () {
                           setCurrentOnboardingScreen(function (param) {
-                                return "VerifyIdentity";
+                                return "CreateAccount";
                               });
                         })
                     });
-      case "VerifyIdentity" :
-          return JsxRuntime.jsx(VerifyIdentity.make, {
+      case "CreateAccount" :
+          return JsxRuntime.jsx(CreateAccount.make, {
                       onNavigateToFaceID: (function () {
-                          handleNavigateToFaceID();
+                          handleNavigateToFaceID(undefined);
                         })
                     });
       case "FaceID" :
@@ -476,38 +551,32 @@ function App(props) {
     }
   };
   var renderFinternetOnboardingContent = function () {
-    switch (currentOnboardingScreen) {
+    switch (currentFinternetOnboardingScreen) {
       case "OnboardingLogin" :
           return JsxRuntime.jsx(OnboardingLogin.make, {
                       onNavigateToVerifyIdentity: (function () {
-                          setCurrentOnboardingScreen(function (param) {
-                                return "VerifyIdentity";
+                          setCurrentFinternetOnboardingScreen(function (param) {
+                                return "CreateAccount";
                               });
                         })
                     });
-      case "VerifyIdentity" :
-          return JsxRuntime.jsx(VerifyIdentity.make, {
+      case "CreateAccount" :
+          return JsxRuntime.jsx(CreateAccount.make, {
                       onNavigateToFaceID: (function () {
-                          handleNavigateToFaceID();
+                          handleNavigateToFaceID(true);
                         })
                     });
       case "FaceID" :
           return JsxRuntime.jsx(FaceID.make, {});
       case "QRScreen" :
-          return JsxRuntime.jsx(QRScreen.make, {
-                      onNavigateToLinkBankAccount: (function () {
-                          setCurrentOnboardingScreen(function (param) {
-                                return "LinkBankAccount";
-                              });
-                        })
-                    });
+          return JsxRuntime.jsx(QRScreen.make, {});
       case "LinkBankAccount" :
       case "BankAccountLinked" :
           throw {
                 RE_EXN_ID: "Match_failure",
                 _1: [
                   "App.res",
-                  284,
+                  306,
                   4
                 ],
                 Error: new Error()
@@ -657,7 +726,7 @@ function App(props) {
         });
   } else {
     var tmp$1;
-    if (match$12[0]) {
+    if (match$13[0]) {
       tmp$1 = JsxRuntime.jsx("div", {
             children: JsxRuntime.jsx("button", {
                   children: "<<<",
@@ -705,15 +774,15 @@ function App(props) {
                     className: "text-2xl"
                   }),
               JsxRuntime.jsx(Accordion.make, {
-                    userData: match$4[0],
-                    userAssets: match$6[0],
-                    transactionsHistory: match$5[0],
-                    showAuthInitiated: match$8[0],
-                    showTransactionConfirm: match$9[0],
-                    transactionResult: match$7[0],
+                    userData: match$5[0],
+                    userAssets: match$7[0],
+                    transactionsHistory: match$6[0],
+                    showAuthInitiated: match$9[0],
+                    showTransactionConfirm: match$10[0],
+                    transactionResult: match$8[0],
                     flowType: selectedOption,
-                    registerStartResponse: match$10[0],
-                    attestation: match$11[0]
+                    registerStartResponse: match$11[0],
+                    attestation: match$12[0]
                   })
             ],
             className: "ml-4 p-4 bg-gray-100 rounded-lg w-4/5 md:w-2/5 md:h-5/6 flex flex-col gap-3 overflow-auto my-4 mr-10"
@@ -735,6 +804,8 @@ function App(props) {
                                       switch (selectedOption) {
                                         case "Domestic Money Transfer" :
                                             return handlePrevScreen();
+                                        case "Finternet Onboarding" :
+                                            return handlePrevFinternetOnboardingScreen();
                                         case "Loan Against Property" :
                                             return handlePrevLoanAgainstPropertyScreen();
                                         case "User Onboarding" :
@@ -751,6 +822,8 @@ function App(props) {
                                       switch (selectedOption) {
                                         case "Domestic Money Transfer" :
                                             return handleNextScreen();
+                                        case "Finternet Onboarding" :
+                                            return handleNextFinternetOnboardingScreen();
                                         case "Loan Against Property" :
                                             return handleNextLoanAgainstPropertyScreen();
                                         case "User Onboarding" :

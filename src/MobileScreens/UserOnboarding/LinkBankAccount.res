@@ -2,10 +2,7 @@
 let make = (~onNavigateToBankAccountLinked) => {
   <div className="flex flex-col h-full justify-between">
     <div className="flex flex-col gap-10">
-      <div className="flex flex-row gap-2">
-        <img src="/BackIcon.svg" alt="Description of image" />
-        <div className="font-bold text-base"> {React.string("Bank")} </div>
-      </div>
+      <HeaderWithBack title="Bank" />
       <div className="">
         <div className="font-bold text-xl"> {React.string("Link Bank Account")} </div>
         <div className="font-light text-sm mt-4">

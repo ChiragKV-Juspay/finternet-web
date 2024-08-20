@@ -2,10 +2,7 @@
 let make = (~onNavigateToSelectBankForLoan) => {
   <div className="flex flex-col h-full justify-between">
     <div className="flex flex-col gap-10">
-      <div className="flex flex-row gap-2">
-        <img src="/BackIcon.svg" alt="Description of image" />
-        <div className="font-bold text-base"> {React.string("Get a Loan")} </div>
-      </div>
+      <HeaderWithBack title="Get a Loan" />
       <div className="">
         <div className="font-bold text-xl"> {React.string("Apply for a loan")} </div>
         <div className="font-light text-sm mt-4">

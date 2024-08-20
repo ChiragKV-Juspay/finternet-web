@@ -26,7 +26,6 @@ function Drawer(props) {
                         className: "font-bold"
                       }),
                   Belt_Array.map(items, (function (item) {
-                          console.log(selectedOption);
                           return JsxRuntime.jsx("div", {
                                       children: item,
                                       className: "cursor-pointer p-2 rounded " + (

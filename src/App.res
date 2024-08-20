@@ -8,13 +8,13 @@ type domesticMoneyTransferScreens =
 
 type finternetOnboardingScreens =
   | OnboardingLogin
-  | VerifyIdentity
+  | CreateAccount
   | FaceID
   | QRScreen
 
 type onboardingScreens =
   | OnboardingLogin
-  | VerifyIdentity
+  | CreateAccount
   | FaceID
   | QRScreen
   | LinkBankAccount
@@ -34,13 +34,15 @@ type loanAgainstPropertyScreens =
 @react.component
 let make = () => {
   let (currentOnboardingScreen, setCurrentOnboardingScreen) = React.useState(_ => OnboardingLogin)
-  let (currentTransferScreen, setCurrentTransferScreen) = React.useState(_ => Login)
+  let (currentTransferScreen, setCurrentTransferScreen) = React.useState(_ => Transfer)
   let (currentLoanAgainstPropertyScreen, setCurrentLoanAgainstPropertyScreen) = React.useState(_ =>
     PropertyHome
   )
-  let (currentFinternetScreen, setCurrentFinternetScreen) = React.useState(_ => OnboardingLogin)
+  let (currentFinternetOnboardingScreen, setCurrentFinternetOnboardingScreen) = React.useState(_ =>
+    OnboardingLogin
+  )
 
-  let (selectedOption, setSelectedOption) = React.useState(_ => "Hello World!")
+  let (selectedOption, setSelectedOption) = React.useState(_ => "Domestic Money Transfer")
 
   let (userData, setUserData) = React.useState(() => Js.Json.null)
   let (transactionsHistory, setTransactionsHistory) = React.useState(() => Js.Json.null)
@@ -82,8 +84,8 @@ let make = () => {
   let handlePrevOnboardingScreen = () => {
     switch currentOnboardingScreen {
     | OnboardingLogin => ()
-    | VerifyIdentity => setCurrentOnboardingScreen(_ => OnboardingLogin)
-    | FaceID => setCurrentOnboardingScreen(_ => VerifyIdentity)
+    | CreateAccount => setCurrentOnboardingScreen(_ => OnboardingLogin)
+    | FaceID => setCurrentOnboardingScreen(_ => CreateAccount)
     | QRScreen => setCurrentOnboardingScreen(_ => FaceID)
     | LinkBankAccount => setCurrentOnboardingScreen(_ => QRScreen)
     | BankAccountLinked => setCurrentOnboardingScreen(_ => LinkBankAccount)
@@ -92,15 +94,31 @@ let make = () => {
 
   let handleNextOnboardingScreen = () => {
     switch currentOnboardingScreen {
-    | OnboardingLogin => setCurrentOnboardingScreen(_ => VerifyIdentity)
-    | VerifyIdentity => setCurrentOnboardingScreen(_ => FaceID)
+    | OnboardingLogin => setCurrentOnboardingScreen(_ => CreateAccount)
+    | CreateAccount => setCurrentOnboardingScreen(_ => FaceID)
     | FaceID => setCurrentOnboardingScreen(_ => QRScreen)
     | QRScreen => setCurrentOnboardingScreen(_ => LinkBankAccount)
     | LinkBankAccount => setCurrentOnboardingScreen(_ => BankAccountLinked)
     | BankAccountLinked => ()
     }
   }
+  let handlePrevFinternetOnboardingScreen = () => {
+    switch currentFinternetOnboardingScreen {
+    | OnboardingLogin => ()
+    | CreateAccount => setCurrentFinternetOnboardingScreen(_ => OnboardingLogin)
+    | FaceID => setCurrentFinternetOnboardingScreen(_ => CreateAccount)
+    | QRScreen => setCurrentFinternetOnboardingScreen(_ => FaceID)
+    }
+  }
 
+  let handleNextFinternetOnboardingScreen = () => {
+    switch currentFinternetOnboardingScreen {
+    | OnboardingLogin => setCurrentFinternetOnboardingScreen(_ => CreateAccount)
+    | CreateAccount => setCurrentFinternetOnboardingScreen(_ => FaceID)
+    | FaceID => setCurrentFinternetOnboardingScreen(_ => QRScreen)
+    | QRScreen => ()
+    }
+  }
   let handlePrevLoanAgainstPropertyScreen = () => {
     switch currentLoanAgainstPropertyScreen {
     | PropertyHome => ()
@@ -236,14 +254,18 @@ let make = () => {
     setShowAuthInitiated(_ => true)
   }
   let handleNavigateToVerfiyIdentity = () => {
-    setCurrentOnboardingScreen(_ => VerifyIdentity)
+    setCurrentOnboardingScreen(_ => CreateAccount)
   }
 
-  let handleNavigateToFaceID = () => {
-    setCurrentOnboardingScreen(_ => FaceID)
+  let handleNavigateToFaceID = (~isFinternetOnboarding=false) => {
+    isFinternetOnboarding
+      ? setCurrentFinternetOnboardingScreen(_ => FaceID)
+      : setCurrentOnboardingScreen(_ => FaceID)
     simpleWebAuthn()
     ->Promise.then(_ => {
-      setCurrentOnboardingScreen(_ => QRScreen)
+      isFinternetOnboarding
+        ? setCurrentFinternetOnboardingScreen(_ => QRScreen)
+        : setCurrentOnboardingScreen(_ => QRScreen)
       Js.Promise.resolve()
     })
     ->ignore
@@ -267,7 +289,7 @@ let make = () => {
     switch currentOnboardingScreen {
     | OnboardingLogin =>
       <OnboardingLogin onNavigateToVerifyIdentity={_ => handleNavigateToVerfiyIdentity()} />
-    | VerifyIdentity => <VerifyIdentity onNavigateToFaceID={_ => handleNavigateToFaceID()} />
+    | CreateAccount => <CreateAccount onNavigateToFaceID={_ => handleNavigateToFaceID()} />
     | FaceID => <FaceID />
     | QRScreen =>
       <QRScreen
@@ -281,15 +303,17 @@ let make = () => {
     }
   }
   let renderFinternetOnboardingContent = () => {
-    switch currentOnboardingScreen {
+    switch currentFinternetOnboardingScreen {
     | OnboardingLogin =>
-      <OnboardingLogin onNavigateToVerifyIdentity={_ => handleNavigateToVerfiyIdentity()} />
-    | VerifyIdentity => <VerifyIdentity onNavigateToFaceID={_ => handleNavigateToFaceID()} />
-    | FaceID => <FaceID />
-    | QRScreen =>
-      <QRScreen
-        onNavigateToLinkBankAccount={_ => setCurrentOnboardingScreen(_ => LinkBankAccount)}
+      <OnboardingLogin
+        onNavigateToVerifyIdentity={_ => setCurrentFinternetOnboardingScreen(_ => CreateAccount)}
       />
+    | CreateAccount =>
+      <CreateAccount
+        onNavigateToFaceID={_ => handleNavigateToFaceID(~isFinternetOnboarding=true)}
+      />
+    | FaceID => <FaceID />
+    | QRScreen => <QRScreen />
     }
   }
 
@@ -416,6 +440,8 @@ let make = () => {
                     | "User Onboarding" => handlePrevOnboardingScreen()
                     | "Domestic Money Transfer" => handlePrevScreen()
                     | "Loan Against Property" => handlePrevLoanAgainstPropertyScreen()
+                    | "Finternet Onboarding" => handlePrevFinternetOnboardingScreen()
+
                     | _ => Js.log("Unhandled case in renderContent: " ++ selectedOption)
                     }
                   }}>
@@ -427,6 +453,8 @@ let make = () => {
                     | "User Onboarding" => handleNextOnboardingScreen()
                     | "Domestic Money Transfer" => handleNextScreen()
                     | "Loan Against Property" => handleNextLoanAgainstPropertyScreen()
+                    | "Finternet Onboarding" => handleNextFinternetOnboardingScreen()
+
                     | _ => Js.log("Unhandled case in renderContent: " ++ selectedOption)
                     }
                   }}>

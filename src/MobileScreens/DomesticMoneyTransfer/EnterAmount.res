@@ -51,10 +51,7 @@ let make = (~onNavigateToEnterPin) => {
           />
         </svg>
       </div>
-      <input
-        placeholder="Enter amount"
-        className="flex-1 p-2 text-base outline-none  rounded-lg w-4/5 text-sm"
-      />
+      <Input placeholder="Enter amount" />
     </div>
     <img
       src="/ExchangeRates.svg"

@@ -2,10 +2,7 @@
 let make = (~onNavigateToLinkedHome) => {
   <div className="flex flex-col h-full justify-between">
     <div className="flex flex-col gap-10">
-      <div className="flex flex-row gap-2">
-        <img src="/BackIcon.svg" alt="Description of image" />
-        <div className="font-bold text-base"> {React.string("Link Property")} </div>
-      </div>
+      <HeaderWithBack title="Link Property" />
       <div className="flex flex-col gap-2">
         <div className="font-light text-[#797979] text-xs">
           {React.string("Select corporation")}
@@ -14,7 +11,7 @@ let make = (~onNavigateToLinkedHome) => {
       </div>
       <div className="flex flex-col gap-2">
         <div className=" text-[#797979] text-xs"> {React.string("Enter Property ID")} </div>
-        <input
+        <Input
           placeholder="Enter property ID"
           className=" p-3 border border-[#E6E6E6]  rounded-lg text-sm placeholder-text-sm"
         />

@@ -14,7 +14,7 @@ let make = (~onNavigateToVerifyIdentity) => {
         </div>
       </div>
       <div className="mt-14 gap-4 flex flex-col">
-        <div className="font-medium text-base"> {React.string("Enter you mobile number")} </div>
+        <div className="font-medium text-base"> {React.string("Enter your mobile number")} </div>
         <div className="flex flex-row border border-[#E6E6E6] rounded-lg">
           <div className="flex flex-row  ml-4 gap-2 items-center ">
             <svg
@@ -68,10 +68,7 @@ let make = (~onNavigateToVerifyIdentity) => {
               />
             </svg>
           </div>
-          <input
-            placeholder="Enter your mobile number"
-            className="flex-1 p-2 text-base outline-none  rounded-lg w-4/5 text-sm"
-          />
+          <Input placeholder="Enter your mobile number" />
         </div>
         <div className="font-light text-sm">
           {React.string("An OTP will be sent to the linked mobile number for verification")}

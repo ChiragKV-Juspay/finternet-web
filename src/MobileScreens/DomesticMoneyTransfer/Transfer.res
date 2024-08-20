@@ -1,11 +1,18 @@
 @react.component
 let make = (~onNavigateToEnterAmount) => {
   <div className="flex flex-col h-full gap-4 ">
-    <div>
-      <img src="/TransferHeader.svg" alt="Description of image" />
-      <img src="/SendingToHeader.svg" alt="Description of image" />
+    <HeaderWithBack title="Transfer" />
+    <div className="flex flex-col gap-1 my-3 ">
+      <div className="font-bold text-lg"> {React.string("Who are you sending to?")} </div>
+      <div className="flex justify-start">
+        <SecuredByFinterest />
+      </div>
     </div>
-    <input
+    // <div>
+    //   <img src="/TransferHeader.svg" alt="Description of image" />
+    //   <img src="/SendingToHeader.svg" alt="Description of image" />
+    // </div>
+    <Input
       placeholder="Enter mobile number/name/account"
       className=" p-2 text-base border border-[#E6E6E6]  rounded-lg text-sm"
     />
@@ -63,7 +70,7 @@ let make = (~onNavigateToEnterAmount) => {
       //     className="flex-1 p-2 text-base outline-none  rounded-lg w-4/5"
       //     // style="border: none;"
       //   />
-      //   // <div className="font-medium text-base"> {React.string("Enter you mobile number")} </div>
+      //   // <div className="font-medium text-base"> {React.string("Enter your mobile number")} </div>
       // </div>
       <div className="flex justify-end">
         <button
