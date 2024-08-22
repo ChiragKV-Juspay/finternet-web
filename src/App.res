@@ -1,49 +1,66 @@
 type domesticMoneyTransferScreens =
-  | Login
   | Home
   | EnterAmount
   | FaceID
-  | EnterPin
   | Transfer
   | TransactionCompleted
+  | FinternetHome
 
 type finternetOnboardingScreens =
-  | OnboardingLogin
+  | FinternetLogin
   | CreateAccount
   | FaceID
   | QRScreen
 
 type onboardingScreens =
   | OnboardingLogin
-  | CreateAccount
-  | FaceID
-  | QRScreen
   | LinkBankAccount
+  | SelectBank
+  | SelectedBankAccount
+  | FaceID
   | BankAccountLinked
 
 type loanAgainstPropertyScreens =
-  | PropertyHome
-  | LinkProperty
-  | LinkedHome
-  | LoanSteps
+  | PropertyDashboard
+  | ShareVerifiableCredentials
   | SelectBankForLoan
-  | FillLoanApplication
-  | LinkCredentials
-  | CheckEligibility
+  | KeyFactSheet
+  | SignAgreement
   | LoanSanctionedSuccessfully
+
+// | LinkProperty
+// | LinkedHome
+// | LoanSteps
+// | FillLoanApplication
+// | LinkCredentials
+
+type propertyUserOnboardingScreens =
+  | PropertyLogin
+  | PropertyTokenizationHome
+  | PropertyDetailsForm
+  | AttestVerifiableCredentials
+  | PropertyTokenizedStatus
+
+// | PropertyDashboard
+// | ShareVerifiableCredentials
 
 @react.component
 let make = () => {
-  let (currentOnboardingScreen, setCurrentOnboardingScreen) = React.useState(_ => OnboardingLogin)
-  let (currentTransferScreen, setCurrentTransferScreen) = React.useState(_ => Login)
-  let (currentLoanAgainstPropertyScreen, setCurrentLoanAgainstPropertyScreen) = React.useState(_ =>
-    PropertyHome
-  )
   let (currentFinternetOnboardingScreen, setCurrentFinternetOnboardingScreen) = React.useState(_ =>
-    OnboardingLogin
+    FinternetLogin
+  )
+  let (currentOnboardingScreen, setCurrentOnboardingScreen) = React.useState(_ => OnboardingLogin)
+  let (currentTransferScreen, setCurrentTransferScreen) = React.useState(_ => Home)
+  let (currentLoanAgainstPropertyScreen, setCurrentLoanAgainstPropertyScreen) = React.useState(_ =>
+    PropertyDashboard
   )
 
-  let (selectedOption, setSelectedOption) = React.useState(_ => "Hello World!")
+  let (
+    currentPropertyUserOnboardingScreen,
+    setCurrentPropertyUserOnboardingScreen,
+  ) = React.useState(_ => PropertyLogin)
+
+  let (selectedOption, setSelectedOption) = React.useState(_ => "Finternet Onboarding")
 
   let (userData, setUserData) = React.useState(() => Js.Json.null)
   let (transactionsHistory, setTransactionsHistory) = React.useState(() => Js.Json.null)
@@ -62,54 +79,51 @@ let make = () => {
 
   let handlePrevScreen = () => {
     switch currentTransferScreen {
-    | Login => ()
-    | Home => setCurrentTransferScreen(_ => Login)
+    | Home => ()
     | Transfer => setCurrentTransferScreen(_ => Home)
     | EnterAmount => setCurrentTransferScreen(_ => Transfer)
     | FaceID => setCurrentTransferScreen(_ => EnterAmount)
-    // | EnterPin => setCurrentTransferScreen(_ => EnterAmount)
     | TransactionCompleted => setCurrentTransferScreen(_ => FaceID)
+    | FinternetHome => setCurrentTransferScreen(_ => TransactionCompleted)
     }
   }
 
   let handleNextScreen = () => {
     switch currentTransferScreen {
-    | Login => setCurrentTransferScreen(_ => Home)
     | Home => setCurrentTransferScreen(_ => Transfer)
     | Transfer => setCurrentTransferScreen(_ => EnterAmount)
     | EnterAmount => setCurrentTransferScreen(_ => FaceID)
     | FaceID => setCurrentTransferScreen(_ => TransactionCompleted)
-
-    // | EnterPin => setCurrentTransferScreen(_ => TransactionCompleted)
-    | TransactionCompleted => ()
+    | TransactionCompleted => setCurrentTransferScreen(_ => FinternetHome)
+    | FinternetHome => ()
     }
   }
 
   let handlePrevOnboardingScreen = () => {
     switch currentOnboardingScreen {
     | OnboardingLogin => ()
-    | CreateAccount => setCurrentOnboardingScreen(_ => OnboardingLogin)
-    | FaceID => setCurrentOnboardingScreen(_ => CreateAccount)
-    | QRScreen => setCurrentOnboardingScreen(_ => FaceID)
-    | LinkBankAccount => setCurrentOnboardingScreen(_ => QRScreen)
-    | BankAccountLinked => setCurrentOnboardingScreen(_ => LinkBankAccount)
+    | LinkBankAccount => setCurrentOnboardingScreen(_ => OnboardingLogin)
+    | SelectBank => setCurrentOnboardingScreen(_ => LinkBankAccount)
+    | SelectedBankAccount => setCurrentOnboardingScreen(_ => SelectBank)
+    | FaceID => setCurrentOnboardingScreen(_ => SelectedBankAccount)
+    | BankAccountLinked => setCurrentOnboardingScreen(_ => FaceID)
     }
   }
 
   let handleNextOnboardingScreen = () => {
     switch currentOnboardingScreen {
-    | OnboardingLogin => setCurrentOnboardingScreen(_ => CreateAccount)
-    | CreateAccount => setCurrentOnboardingScreen(_ => FaceID)
-    | FaceID => setCurrentOnboardingScreen(_ => QRScreen)
-    | QRScreen => setCurrentOnboardingScreen(_ => LinkBankAccount)
-    | LinkBankAccount => setCurrentOnboardingScreen(_ => BankAccountLinked)
+    | OnboardingLogin => setCurrentOnboardingScreen(_ => LinkBankAccount)
+    | LinkBankAccount => setCurrentOnboardingScreen(_ => SelectBank)
+    | SelectBank => setCurrentOnboardingScreen(_ => SelectedBankAccount)
+    | SelectedBankAccount => setCurrentOnboardingScreen(_ => FaceID)
+    | FaceID => setCurrentOnboardingScreen(_ => BankAccountLinked)
     | BankAccountLinked => ()
     }
   }
   let handlePrevFinternetOnboardingScreen = () => {
     switch currentFinternetOnboardingScreen {
-    | OnboardingLogin => ()
-    | CreateAccount => setCurrentFinternetOnboardingScreen(_ => OnboardingLogin)
+    | FinternetLogin => ()
+    | CreateAccount => setCurrentFinternetOnboardingScreen(_ => FinternetLogin)
     | FaceID => setCurrentFinternetOnboardingScreen(_ => CreateAccount)
     | QRScreen => setCurrentFinternetOnboardingScreen(_ => FaceID)
     }
@@ -117,7 +131,7 @@ let make = () => {
 
   let handleNextFinternetOnboardingScreen = () => {
     switch currentFinternetOnboardingScreen {
-    | OnboardingLogin => setCurrentFinternetOnboardingScreen(_ => CreateAccount)
+    | FinternetLogin => setCurrentFinternetOnboardingScreen(_ => CreateAccount)
     | CreateAccount => setCurrentFinternetOnboardingScreen(_ => FaceID)
     | FaceID => setCurrentFinternetOnboardingScreen(_ => QRScreen)
     | QRScreen => ()
@@ -125,30 +139,49 @@ let make = () => {
   }
   let handlePrevLoanAgainstPropertyScreen = () => {
     switch currentLoanAgainstPropertyScreen {
-    | PropertyHome => ()
-    | LinkProperty => setCurrentLoanAgainstPropertyScreen(_ => PropertyHome)
-    | LinkedHome => setCurrentLoanAgainstPropertyScreen(_ => LinkProperty)
-    | LoanSteps => setCurrentLoanAgainstPropertyScreen(_ => LinkedHome)
-    | SelectBankForLoan => setCurrentLoanAgainstPropertyScreen(_ => LoanSteps)
-    | FillLoanApplication => setCurrentLoanAgainstPropertyScreen(_ => SelectBankForLoan)
-    | LinkCredentials => setCurrentLoanAgainstPropertyScreen(_ => FillLoanApplication)
-    | CheckEligibility => setCurrentLoanAgainstPropertyScreen(_ => LinkCredentials)
-    | LoanSanctionedSuccessfully => setCurrentLoanAgainstPropertyScreen(_ => CheckEligibility)
+    | PropertyDashboard => ()
+
+    | ShareVerifiableCredentials => setCurrentLoanAgainstPropertyScreen(_ => PropertyDashboard)
+    | SelectBankForLoan => setCurrentLoanAgainstPropertyScreen(_ => ShareVerifiableCredentials)
+    | KeyFactSheet => setCurrentLoanAgainstPropertyScreen(_ => SelectBankForLoan)
+    | SignAgreement => setCurrentLoanAgainstPropertyScreen(_ => KeyFactSheet)
+    | LoanSanctionedSuccessfully => setCurrentLoanAgainstPropertyScreen(_ => SignAgreement)
     }
   }
 
   let handleNextLoanAgainstPropertyScreen = () => {
     switch currentLoanAgainstPropertyScreen {
-    | PropertyHome => setCurrentLoanAgainstPropertyScreen(_ => LinkProperty)
-    | LinkProperty => setCurrentLoanAgainstPropertyScreen(_ => LinkedHome)
-    | LinkedHome => setCurrentLoanAgainstPropertyScreen(_ => LoanSteps)
-    | LoanSteps => setCurrentLoanAgainstPropertyScreen(_ => SelectBankForLoan)
-    | SelectBankForLoan => setCurrentLoanAgainstPropertyScreen(_ => FillLoanApplication)
-    | FillLoanApplication => setCurrentLoanAgainstPropertyScreen(_ => LinkCredentials)
-    | LinkCredentials => setCurrentLoanAgainstPropertyScreen(_ => CheckEligibility)
-    | CheckEligibility => setCurrentLoanAgainstPropertyScreen(_ => LoanSanctionedSuccessfully)
+    | PropertyDashboard => setCurrentLoanAgainstPropertyScreen(_ => ShareVerifiableCredentials)
 
+    | ShareVerifiableCredentials => setCurrentLoanAgainstPropertyScreen(_ => SelectBankForLoan)
+    | SelectBankForLoan => setCurrentLoanAgainstPropertyScreen(_ => KeyFactSheet)
+    | KeyFactSheet => setCurrentLoanAgainstPropertyScreen(_ => SignAgreement)
+    | SignAgreement => setCurrentLoanAgainstPropertyScreen(_ => LoanSanctionedSuccessfully)
     | LoanSanctionedSuccessfully => ()
+    }
+  }
+
+  let handlePropertyUserOnboardingNextScreen = () => {
+    switch currentPropertyUserOnboardingScreen {
+    | PropertyLogin => setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizationHome)
+    | PropertyTokenizationHome => setCurrentPropertyUserOnboardingScreen(_ => PropertyDetailsForm)
+    | PropertyDetailsForm =>
+      setCurrentPropertyUserOnboardingScreen(_ => AttestVerifiableCredentials)
+    | AttestVerifiableCredentials =>
+      setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizedStatus)
+    | PropertyTokenizedStatus => ()
+    }
+  }
+
+  let handlePropertyUserOnboardingPrevScreen = () => {
+    switch currentPropertyUserOnboardingScreen {
+    | PropertyLogin => ()
+    | PropertyTokenizationHome => setCurrentPropertyUserOnboardingScreen(_ => PropertyLogin)
+    | PropertyDetailsForm => setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizationHome)
+    | AttestVerifiableCredentials =>
+      setCurrentPropertyUserOnboardingScreen(_ => PropertyDetailsForm)
+    | PropertyTokenizedStatus =>
+      setCurrentPropertyUserOnboardingScreen(_ => AttestVerifiableCredentials)
     }
   }
 
@@ -253,13 +286,6 @@ let make = () => {
     setShowTrasactionConfirm(_ => true)
     performTransfer()->ignore
   }
-  let handleNavigateToEnterPin = () => {
-    setCurrentTransferScreen(_ => EnterPin)
-    setShowAuthInitiated(_ => true)
-  }
-  let handleNavigateToVerfiyIdentity = () => {
-    setCurrentOnboardingScreen(_ => CreateAccount)
-  }
 
   // let handleNavigateToFaceID = (~isFinternetOnboarding=false) => {
   //   isFinternetOnboarding
@@ -287,7 +313,7 @@ let make = () => {
     ->Promise.then(_ => {
       switch flow {
       | `FinternetOnboarding` => setCurrentFinternetOnboardingScreen(_ => QRScreen)
-      | `Onboarding` => setCurrentOnboardingScreen(_ => QRScreen)
+      | `Onboarding` => setCurrentOnboardingScreen(_ => BankAccountLinked)
       | `Transfer` => {
           handleNavigateToTransactionCompleted()
           setCurrentTransferScreen(_ => TransactionCompleted)
@@ -300,41 +326,49 @@ let make = () => {
 
   let renderTransferContent = () => {
     switch currentTransferScreen {
-    | Login => <Login handleNavigate={_ => handleNavigateToHome()} />
     | Home => <Home handleNavigate={_ => setCurrentTransferScreen(_ => Transfer)} />
     | Transfer => <Transfer handleNavigate={_ => setCurrentTransferScreen(_ => EnterAmount)} />
-    // | EnterAmount => <EnterAmount handleNavigate={_ => handleNavigateToEnterPin()} />
     | EnterAmount => <EnterAmount handleNavigate={_ => handleNavigateToFaceID(~flow="Transfer")} />
-
     | FaceID => <FaceID />
-    | EnterPin => <EnterPin handleNavigate={_ => handleNavigateToTransactionCompleted()} />
     | TransactionCompleted =>
-      <TransactionCompleted handleNavigate={_ => setCurrentTransferScreen(_ => Home)} />
+      <TransactionCompleted handleNavigate={_ => setCurrentTransferScreen(_ => FinternetHome)} />
+    | FinternetHome => <FinternetHome handleNavigate={_ => setCurrentTransferScreen(_ => Home)} />
     }
   }
 
   let renderOnboardingContent = () => {
     switch currentOnboardingScreen {
-    | OnboardingLogin => <OnboardingLogin handleNavigate={_ => handleNavigateToVerfiyIdentity()} />
-    | CreateAccount =>
-      <CreateAccount handleNavigate={_ => handleNavigateToFaceID(~flow="Onboarding")} />
-    | FaceID => <FaceID />
-    | QRScreen =>
-      <QRScreen handleNavigate={_ => setCurrentOnboardingScreen(_ => LinkBankAccount)} />
+    | OnboardingLogin =>
+      // <OnboardingLogin handleNavigate={_ => setCurrentOnboardingScreen(_ => LinkBankAccount)} />
+      <Login
+        handleNavigate={_ => setCurrentOnboardingScreen(_ => LinkBankAccount)}
+        flow={MoneyTransferOnboarding}
+      />
     | LinkBankAccount =>
-      <LinkBankAccount handleNavigate={_ => setCurrentOnboardingScreen(_ => BankAccountLinked)} />
+      <LinkBankAccount handleNavigate={_ => setCurrentOnboardingScreen(_ => SelectBank)} />
+
+    | SelectBank =>
+      <SelectBank handleNavigate={_ => setCurrentOnboardingScreen(_ => SelectedBankAccount)} />
+    | SelectedBankAccount =>
+      <SelectedBankAccount handleNavigate={_ => setCurrentOnboardingScreen(_ => FaceID)} />
+
+    | FaceID => <FaceID />
+
     | BankAccountLinked => <BankAccountLinked />
     }
   }
 
   let renderFinternetOnboardingContent = () => {
     switch currentFinternetOnboardingScreen {
-    | OnboardingLogin =>
-      <OnboardingLogin
+    | FinternetLogin =>
+      <Login
         handleNavigate={_ => setCurrentFinternetOnboardingScreen(_ => CreateAccount)}
+        flow={FinternetOnboarding}
       />
+    // <FinternetLogin
+    //   handleNavigate={_ => setCurrentFinternetOnboardingScreen(_ => CreateAccount)}
+    // />
     | CreateAccount =>
-      // <CreateAccount handleNavigate={_ => handleNavigateToFaceID(~isFinternetOnboarding=true)} />
       <CreateAccount handleNavigate={_ => handleNavigateToFaceID(~flow="FinternetOnboarding")} />
 
     | FaceID => <FaceID />
@@ -344,37 +378,84 @@ let make = () => {
 
   let renderLoanAgainstPropertyContent = () => {
     switch currentLoanAgainstPropertyScreen {
-    | PropertyHome =>
-      <PropertyHome handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkProperty)} />
-    | LinkProperty =>
-      <LinkProperty handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkedHome)} />
-    | LinkedHome =>
-      <LinkedHome handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LoanSteps)} />
-    | LoanSteps =>
-      <LoanSteps
+    | PropertyDashboard =>
+      <PropertyDashboard
+        handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => ShareVerifiableCredentials)}
+      />
+    | ShareVerifiableCredentials =>
+      <ShareVerifiableCredentials
         handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => SelectBankForLoan)}
       />
     | SelectBankForLoan =>
       <SelectBankForLoan
-        handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => FillLoanApplication)}
+        handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => KeyFactSheet)}
       />
-    | FillLoanApplication =>
-      <FillLoanApplication
-        handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkCredentials)}
-      />
-    | LinkCredentials =>
-      <LinkCredentials
-        handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => CheckEligibility)}
-      />
-    | CheckEligibility =>
-      <CheckEligibility
+    | KeyFactSheet =>
+      <KeyFactSheet handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => SignAgreement)} />
+
+    | SignAgreement =>
+      <SignAgreement
         handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LoanSanctionedSuccessfully)}
       />
+
     | LoanSanctionedSuccessfully =>
       <LoanSanctionedSuccessfully
-        handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkedHome)}
+        handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => PropertyDashboard)}
       />
+
+    // | PropertyHome =>
+    //   <PropertyHome handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkProperty)} />
+    // | LinkProperty =>
+    //   <LinkProperty handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkedHome)} />
+    // | LinkedHome =>
+    //   <LinkedHome handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LoanSteps)} />
+    // | LoanSteps =>
+    //   <LoanSteps
+    //     handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => SelectBankForLoan)}
+    //   />
+
+    // | FillLoanApplication =>
+    //   <FillLoanApplication
+    //     handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkCredentials)}
+    //   />
+    // | LinkCredentials =>
+    //   <LinkCredentials
+    //     handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => KeyFactSheet)}
+    //   />
+
+    // | LoanSanctionedSuccessfully =>
+    //   <LoanSanctionedSuccessfully
+    //     handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkedHome)}
+    //   />
     | _ => <div> {React.string("Unexpected Screen")} </div>
+    }
+  }
+
+  let renderPropertyUserOnboardingContent = () => {
+    switch currentPropertyUserOnboardingScreen {
+    | PropertyLogin =>
+      <Login
+        handleNavigate={_ => setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizationHome)}
+        flow={PropertyOnboarding}
+      />
+    // <PropertyLogin
+    //   handleNavigate={_ => setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizationHome)}
+    // />
+    | PropertyTokenizationHome =>
+      <PropertyTokenizationHome
+        handleNavigate={_ => setCurrentPropertyUserOnboardingScreen(_ => PropertyDetailsForm)}
+      />
+
+    | PropertyDetailsForm =>
+      <PropertyDetailsForm
+        handleNavigate={_ =>
+          setCurrentPropertyUserOnboardingScreen(_ => AttestVerifiableCredentials)}
+      />
+    | AttestVerifiableCredentials =>
+      <AttestVerifiableCredentials
+        handleNavigate={_ => setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizedStatus)}
+      />
+    | PropertyTokenizedStatus => <PropertyTokenizedStatus handleNavigate={_ => ()} />
     }
   }
 
@@ -384,6 +465,7 @@ let make = () => {
     | "Domestic Money Transfer" => setSelectedOption(_ => "Domestic Money Transfer")
     | "Loan Against Property" => setSelectedOption(_ => "Loan Against Property")
     | "Finternet Onboarding" => setSelectedOption(_ => "Finternet Onboarding")
+    | "Property User Onboarding" => setSelectedOption(_ => "Property User Onboarding")
 
     | "Hello World!" => setSelectedOption(_ => "Hello World!")
     | _ => Js.log("Unexpected drawer selection: " ++ selectedOption)
@@ -396,6 +478,7 @@ let make = () => {
     | "Domestic Money Transfer" => renderTransferContent()
     | "Loan Against Property" => renderLoanAgainstPropertyContent()
     | "Finternet Onboarding" => renderFinternetOnboardingContent()
+    | "Property User Onboarding" => renderPropertyUserOnboardingContent()
 
     | "Hello World" =>
       <div className="h-full w-full flex justify-center items-center text-2xl">
@@ -438,20 +521,25 @@ let make = () => {
         : <>
             <div
               className="flex flex-col sm:self-auto self-center min-h-[50rem] sm:min-h-full h-full w-4/5 sm:w-1/5  my-4 gap-4 ">
-              // <div className="relative w-full flex justify-center items-center p-4">
-              //   <div className="bg-white p-4 shadow-lg rounded-lg overflow-auto w-full max-w-[360px]">
+              // <div
+              //   className="bg-white h-full sm:h-4/5 self-center w-full border-8 border-black shadow-lg rounded-lg overflow-auto ">
               <div
-                className="bg-white h-full sm:h-4/5 self-center w-full p-4 border  shadow-lg rounded-lg overflow-auto ">
+                //     className="h-full w-full border-8 border-black shadow-lg rounded-lg p-4 "
+                // className="bg-white h-full sm:h-4/5 self-center w-full p-4 border-2 border-black border-t-4 shadow-lg rounded-lg overflow-auto ">
+                className="bg-white h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto">
                 {renderContent()}
               </div>
+              // </div>
               <div className="flex flex-row justify-around text-xl text-gray-400">
                 <button
                   onClick={_ => {
                     switch selectedOption {
+                    | "Finternet Onboarding" => handlePrevFinternetOnboardingScreen()
                     | "User Onboarding" => handlePrevOnboardingScreen()
                     | "Domestic Money Transfer" => handlePrevScreen()
+                    | "Property User Onboarding" => handlePropertyUserOnboardingPrevScreen()
+
                     | "Loan Against Property" => handlePrevLoanAgainstPropertyScreen()
-                    | "Finternet Onboarding" => handlePrevFinternetOnboardingScreen()
 
                     | _ => Js.log("Unhandled case in renderContent: " ++ selectedOption)
                     }
@@ -461,10 +549,12 @@ let make = () => {
                 <button
                   onClick={_ => {
                     switch selectedOption {
+                    | "Finternet Onboarding" => handleNextFinternetOnboardingScreen()
                     | "User Onboarding" => handleNextOnboardingScreen()
                     | "Domestic Money Transfer" => handleNextScreen()
+                    | "Property User Onboarding" => handlePropertyUserOnboardingNextScreen()
+
                     | "Loan Against Property" => handleNextLoanAgainstPropertyScreen()
-                    | "Finternet Onboarding" => handleNextFinternetOnboardingScreen()
 
                     | _ => Js.log("Unhandled case in renderContent: " ++ selectedOption)
                     }
@@ -484,14 +574,20 @@ let make = () => {
                   </div>
                 }
               : <div
-                  className="sm:ml-4 p-4 bg-gray-100 rounded-lg w-4/5 min-h-96 sm:self-auto self-center sm:w-2/5 sm:h-5/6 flex flex-col gap-3 overflow-auto my-4 sm:mr-10">
-                  <div className="flex flex-row w-full justify-end">
-                    <button onClick={_ => setIsCollapsed(_ => true)}> {React.string("x")} </button>
-                  </div>
+                  className="relative sm:ml-4 p-4 bg-gray-100 rounded-lg w-4/5 min-h-96 sm:self-auto self-center sm:w-2/5 sm:h-5/6 flex flex-col gap-3 overflow-auto my-4 sm:mr-10">
+                  <button
+                    className="absolute top-3 right-3" onClick={_ => setIsCollapsed(_ => true)}>
+                    {React.string("x")}
+                  </button>
+                  // <div className="flex flex-row w-full justify-end">
+                  //   <button onClick={_ => setIsCollapsed(_ => true)}> {React.string("x")} </button>
+                  // </div>
                   <div className="text-2xl">
                     {switch selectedOption {
                     | "User Onboarding" => React.string("User Onboarding Activity Log (WIP)")
                     | "Domestic Money Transfer" => React.string("Domestic Transfer Activity Log")
+                    | "Property User Onboarding" =>
+                      React.string("Property User Onboarding Activity Log")
                     | "Loan Against Property" => React.string("Loan Against Property Activity Log")
                     | "Finternet Onboarding" => React.string("Finternet Onboarding Activity Log")
                     | _ => React.string("Unexpected Screen")

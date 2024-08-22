@@ -15,7 +15,7 @@ let make = (~handleNavigate) => {
         <CardWithButton
           title="Apply for loan?"
           description="Access quick financing by leveraging your property today!"
-          buttonColor="#00B76A"
+          buttonColor="#D5D5D5"
           onClick={_ => handleNavigate()}
         />
       </div>

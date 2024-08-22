@@ -5,36 +5,66 @@ var bankOptions = [
   {
     id: "1",
     name: "ABC Bank",
-    description: "Interest rates starts from 8.00%",
-    imagePath: "/RoundedPinkRectangle.svg"
+    ltvRatio: "80%",
+    interestRate: "10%",
+    imagePath: "/RoundedPinkRectangle.svg",
+    cardNumber: "**** **** 1234"
   },
   {
     id: "2",
     name: "Amazing Bank",
-    description: "Interest rates starts from 8.50%",
-    imagePath: "/BlueTriangle.svg"
+    ltvRatio: "75%",
+    interestRate: "8%",
+    imagePath: "/BlueTriangle.svg",
+    cardNumber: "**** **** 1022"
   },
   {
     id: "3",
     name: "Best Bank",
-    description: "Interest rates starts from 9.50%",
-    imagePath: "/GreenCircle.svg"
+    ltvRatio: "70%",
+    interestRate: "7.3%",
+    imagePath: "/GreenCircle.svg",
+    cardNumber: "**** **** 9000"
   },
   {
     id: "4",
     name: "People's Bank",
-    description: "Interest rates starts from 11.50%",
-    imagePath: "/YellowPentagon.svg"
+    ltvRatio: "70%",
+    interestRate: "7.5%",
+    imagePath: "/YellowPentagon.svg",
+    cardNumber: "**** **** 3000"
   },
   {
     id: "5",
     name: "Awesome Bank",
-    description: "Interest rates starts from 11.50%",
-    imagePath: "/BlueHexagon.svg"
+    ltvRatio: "75%",
+    interestRate: "7.9%",
+    imagePath: "/BlueHexagon.svg",
+    cardNumber: "**** **** 0900"
+  }
+];
+
+var bankAccountOptions = [
+  {
+    id: "1",
+    name: "ABC Bank",
+    ltvRatio: "80%",
+    interestRate: "10%",
+    imagePath: "/RoundedPinkRectangle.svg",
+    cardNumber: "**** **** 1234"
+  },
+  {
+    id: "2",
+    name: "ABC Bank",
+    ltvRatio: "80%",
+    interestRate: "10%",
+    imagePath: "/RoundedPinkRectangle.svg",
+    cardNumber: "**** **** 5682"
   }
 ];
 
 export {
   bankOptions ,
+  bankAccountOptions ,
 }
 /* No side effect */

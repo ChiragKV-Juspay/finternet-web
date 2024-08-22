@@ -33,7 +33,7 @@ function PropertyHome(props) {
                                 JsxRuntime.jsx(CardWithButton.make, {
                                       title: "Apply for loan?",
                                       description: "Access quick financing by leveraging your property today!",
-                                      buttonColor: "#00B76A",
+                                      buttonColor: "#D5D5D5",
                                       onClick: (function (param) {
                                           handleNavigate();
                                         })

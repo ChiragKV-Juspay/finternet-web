@@ -4,13 +4,44 @@ import * as Divider from "./Divider.res.mjs";
 import * as JsxRuntime from "react/jsx-runtime";
 
 function HeaderWithBack(props) {
+  var __backButtonStrokeColor = props.backButtonStrokeColor;
+  var backButtonStrokeColor = __backButtonStrokeColor !== undefined ? __backButtonStrokeColor : "#00B76A";
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsxs("div", {
                       children: [
-                        JsxRuntime.jsx("img", {
-                              alt: "Description of image",
-                              src: "/BackIcon.svg"
+                        JsxRuntime.jsxs("svg", {
+                              children: [
+                                JsxRuntime.jsx("path", {
+                                      d: "M17.7188 12H20.2507",
+                                      stroke: backButtonStrokeColor,
+                                      strokeLinecap: "square",
+                                      strokeWidth: "1.5"
+                                    }),
+                                JsxRuntime.jsx("path", {
+                                      d: "M4.24902 12H14.208",
+                                      stroke: backButtonStrokeColor,
+                                      strokeLinecap: "square",
+                                      strokeWidth: "1.5"
+                                    }),
+                                JsxRuntime.jsx("path", {
+                                      d: "M9.90902 17.66C9.90902 14.75 7.34702 12 4.24902 12",
+                                      stroke: backButtonStrokeColor,
+                                      strokeLinecap: "square",
+                                      strokeWidth: "1.5"
+                                    }),
+                                JsxRuntime.jsx("path", {
+                                      d: "M9.90902 6.33984C9.90902 9.24984 7.34702 11.9999 4.24902 11.9999",
+                                      stroke: backButtonStrokeColor,
+                                      strokeLinecap: "square",
+                                      strokeWidth: "1.5"
+                                    })
+                              ],
+                              height: "24",
+                              width: "25",
+                              fill: "none",
+                              viewBox: "0 0 25 24",
+                              xmlns: "http://www.w3.org/2000/svg"
                             }),
                         JsxRuntime.jsx("div", {
                               children: props.title,

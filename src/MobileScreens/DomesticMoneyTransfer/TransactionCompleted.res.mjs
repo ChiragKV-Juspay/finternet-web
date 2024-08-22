@@ -13,7 +13,7 @@ function TransactionCompleted(props) {
                 JsxRuntime.jsxs("div", {
                       children: [
                         JsxRuntime.jsx("button", {
-                              children: "Go to Home",
+                              children: "View in Wallet",
                               className: " bg-[#00B76A] text-white rounded-lg w-full h-10 text-sm",
                               onClick: props.handleNavigate
                             }),

@@ -10,7 +10,7 @@ let make = (~handleNavigate) => {
       <button
         className=" bg-[#00B76A] text-white rounded-lg w-full h-10 text-sm"
         onClick={handleNavigate}>
-        {React.string("Go to Home")}
+        {React.string("View in Wallet")}
       </button>
       <div className="flex items-center justify-center text-sm text-[#00B76A] w-full my-4">
         {React.string("View Transaction History")}
