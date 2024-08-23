@@ -72,7 +72,7 @@ function AccountCard(props) {
                       className: "h-full justify-between z-10"
                     })
               ],
-              className: "relative border border-gray-100 drop-shadow-md rounded-2xl p-5 overflow-hidden"
+              className: "relative border border-gray-100 rounded-2xl p-5 overflow-hidden"
             });
 }
 

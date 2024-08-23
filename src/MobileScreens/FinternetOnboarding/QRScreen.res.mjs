@@ -26,7 +26,7 @@ function QRScreen(props) {
                                     }),
                                 JsxRuntime.jsx("div", {
                                       children: JsxRuntime.jsx("div", {
-                                            children: "nandan@finternet",
+                                            children: "siddharth@finternet",
                                             className: " text-base "
                                           }),
                                       className: "flex flex-row justify-between"
@@ -44,7 +44,7 @@ function QRScreen(props) {
                               className: "font-light text-[#797979] text-base"
                             }),
                         JsxRuntime.jsx("button", {
-                              children: "Link Bank Accounts",
+                              children: "Go to Home",
                               className: " bg-black text-white text-xs rounded-lg w-3/5 h-10",
                               onClick: (function (param) {
                                   if (handleNavigate !== undefined) {

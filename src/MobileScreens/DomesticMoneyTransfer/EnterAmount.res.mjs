@@ -7,7 +7,7 @@ function EnterAmount(props) {
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsx("img", {
-                      className: "w-full h-auto max-w-xs md:max-w-md lg:max-w-lg",
+                      className: "scale-105 border border-white",
                       alt: "Description of image",
                       src: "/EnterAmountTop.svg"
                     }),
@@ -88,6 +88,7 @@ function EnterAmount(props) {
                               onClick: props.handleNavigate
                             }),
                         JsxRuntime.jsx("img", {
+                              className: "scale-105",
                               alt: "Description of image",
                               src: "/KeypadIphone.svg"
                             })

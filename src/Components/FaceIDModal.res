@@ -7,7 +7,7 @@ let make = (~showModal, ~toggleModal, ~text, ~buttonText) => {
     showModal
       ? <div className={modalStyle} onClick={_ => toggleModal()}>
           <div
-            className={`flex flex-col h-1/2 gap-6 w-full max-w-md bg-white justify-between items-center p-5 rounded-lg shadow-lg m-4`}>
+            className={`flex flex-col h-1/2 gap-6 w-full w-full max-w-md bg-white justify-between items-center p-5 rounded-lg shadow-lg m-4`}>
             // className="flex flex-col h-1/2 gap-6 w-full max-w-md bg-white justify-between items-center p-5 rounded-lg shadow-lg ">
             <div className="flex flex-col gap-4 items-center">
               <div className="text-base text-center"> {React.string("Face ID")} </div>

@@ -41,8 +41,7 @@ let make = (~title, ~description, ~buttonColor, ~onClick) => {
   | _ => "bg-disabledGray"
   }
 
-  <div
-    className="flex flex-col justify-center gap-2 p-4 border border-gray-100 drop-shadow-md rounded-2xl">
+  <div className="flex flex-col justify-center gap-2 p-4 border border-gray-100  rounded-2xl">
     <div className="font-bold text-sm"> {React.string(title)} </div>
     <div className="font-light text-[#797979] text-xs"> {React.string(description)} </div>
     <button className={`${buttonClass} text-white rounded-lg w-2/6 h-9 text-xs`} onClick={onClick}>

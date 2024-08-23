@@ -1,7 +1,10 @@
+@new external urlSearchParams: 'a = "URLSearchParams"
+@val external window: 'a = "window"
+
 type domesticMoneyTransferScreens =
   | Home
   | EnterAmount
-  | FaceID
+
   | Transfer
   | TransactionCompleted
   | FinternetHome
@@ -9,15 +12,15 @@ type domesticMoneyTransferScreens =
 type finternetOnboardingScreens =
   | FinternetLogin
   | CreateAccount
-  | FaceID
   | QRScreen
+  | FinternetEmptyHome
 
 type onboardingScreens =
   | OnboardingLogin
   | LinkBankAccount
   | SelectBank
   | SelectedBankAccount
-  | FaceID
+
   | BankAccountLinked
 
 type loanAgainstPropertyScreens =
@@ -27,6 +30,7 @@ type loanAgainstPropertyScreens =
   | KeyFactSheet
   | SignAgreement
   | LoanSanctionedSuccessfully
+  | FinternetHomeMyProp
 
 // | LinkProperty
 // | LinkedHome
@@ -60,16 +64,31 @@ let make = () => {
     setCurrentPropertyUserOnboardingScreen,
   ) = React.useState(_ => PropertyLogin)
 
-  let (selectedOption, setSelectedOption) = React.useState(_ => "Finternet Onboarding")
+  let (selectedOption, setSelectedOption) = React.useState(_ => "Hello World!")
 
   let (userData, setUserData) = React.useState(() => Js.Json.null)
   let (transactionsHistory, setTransactionsHistory) = React.useState(() => Js.Json.null)
   let (userAssets, setUserAssets) = React.useState(() => Js.Json.null)
   let (transactionResult, setTransactionResult) = React.useState(() => Js.Json.null)
+
+  let (tokenizeAccount, setTokenizeAccount) = React.useState(_ => false)
+  let (tokenizeProperty, setTokenizeProperty) = React.useState(_ => false)
+  let (agreementSigned, setAgreementSigned) = React.useState(_ => false)
+
+  let (tokenizeAccountResult, setTokenizeAccountResult) = React.useState(() => Js.Json.null)
+  // let (tokenizeAccountResult, setTokenizeAccountResult) = React.useState(() => Js.Json.null)
+
   let (showAuthInitiated, setShowAuthInitiated) = React.useState(_ => false)
   let (showTransactionConfirm, setShowTrasactionConfirm) = React.useState(_ => false)
   let (registerStartResponse, setRegisterStartResponse) = React.useState(() => Js.Json.null)
+  let (loginStartResponse, setLoginStartResponse) = React.useState(() => Js.Json.null)
+  let (loginPropertyStartResponse, setLoginPropertyStartResponse) = React.useState(() =>
+    Js.Json.null
+  )
+
   let (attestation, setAttestation) = React.useState(() => Js.Json.null)
+  let (assertion, setAssertion) = React.useState(() => Js.Json.null)
+  let (propertyLoginAssertion, setPropertyLoginAssertion) = React.useState(() => Js.Json.null)
 
   let (showFaceIDModal, setShowFaceIDModal) = React.useState(_ => false)
 
@@ -87,8 +106,7 @@ let make = () => {
     | Home => ()
     | Transfer => setCurrentTransferScreen(_ => Home)
     | EnterAmount => setCurrentTransferScreen(_ => Transfer)
-    | FaceID => setCurrentTransferScreen(_ => EnterAmount)
-    | TransactionCompleted => setCurrentTransferScreen(_ => FaceID)
+    | TransactionCompleted => setCurrentTransferScreen(_ => EnterAmount)
     | FinternetHome => setCurrentTransferScreen(_ => TransactionCompleted)
     }
   }
@@ -97,8 +115,7 @@ let make = () => {
     switch currentTransferScreen {
     | Home => setCurrentTransferScreen(_ => Transfer)
     | Transfer => setCurrentTransferScreen(_ => EnterAmount)
-    | EnterAmount => setCurrentTransferScreen(_ => FaceID)
-    | FaceID => setCurrentTransferScreen(_ => TransactionCompleted)
+    | EnterAmount => setCurrentTransferScreen(_ => TransactionCompleted)
     | TransactionCompleted => setCurrentTransferScreen(_ => FinternetHome)
     | FinternetHome => ()
     }
@@ -110,8 +127,7 @@ let make = () => {
     | LinkBankAccount => setCurrentOnboardingScreen(_ => OnboardingLogin)
     | SelectBank => setCurrentOnboardingScreen(_ => LinkBankAccount)
     | SelectedBankAccount => setCurrentOnboardingScreen(_ => SelectBank)
-    | FaceID => setCurrentOnboardingScreen(_ => SelectedBankAccount)
-    | BankAccountLinked => setCurrentOnboardingScreen(_ => FaceID)
+    | BankAccountLinked => setCurrentOnboardingScreen(_ => SelectedBankAccount)
     }
   }
 
@@ -120,8 +136,8 @@ let make = () => {
     | OnboardingLogin => setCurrentOnboardingScreen(_ => LinkBankAccount)
     | LinkBankAccount => setCurrentOnboardingScreen(_ => SelectBank)
     | SelectBank => setCurrentOnboardingScreen(_ => SelectedBankAccount)
-    | SelectedBankAccount => setCurrentOnboardingScreen(_ => FaceID)
-    | FaceID => setCurrentOnboardingScreen(_ => BankAccountLinked)
+    | SelectedBankAccount => setCurrentOnboardingScreen(_ => BankAccountLinked)
+
     | BankAccountLinked => ()
     }
   }
@@ -129,17 +145,17 @@ let make = () => {
     switch currentFinternetOnboardingScreen {
     | FinternetLogin => ()
     | CreateAccount => setCurrentFinternetOnboardingScreen(_ => FinternetLogin)
-    | FaceID => setCurrentFinternetOnboardingScreen(_ => CreateAccount)
-    | QRScreen => setCurrentFinternetOnboardingScreen(_ => FaceID)
+    | QRScreen => setCurrentFinternetOnboardingScreen(_ => CreateAccount)
+    | FinternetEmptyHome => setCurrentFinternetOnboardingScreen(_ => QRScreen)
     }
   }
 
   let handleNextFinternetOnboardingScreen = () => {
     switch currentFinternetOnboardingScreen {
     | FinternetLogin => setCurrentFinternetOnboardingScreen(_ => CreateAccount)
-    | CreateAccount => setCurrentFinternetOnboardingScreen(_ => FaceID)
-    | FaceID => setCurrentFinternetOnboardingScreen(_ => QRScreen)
-    | QRScreen => ()
+    | CreateAccount => setCurrentFinternetOnboardingScreen(_ => QRScreen)
+    | QRScreen => setCurrentFinternetOnboardingScreen(_ => FinternetEmptyHome)
+    | FinternetEmptyHome => ()
     }
   }
   let handlePrevLoanAgainstPropertyScreen = () => {
@@ -151,6 +167,7 @@ let make = () => {
     | KeyFactSheet => setCurrentLoanAgainstPropertyScreen(_ => SelectBankForLoan)
     | SignAgreement => setCurrentLoanAgainstPropertyScreen(_ => KeyFactSheet)
     | LoanSanctionedSuccessfully => setCurrentLoanAgainstPropertyScreen(_ => SignAgreement)
+    | FinternetHomeMyProp => setCurrentLoanAgainstPropertyScreen(_ => LoanSanctionedSuccessfully)
     }
   }
 
@@ -162,7 +179,8 @@ let make = () => {
     | SelectBankForLoan => setCurrentLoanAgainstPropertyScreen(_ => KeyFactSheet)
     | KeyFactSheet => setCurrentLoanAgainstPropertyScreen(_ => SignAgreement)
     | SignAgreement => setCurrentLoanAgainstPropertyScreen(_ => LoanSanctionedSuccessfully)
-    | LoanSanctionedSuccessfully => ()
+    | LoanSanctionedSuccessfully => setCurrentLoanAgainstPropertyScreen(_ => FinternetHomeMyProp)
+    | FinternetHomeMyProp => ()
     }
   }
 
@@ -205,14 +223,88 @@ let make = () => {
 
     setUserAssets(_ => json)
   }
+  // let postUserAssets = async () => {
+  //   let assetsEndpoint = `https://finternet-app-api.shuttleapp.rs/v1/users/exampleUserId/assets`
 
-  let simpleWebAuthn = async () => {
+  //   let transferBody = {"username": "mywallet"}
+  //   let response = await Fetch.fetch(
+  //     assetsEndpoint,
+  //     {
+  //       method: #POST,
+  //       body: transferBody->Js.Json.stringifyAny->Belt.Option.getExn->Body.string,
+  //       headers: Headers.fromObject({
+  //         "Content-type": "application/json",
+  //       }),
+  //       // credentials: #omit,
+  //     },
+  //   )
+  //   let response = await Fetch.get(assetsEndpoint)
+  //   let json = await response->Fetch.Response.json
+  //   Js.log(json)
+
+  //   setUserAssets(_ => json)
+  // }
+
+  let authenticate = async () => {
+    // let urlParams = urlSearchParams(window["location"]["search"])
+    // let uuid = urlParams["get"]("uuid")
+    // let isRegistered = urlParams["get"]("registered") === "true"
+    // Console.log(urlParams)
+    // if !isRegistered {
+    let result = await RegisterWithPassKeys.registerWithPasskeys("`chirag`")
+    // if !result {
+    //   Js.error("Failed to register with passkeys")
+    //   // throw new Error("Failed to register with passkeys");
+    // }
+
+    // return sendResultToServer(result);
+    // }
+  }
+  let simpleWebAuthnRegister = async () => {
     open Fetch
     toggleFaceIDModal()
     // https://webauthn-fin-production.up.railway.app/api/passkey/registerStart
-    let transferBody = {"username": "siddharth"}
+    let transferBody = {"username": "mywallet"}
     let response = await fetch(
       "https://webauthn-fin-production.up.railway.app/api/passkey/registerStart",
+      {
+        method: #POST,
+        body: transferBody->Js.Json.stringifyAny->Belt.Option.getExn->Body.string,
+        headers: Headers.fromObject({
+          "Content-type": "application/json",
+        }),
+        // credentials: #omit,
+      },
+    )
+    let json = await response->Fetch.Response.json
+    setRegisterStartResponse(_ => json)
+
+    let attestationResponse = await SimpleWebAuthnTypes.startRegistration(json)
+    setAttestation(_ => attestationResponse)
+
+    Console.log(attestationResponse)
+    let registerFinishResponse = await fetch(
+      "https://webauthn-fin-production.up.railway.app/api/passkey/registerFinish",
+      {
+        method: #POST,
+        body: attestationResponse->Js.Json.stringifyAny->Belt.Option.getExn->Body.string,
+        headers: Headers.fromObject({
+          "Content-type": "application/json",
+        }),
+        // credentials: #omit,
+      },
+    )
+    Console.log(registerFinishResponse)
+    toggleFaceIDModal()
+    // Console.log(registerFinishResponse)
+  }
+  let simpleWebAuthnLogin = async () => {
+    open Fetch
+    toggleFaceIDModal()
+    // https://webauthn-fin-production.up.railway.app/api/passkey/registerStart
+    let transferBody = {"username": "mywallet"}
+    let response = await fetch(
+      "https://webauthn-fin-production.up.railway.app/api/passkey/loginStart",
       {
         method: #POST,
         body: transferBody->Js.Json.stringifyAny->Belt.Option.getExn->Body.string,
@@ -222,22 +314,30 @@ let make = () => {
       },
     )
     let json = await response->Fetch.Response.json
-    setRegisterStartResponse(_ => json)
+    switch selectedOption {
+    | "User Onboarding" => setLoginStartResponse(_ => json)
+    | "Property User Onboarding" => setLoginPropertyStartResponse(_ => json)
+    | _ => ()
+    }
 
-    let attestationResponse = await SimpleWebAuthnTypes.startRegistration(json)
-    setAttestation(_ => attestationResponse)
-
+    let assertionResponse = await SimpleWebAuthnTypes.startAuthentication(json)
+    switch selectedOption {
+    | "User Onboarding" => setAssertion(_ => assertionResponse)
+    | "Property User Onboarding" => setPropertyLoginAssertion(_ => assertionResponse)
+    | _ => ()
+    }
     // Console.log(attestationResponse)
-    let registerFinishResponse = await fetch(
-      "https://webauthn-fin-production.up.railway.app/api/passkey/registerFinish",
+    let loginFinishResponse = await fetch(
+      "https://webauthn-fin-production.up.railway.app/api/passkey/loginFinish",
       {
         method: #POST,
-        body: attestationResponse->Js.Json.stringifyAny->Belt.Option.getExn->Body.string,
+        body: assertionResponse->Js.Json.stringifyAny->Belt.Option.getExn->Body.string,
         headers: Headers.fromObject({
           "Content-type": "application/json",
         }),
       },
     )
+    Console.log(loginFinishResponse)
     toggleFaceIDModal()
     // Console.log(registerFinishResponse)
   }
@@ -281,15 +381,15 @@ let make = () => {
 
     postTransfer()->ignore
   }
-  let handleNavigateToHome = () => {
-    setCurrentTransferScreen(_ => Home)
+  let handleFetchUser = () => {
+    // setCurrentTransferScreen(_ => Home)
     fetchData()->ignore
     fetchUserTransactionsHistory()->ignore
     fetchUserAssets()->ignore
   }
 
   let handleNavigateToTransactionCompleted = () => {
-    setCurrentTransferScreen(_ => TransactionCompleted)
+    // setCurrentTransferScreen(_ => TransactionCompleted)
     setShowTrasactionConfirm(_ => true)
     performTransfer()->ignore
   }
@@ -298,7 +398,7 @@ let make = () => {
   //   isFinternetOnboarding
   //     ? setCurrentFinternetOnboardingScreen(_ => FaceID)
   //     : setCurrentOnboardingScreen(_ => FaceID)
-  //   simpleWebAuthn()
+  //   simpleWebAuthnRegister()
   //   ->Promise.then(_ => {
   //     isFinternetOnboarding
   //       ? setCurrentFinternetOnboardingScreen(_ => QRScreen)
@@ -307,23 +407,68 @@ let make = () => {
   //   })
   //   ->ignore
   // }
-  let handleNavigateToFaceID = () => {
-    // toggleFaceIDModal()
+  let handleTokenizeAccount = () => {
+    setTokenizeAccount(_ => true)
+    setCurrentOnboardingScreen(_ => BankAccountLinked)
+  }
+  let handleTokenizeProperty = () => {
+    setTokenizeProperty(_ => true)
+    setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizedStatus)
+  }
 
-    // switch flow {
-    // | `FinternetOnboarding` => setCurrentFinternetOnboardingScreen(_ => FaceID)
-    // | `Onboarding` => setCurrentOnboardingScreen(_ => FaceID)
-    // | `Transfer` => {
-    //     setShowAuthInitiated(_ => true)
-    //     setCurrentTransferScreen(_ => FaceID)
-    //   }
-    // }
-    simpleWebAuthn()
+  let handleSignAgreement = () => {
+    handleFetchUser()
+    setAgreementSigned(_ => true)
+    setCurrentLoanAgainstPropertyScreen(_ => LoanSanctionedSuccessfully)
+  }
+  let handleRegister = () => {
+    // authenticate()->ignore
+    simpleWebAuthnRegister()
+    // simpleWebAuthnLogin()
+    ->Promise.then(_ => {
+      setCurrentFinternetOnboardingScreen(_ => QRScreen)
+      Js.Promise.resolve()
+    })
+    ->ignore
+  }
+  let handleAuth = () => {
+    // authenticate()->ignore
+    simpleWebAuthnLogin()
+    // simpleWebAuthnLogin()
     ->Promise.then(_ => {
       switch selectedOption {
-      | `Finternet Onboarding` => setCurrentFinternetOnboardingScreen(_ => QRScreen)
-      | `User Onboarding` => setCurrentOnboardingScreen(_ => LinkBankAccount)
+      | `Property User Onboarding` => handleTokenizeProperty()
+
+      // setCurrentPropertyUserOnboardingScreen(_ =>
+      | `User Onboarding` => handleTokenizeAccount()
+      // | `Domestic Money Transfer` => {
+      //     handleNavigateToTransactionCompleted()
+      //     setCurrentTransferScreen(_ => TransactionCompleted)
+      //   }
+      | `Loan Against Property` => handleSignAgreement()
+      }
+      Js.Promise.resolve()
+    })
+    ->ignore
+  }
+  let handleNavigateToFaceID = (~id=1) => {
+    // authenticate()->ignore
+    simpleWebAuthnLogin()
+    // simpleWebAuthnLogin()
+    ->Promise.then(_ => {
+      switch selectedOption {
+      // | `Finternet Onboarding` => setCurrentFinternetOnboardingScreen(_ => QRScreen)
+      | `User Onboarding` =>
+        id == 1
+          ? {
+              handleFetchUser()
+              setCurrentOnboardingScreen(_ => LinkBankAccount)
+            }
+          : setCurrentOnboardingScreen(_ => BankAccountLinked)
+      // setCurrentOnboardingScreen(_ => id == 1 ? LinkBankAccount : BankAccountLinked)
       | `Property User Onboarding` =>
+        handleFetchUser()
+
         setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizationHome)
       | `Domestic Money Transfer` => {
           handleNavigateToTransactionCompleted()
@@ -333,7 +478,6 @@ let make = () => {
       Js.Promise.resolve()
     })
     ->ignore
-    // toggleFaceIDModal()
   }
 
   let renderFinternetOnboardingContent = () => {
@@ -346,10 +490,14 @@ let make = () => {
     // <FinternetLogin
     //   handleNavigate={_ => setCurrentFinternetOnboardingScreen(_ => CreateAccount)}
     // />
-    | CreateAccount => <CreateAccount handleNavigate={_ => handleNavigateToFaceID()} />
+    // | CreateAccount => <CreateAccount handleNavigate={_ => handleNavigateToFaceID()} />
+    | CreateAccount => <CreateAccount handleNavigate={_ => handleRegister()} />
 
-    | FaceID => <FaceID />
-    | QRScreen => <QRScreen />
+    | QRScreen =>
+      <QRScreen
+        handleNavigate={_ => setCurrentFinternetOnboardingScreen(_ => FinternetEmptyHome)}
+      />
+    | FinternetEmptyHome => <FinternetHome flow={EmptyHome} />
     }
   }
 
@@ -358,10 +506,10 @@ let make = () => {
     | Home => <Home handleNavigate={_ => setCurrentTransferScreen(_ => Transfer)} />
     | Transfer => <Transfer handleNavigate={_ => setCurrentTransferScreen(_ => EnterAmount)} />
     | EnterAmount => <EnterAmount handleNavigate={_ => handleNavigateToFaceID()} />
-    | FaceID => <FaceID />
+    // | FaceID => <FaceID />
     | TransactionCompleted =>
       <TransactionCompleted handleNavigate={_ => setCurrentTransferScreen(_ => FinternetHome)} />
-    | FinternetHome => <FinternetHome handleNavigate={_ => setCurrentTransferScreen(_ => Home)} />
+    | FinternetHome => <FinternetHome flow={HomeWithMyFin} />
     }
   }
 
@@ -378,11 +526,20 @@ let make = () => {
       <LinkBankAccount handleNavigate={_ => setCurrentOnboardingScreen(_ => SelectBank)} />
 
     | SelectBank =>
-      <SelectBank handleNavigate={_ => setCurrentOnboardingScreen(_ => SelectedBankAccount)} />
-    | SelectedBankAccount =>
-      <SelectedBankAccount handleNavigate={_ => setCurrentOnboardingScreen(_ => FaceID)} />
+      // <SelectBank handleNavigate={_ => setCurrentOnboardingScreen(_ => SelectedBankAccount)} />
+      <SelectBank
+        handleNavigate={_ => {
+          setCurrentOnboardingScreen(_ => SelectedBankAccount)
+        }}
+      />
 
-    | FaceID => <FaceID />
+    | SelectedBankAccount =>
+      // handleTokenizeAccount()
+
+      // <SelectedBankAccount handleNavigate={_ => handleNavigateToFaceID(~id=2)} />
+      <SelectedBankAccount handleNavigate={_ => handleAuth()} />
+
+    // | FaceID => <FaceID />
 
     | BankAccountLinked => <BankAccountLinked />
     }
@@ -407,13 +564,15 @@ let make = () => {
 
     | SignAgreement =>
       <SignAgreement
-        handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LoanSanctionedSuccessfully)}
+        // handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LoanSanctionedSuccessfully)}
+        handleNavigate={_ => handleAuth()}
       />
 
     | LoanSanctionedSuccessfully =>
       <LoanSanctionedSuccessfully
-        handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => PropertyDashboard)}
+        handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => FinternetHomeMyProp)}
       />
+    | FinternetHomeMyProp => <FinternetHome flow={HomeWithMyFinAndMyProp} />
 
     // | PropertyHome =>
     //   <PropertyHome handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkProperty)} />
@@ -466,7 +625,9 @@ let make = () => {
       />
     | AttestVerifiableCredentials =>
       <AttestVerifiableCredentials
-        handleNavigate={_ => setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizedStatus)}
+        handleNavigate={_ => handleAuth()}
+
+        // handleNavigate={_ => setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizedStatus)}
       />
     | PropertyTokenizedStatus => <PropertyTokenizedStatus handleNavigate={_ => ()} />
     }
@@ -626,6 +787,13 @@ let make = () => {
                     flowType={selectedOption}
                     registerStartResponse={registerStartResponse}
                     attestation={attestation}
+                    loginStartResponse={loginStartResponse}
+                    assertion={assertion}
+                    tokenizeAccount={tokenizeAccount}
+                    tokenizeProperty={tokenizeProperty}
+                    loginPropertyStartResponse={loginPropertyStartResponse}
+                    propertyLoginAssertion={propertyLoginAssertion}
+                    agreementSigned={agreementSigned}
                   />
                 </div>}
             // :

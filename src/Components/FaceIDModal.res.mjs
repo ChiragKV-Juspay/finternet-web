@@ -32,7 +32,7 @@ function FaceIDModal(props) {
                               color: Colors.colors.black
                             })
                       ],
-                      className: "flex flex-col h-1/2 gap-6 w-full max-w-md bg-white justify-between items-center p-5 rounded-lg shadow-lg m-4"
+                      className: "flex flex-col h-1/2 gap-6 w-full w-full max-w-md bg-white justify-between items-center p-5 rounded-lg shadow-lg m-4"
                     }),
                 className: "absolute -inset-4 flex items-end justify-center z-50 bg-black bg-opacity-50 ",
                 onClick: (function (param) {

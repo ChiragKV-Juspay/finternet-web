@@ -27,7 +27,7 @@ function CardWithButton(props) {
                       onClick: props.onClick
                     })
               ],
-              className: "flex flex-col justify-center gap-2 p-4 border border-gray-100 drop-shadow-md rounded-2xl"
+              className: "flex flex-col justify-center gap-2 p-4 border border-gray-100  rounded-2xl"
             });
 }
 

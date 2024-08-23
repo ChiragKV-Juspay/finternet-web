@@ -11,7 +11,7 @@ let make = (~handleNavigate=?) => {
           {React.string("Account Address")}
         </div>
         <div className="flex flex-row justify-between">
-          <div className=" text-base "> {React.string("nandan@finternet")} </div>
+          <div className=" text-base "> {React.string("siddharth@finternet")} </div>
           // <img src="/CopyIcon.svg" alt="Description of image" />
         </div>
       </div>
@@ -26,7 +26,7 @@ let make = (~handleNavigate=?) => {
           | Some(callback) => callback()
           | None => Js.log("No navigation function provided")
           }}>
-        {React.string("Link Bank Accounts")}
+        {React.string("Go to Home")}
       </button>
       <SecuredByFinterest color=colors.black />
     </div>

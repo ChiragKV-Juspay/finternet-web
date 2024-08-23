@@ -70,7 +70,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
     }
   }
 
-  <div className="relative flex flex-col h-full justify-between">
+  <div className={`relative flex flex-col h-full justify-between`}>
     {flow == MoneyTransferOnboarding
       ? <div className=imageClass>
           <svg
@@ -103,7 +103,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
           </svg>
         </div>
       : React.null}
-    <div className="z-10">
+    <div className="z-10 h-1">
       <div>
         {flow == FinternetOnboarding
           ? <img src="/finternetLogo.png" alt="Description of image" className=" h-6/12 w-3/12" />
@@ -115,32 +115,36 @@ let make = (~handleNavigate, ~flow: flowType) => {
           <div className="font-light text-sm mt-4"> {React.string({descriptionMessage})} </div>
         </div>
       </div>
-      // <div className="mt-14 gap-4 flex flex-col">
-      //   <div className="font-medium text-base"> {React.string("Enter your mobile number")} </div>
-      //   <div className="flex flex-row border border-[#E6E6E6] rounded-lg">
-      //     <div className="flex flex-row ml-4 gap-2 items-center ">
-      //       <img src="/IndiaFlag.svg" alt="Description of image" />
-      //       <div className="font-normal text-base"> {React.string("+91")} </div>
-      //       <svg
-      //         width="12"
-      //         height="8"
-      //         viewBox="0 0 12 8"
-      //         fill="none"
-      //         xmlns="http://www.w3.org/2000/svg">
-      //         <path
-      //           d="M5.58917 7.03844C5.37032 7.03882 5.15357 6.99595 4.95135 6.91229C4.74913 6.82862 4.56544 6.70582 4.41083 6.55094L0 2.13927L1.17833 0.960938L5.58917 5.37177L10 0.960938L11.1783 2.13927L6.7675 6.5501C6.61296 6.70514 6.4293 6.82809 6.22708 6.9119C6.02486 6.99571 5.80807 7.03871 5.58917 7.03844Z"
-      //           fill={color}
-      //         />
-      //       </svg>
-      //     </div>
-      //     <Input placeholder="Enter your mobile number" />
-      //   </div>
-      //   <div className="font-light text-sm">
-      //     {React.string("An OTP will be sent to the linked mobile number for verification")}
-      //   </div>
-      // </div>
+      {flow == FinternetOnboarding
+        ? <div className="mt-14 gap-4 flex flex-col">
+            <div className="font-medium text-base">
+              {React.string("Enter your mobile number")}
+            </div>
+            <div className="flex flex-row border border-[#E6E6E6] rounded-lg">
+              <div className="flex flex-row ml-4 gap-2 items-center ">
+                <img src="/IndiaFlag.svg" alt="Description of image" />
+                <div className="font-normal text-base"> {React.string("+91")} </div>
+                <svg
+                  width="12"
+                  height="8"
+                  viewBox="0 0 12 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M5.58917 7.03844C5.37032 7.03882 5.15357 6.99595 4.95135 6.91229C4.74913 6.82862 4.56544 6.70582 4.41083 6.55094L0 2.13927L1.17833 0.960938L5.58917 5.37177L10 0.960938L11.1783 2.13927L6.7675 6.5501C6.61296 6.70514 6.4293 6.82809 6.22708 6.9119C6.02486 6.99571 5.80807 7.03871 5.58917 7.03844Z"
+                    fill={color}
+                  />
+                </svg>
+              </div>
+              <Input placeholder="Enter your mobile number" />
+            </div>
+            // <div className="font-light text-sm">
+            //   {React.string("An OTP will be sent to the linked mobile number for verification")}
+            // </div>
+          </div>
+        : React.null}
     </div>
-    <div className="mt-14 gap-y-4 flex flex-col">
+    <div className="gap-y-4 flex flex-col">
       <div className="flex flew-row">
         <Mui.Checkbox
           defaultChecked=true

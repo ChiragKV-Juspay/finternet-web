@@ -29,7 +29,7 @@ function BankAccountCard(props) {
                       className: "flex flex-row justify-between"
                     })
               ],
-              className: "border border-gray-100 drop-shadow-md rounded-2xl "
+              className: "border border-gray-100  rounded-2xl "
             });
 }
 

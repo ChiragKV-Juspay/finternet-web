@@ -26,7 +26,7 @@ let make = (~handleNavigate) => {
       <button
         className={` bg-[${colors.propertyBlue}] text-white rounded-lg w-full h-10 text-sm`}
         onClick={_ => handleNavigate()}>
-        {React.string("Go back to Dashboard")}
+        {React.string("View in Wallet")}
       </button>
       <SecuredByFinterest color=colors.propertyBlue />
     </div>

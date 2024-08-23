@@ -2,13 +2,68 @@
 
 import * as Colors from "../Utilities/Colors.res.mjs";
 import * as Header from "../Components/Header.res.mjs";
+import * as AppCard from "../Components/AppCard.res.mjs";
 import * as AccountCard from "../Components/AccountCard.res.mjs";
-import * as BankAccountCard from "../Components/BankAccountCard.res.mjs";
-import * as TransactionsList from "../Components/TransactionsList.res.mjs";
 import * as JsxRuntime from "react/jsx-runtime";
 
 function FinternetHome(props) {
   var handleNavigate = props.handleNavigate;
+  var tmp;
+  switch (props.flow) {
+    case "EmptyHome" :
+        tmp = JsxRuntime.jsxs("div", {
+              children: [
+                JsxRuntime.jsx("img", {
+                      alt: "Background Image",
+                      src: "/NoAppsLinkedImage.svg"
+                    }),
+                JsxRuntime.jsxs("div", {
+                      children: [
+                        JsxRuntime.jsx("div", {
+                              children: "No apps linked"
+                            }),
+                        JsxRuntime.jsx("button", {
+                              children: "Link Account",
+                              className: "bg-black text-white text-xs rounded-lg w-1/3 h-8",
+                              onClick: (function (param) {
+                                  if (handleNavigate !== undefined) {
+                                    return handleNavigate();
+                                  } else {
+                                    console.log("No navigation function provided");
+                                    return ;
+                                  }
+                                })
+                            })
+                      ],
+                      className: "flex flex-col gap-4 w-full items-center"
+                    })
+              ],
+              className: "flex flex-col items-center border border-gray-100 rounded-2xl p-5"
+            });
+        break;
+    case "HomeWithMyFin" :
+        tmp = JsxRuntime.jsx(AppCard.make, {
+              app: "MyFin",
+              amount: "₹ 4800"
+            });
+        break;
+    case "HomeWithMyFinAndMyProp" :
+        tmp = JsxRuntime.jsxs("div", {
+              children: [
+                JsxRuntime.jsx(AppCard.make, {
+                      app: "MyFin",
+                      amount: "₹ 80,04,800"
+                    }),
+                JsxRuntime.jsx(AppCard.make, {
+                      app: "MyProp",
+                      amount: "₹ 80,00,000"
+                    })
+              ],
+              className: "flex flex-col gap-3"
+            });
+        break;
+    
+  }
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsx(Header.make, {
@@ -18,20 +73,12 @@ function FinternetHome(props) {
                       iconColor: Colors.colors.black
                     }),
                 JsxRuntime.jsx("div", {
-                      children: "Bank Accounts",
+                      children: "Linked Applications",
                       className: "my-2"
                     }),
-                JsxRuntime.jsx(BankAccountCard.make, {
-                      handleNavigate: (function () {
-                          handleNavigate();
-                        })
-                    }),
-                JsxRuntime.jsx("div", {
-                      children: "All Transactions",
-                      className: "my-2"
-                    }),
-                JsxRuntime.jsx(TransactionsList.make, {})
-              ]
+                tmp
+              ],
+              className: "flex flex-col gap-4"
             });
 }
 

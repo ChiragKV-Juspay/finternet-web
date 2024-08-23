@@ -2,6 +2,7 @@
 
 import * as Js_dict from "rescript/lib/es6/js_dict.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
+import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as AccordionItem from "./AccordionItem.res.mjs";
 import * as ExpandMoreIcon from "../Icons/ExpandMoreIcon.res.mjs";
@@ -41,6 +42,64 @@ function toJson(record) {
               [
                 "signature",
                 record.signature
+              ]
+            ]);
+}
+
+function tokenizedBodyToJson(record) {
+  var accountDetailsDict = Js_dict.fromArray([[
+          "account_number",
+          record.account_details.account_number
+        ]]);
+  return Js_dict.fromArray([
+              [
+                "token_manager",
+                record.token_manager
+              ],
+              [
+                "asset_type",
+                record.asset_type
+              ],
+              [
+                "currency",
+                record.currency
+              ],
+              [
+                "account_details",
+                accountDetailsDict
+              ]
+            ]);
+}
+
+function tokenizedPropertyBodyToJson(record) {
+  var propertyDetailsDict = Js_dict.fromArray([
+        [
+          "property_id",
+          record.property_details.property_id
+        ],
+        [
+          "property_registrar",
+          record.property_details.property_registrar
+        ]
+      ]);
+  var attestationsArray = Belt_Array.map(record.attestations, (function (attestation) {
+          return Js_dict.fromArray([[
+                        "certificate",
+                        attestation.certificate
+                      ]]);
+        }));
+  return Js_dict.fromArray([
+              [
+                "asset_type",
+                record.asset_type
+              ],
+              [
+                "property_details",
+                propertyDetailsDict
+              ],
+              [
+                "attestations",
+                attestationsArray
               ]
             ]);
 }
@@ -106,12 +165,36 @@ function toJsonKeyGenResponse(stats) {
 }
 
 function Accordion$1(props) {
+  var propertyLoginAssertion = props.propertyLoginAssertion;
+  var loginPropertyStartResponse = props.loginPropertyStartResponse;
+  var assertion = props.assertion;
+  var loginStartResponse = props.loginStartResponse;
   var attestation = props.attestation;
   var registerStartResponse = props.registerStartResponse;
   var transactionResult = props.transactionResult;
   var transactionsHistory = props.transactionsHistory;
   var userAssets = props.userAssets;
   var userData = props.userData;
+  var tokenizePropertybody_property_details = {
+    property_id: "1234",
+    property_registrar: "Some Registrar"
+  };
+  var tokenizePropertybody_attestations = [
+    {
+      certificate: "NOC"
+    },
+    {
+      certificate: "Ownership"
+    },
+    {
+      certificate: "Value"
+    }
+  ];
+  var tokenizePropertybody = {
+    asset_type: "Property",
+    property_details: tokenizePropertybody_property_details,
+    attestations: tokenizePropertybody_attestations
+  };
   var jwtBody_payload = {
     slMpcSetup: {
       keygen: {}
@@ -125,15 +208,24 @@ function Accordion$1(props) {
     uuid: "[USER_EMAIL_PLACEHOLDER]"
   };
   var bodyJson = toJson({
-        sender: "nandan@finternet",
-        recipient: "ales@ledger",
+        sender: "siddharth@finternet",
+        recipient: "nandan@ledger",
         asset: {
-          currency: "USD",
+          currency: "INR",
           unit: 200,
-          token_manager: "tokenManagerAddress"
+          token_manager: "ABC Bank"
         },
-        signature: "signature"
+        signature: "AWoqX7bTaHtIyGQzgs9_c8jYdhN7sC2ascAE9hsC"
       });
+  var accountTokenizeBodyJson = tokenizedBodyToJson({
+        token_manager: "ABC Bank",
+        asset_type: "Money",
+        currency: "INR",
+        account_details: {
+          account_number: "1234 1234 1234 1234"
+        }
+      });
+  var tokenizedPropertyBodyJson = tokenizedPropertyBodyToJson(tokenizePropertybody);
   var jwtBodyJson = toJsonJwtBody(jwtBody);
   var keygenResponseJson0 = toJsonKeyGenResponse({
         public_key: "03823d089f3612a3d4a22223d15283475c20526475cbdca733f9228a11495b9694",
@@ -162,8 +254,14 @@ function Accordion$1(props) {
   var prettyTransactionResult = JSON.stringify(transactionResult, undefined, 2);
   var prettyPostBody = JSON.stringify(bodyJson, undefined, 2);
   var prettyRegisterStartResponse = JSON.stringify(registerStartResponse, undefined, 2);
+  var prettyLoginStartResponse = JSON.stringify(loginStartResponse, undefined, 2);
+  var prettyLoginPropertyStartResponse = JSON.stringify(loginPropertyStartResponse, undefined, 2);
   var prettyAttestation = JSON.stringify(attestation, undefined, 2);
-  var prettyJwtBody = JSON.stringify(jwtBodyJson, undefined, 2);
+  var prettyAssertion = JSON.stringify(assertion, undefined, 2);
+  var prettyPropertyLoginAssertion = JSON.stringify(propertyLoginAssertion, undefined, 2);
+  JSON.stringify(jwtBodyJson, undefined, 2);
+  var prettyTokenizeAccountPostBody = JSON.stringify(accountTokenizeBodyJson, undefined, 2);
+  var tokenizedPropertyBodyJson$1 = JSON.stringify(tokenizedPropertyBodyJson, undefined, 2);
   var prettyKeyGenResponse0 = JSON.stringify(keygenResponseJson0, undefined, 2);
   var prettyKeyGenResponse1 = JSON.stringify(keygenResponseJson1, undefined, 2);
   var prettyKeyGenResponse2 = JSON.stringify(keygenResponseJson2, undefined, 2);
@@ -253,7 +351,7 @@ function Accordion$1(props) {
                         props.showTransactionConfirm ? JsxRuntime.jsx(AccordionItem.make, {
                                 summary: "Confirm Transaction",
                                 detailsContent: JsxRuntime.jsx(AccordionItem.make, {
-                                      summary: "POST https://finternet-app-api.shuttleapp.rs/v1/users/exampleUserId/assets/123/asset:transfer",
+                                      summary: "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets/123/asset:transfer",
                                       detailsContent: JsxRuntime.jsx("pre", {
                                             children: prettyPostBody,
                                             className: "whitespace-pre-wrap"
@@ -286,11 +384,11 @@ function Accordion$1(props) {
                                 detailsContent: JsxRuntime.jsx(AccordionItem.make, {
                                       summary: JsxRuntime.jsxs("div", {
                                             children: [
-                                              "POST https://selfnode.codecrane.com/auth-0/registerStart",
+                                              "POST https://selfnode.codecrane.com/auth-0/issue_passkeys_challenge",
                                               JsxRuntime.jsx("br", {}),
-                                              "POST https://selfnode.codecrane.com/auth-1/registerStart",
+                                              "POST https://selfnode.codecrane.com/auth-1/issue_passkeys_challenge",
                                               JsxRuntime.jsx("br", {}),
-                                              "POST https://selfnode.codecrane.com/auth-2/registerStart"
+                                              "POST https://selfnode.codecrane.com/auth-2/issue_passkeys_challenge"
                                             ]
                                           }),
                                       detailsContent: JsxRuntime.jsx("pre", {
@@ -307,26 +405,15 @@ function Accordion$1(props) {
                                         detailsContent: JsxRuntime.jsx(AccordionItem.make, {
                                               summary: JsxRuntime.jsxs("div", {
                                                     children: [
-                                                      "POST https://selfnode.codecrane.com/auth-0/registerFinish",
+                                                      "POST https://selfnode.codecrane.com/auth-0/verify_passkeys_registration",
                                                       JsxRuntime.jsx("br", {}),
-                                                      "POST https://selfnode.codecrane.com/auth-1/registerFinish",
+                                                      "POST https://selfnode.codecrane.com/auth-1/verify_passkeys_registration",
                                                       JsxRuntime.jsx("br", {}),
-                                                      "POST https://selfnode.codecrane.com/auth-2/registerFinish"
+                                                      "POST https://selfnode.codecrane.com/auth-2/verify_passkeys_registration"
                                                     ]
                                                   }),
                                               detailsContent: JsxRuntime.jsx("pre", {
                                                     children: prettyAttestation,
-                                                    className: "whitespace-pre-wrap"
-                                                  }),
-                                              detailsClassName: "text-sm overflow-auto"
-                                            })
-                                      }),
-                                  JsxRuntime.jsx(AccordionItem.make, {
-                                        summary: "Verify JWT",
-                                        detailsContent: JsxRuntime.jsx(AccordionItem.make, {
-                                              summary: "POST https://selfnode.codecrane.com/auth-0/verify_google_jwt",
-                                              detailsContent: JsxRuntime.jsx("pre", {
-                                                    children: prettyJwtBody,
                                                     className: "whitespace-pre-wrap"
                                                   }),
                                               detailsClassName: "text-sm overflow-auto"
@@ -363,6 +450,211 @@ function Accordion$1(props) {
                     })
             });
         break;
+    case "Loan Against Property" :
+        accordionContent = JsxRuntime.jsx("div", {
+              children: Caml_obj.equal(userData, null) && Caml_obj.equal(userAssets, null) && Caml_obj.equal(transactionsHistory, null) ? JsxRuntime.jsx("div", {
+                      children: "Start onboarding to view activity logs",
+                      className: "text-sm text-gray-500"
+                    }) : JsxRuntime.jsxs("div", {
+                      children: [
+                        JsxRuntime.jsxs(Accordion, {
+                              children: [
+                                JsxRuntime.jsx(AccordionSummary, {
+                                      "aria-controls": "panel1-content",
+                                      id: "panel1-header",
+                                      children: "Fetch User Details",
+                                      expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
+                                    }),
+                                JsxRuntime.jsxs(AccordionDetails, {
+                                      children: [
+                                        Caml_obj.notequal(userData, null) ? JsxRuntime.jsxs(Accordion, {
+                                                className: "w-11/12 ",
+                                                children: [
+                                                  JsxRuntime.jsx(AccordionSummary, {
+                                                        "aria-controls": "panel2-content",
+                                                        id: "panel2-header",
+                                                        children: "GET user",
+                                                        expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
+                                                      }),
+                                                  JsxRuntime.jsx(AccordionDetails, {
+                                                        className: "text-sm overflow-auto",
+                                                        children: Caml_option.some(JsxRuntime.jsx("pre", {
+                                                                  children: prettyJson,
+                                                                  className: "whitespace-pre-wrap"
+                                                                }))
+                                                      })
+                                                ]
+                                              }) : null,
+                                        Caml_obj.notequal(userAssets, null) ? JsxRuntime.jsxs(Accordion, {
+                                                className: "w-11/12 ",
+                                                children: [
+                                                  JsxRuntime.jsx(AccordionSummary, {
+                                                        "aria-controls": "panel2-content",
+                                                        id: "panel2-header",
+                                                        children: "GET assets",
+                                                        expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
+                                                      }),
+                                                  JsxRuntime.jsx(AccordionDetails, {
+                                                        className: "text-sm overflow-auto",
+                                                        children: Caml_option.some(JsxRuntime.jsx("pre", {
+                                                                  children: prettyAssets,
+                                                                  className: "whitespace-pre-wrap"
+                                                                }))
+                                                      })
+                                                ]
+                                              }) : null,
+                                        Caml_obj.notequal(transactionsHistory, null) ? JsxRuntime.jsxs(Accordion, {
+                                                className: "w-11/12 ",
+                                                children: [
+                                                  JsxRuntime.jsx(AccordionSummary, {
+                                                        "aria-controls": "panel2-content",
+                                                        id: "panel2-header",
+                                                        children: "GET transactionsList",
+                                                        expandIcon: Caml_option.some(JsxRuntime.jsx(ExpandMoreIcon.make, {}))
+                                                      }),
+                                                  JsxRuntime.jsx(AccordionDetails, {
+                                                        className: "text-sm overflow-auto",
+                                                        children: Caml_option.some(JsxRuntime.jsx("pre", {
+                                                                  children: prettyTransactionsHistory,
+                                                                  className: "whitespace-pre-wrap"
+                                                                }))
+                                                      })
+                                                ]
+                                              }) : null
+                                      ]
+                                    })
+                              ]
+                            }),
+                        props.agreementSigned ? JsxRuntime.jsx(AccordionItem.make, {
+                                summary: "Agreement Signature",
+                                detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                      summary: "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets/prpWaAX7bTaIyG/asset:pledge",
+                                      detailsContent: JsxRuntime.jsx("pre", {
+                                            children: tokenizedPropertyBodyJson$1,
+                                            className: "whitespace-pre-wrap"
+                                          }),
+                                      detailsClassName: "text-sm overflow-auto"
+                                    }),
+                                summaryClassName: ""
+                              }) : null
+                      ]
+                    })
+            });
+        break;
+    case "Property User Onboarding" :
+        accordionContent = JsxRuntime.jsx("div", {
+              children: Caml_obj.equal(loginPropertyStartResponse, null) && Caml_obj.equal(propertyLoginAssertion, null) ? JsxRuntime.jsx("div", {
+                      children: "Start onboarding to view activity logs",
+                      className: "text-sm text-gray-500"
+                    }) : JsxRuntime.jsxs("div", {
+                      children: [
+                        Caml_obj.notequal(loginPropertyStartResponse, null) ? JsxRuntime.jsx(AccordionItem.make, {
+                                summary: "User Login",
+                                detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                      summary: JsxRuntime.jsxs("div", {
+                                            children: [
+                                              "POST https://selfnode.codecrane.com/auth-0/issue_authentication_challenge?user-id=mywallet",
+                                              JsxRuntime.jsx("br", {}),
+                                              "POST https://selfnode.codecrane.com/auth-1/issue_authentication_challenge?user-id=mywallet",
+                                              JsxRuntime.jsx("br", {}),
+                                              "POST https://selfnode.codecrane.com/auth-2/issue_authentication_challenge?user-id=mywallet"
+                                            ]
+                                          }),
+                                      detailsContent: JsxRuntime.jsx("pre", {
+                                            children: prettyLoginPropertyStartResponse,
+                                            className: "whitespace-pre-wrap"
+                                          }),
+                                      detailsClassName: "text-sm overflow-auto"
+                                    })
+                              }) : null,
+                        Caml_obj.notequal(propertyLoginAssertion, null) ? JsxRuntime.jsx("div", {
+                                children: JsxRuntime.jsx(AccordionItem.make, {
+                                      summary: "User Login Finish",
+                                      detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                            summary: JsxRuntime.jsx("div", {
+                                                  children: "POST https://selfnode.codecrane.com/store-result"
+                                                }),
+                                            detailsContent: JsxRuntime.jsx("pre", {
+                                                  children: prettyPropertyLoginAssertion,
+                                                  className: "whitespace-pre-wrap"
+                                                }),
+                                            detailsClassName: "text-sm overflow-auto"
+                                          })
+                                    })
+                              }) : null,
+                        props.tokenizeProperty ? JsxRuntime.jsx(AccordionItem.make, {
+                                summary: "Tokenization",
+                                detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                      summary: "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets",
+                                      detailsContent: JsxRuntime.jsx("pre", {
+                                            children: tokenizedPropertyBodyJson$1,
+                                            className: "whitespace-pre-wrap"
+                                          }),
+                                      detailsClassName: "text-sm overflow-auto"
+                                    }),
+                                summaryClassName: ""
+                              }) : null
+                      ]
+                    })
+            });
+        break;
+    case "User Onboarding" :
+        accordionContent = JsxRuntime.jsx("div", {
+              children: Caml_obj.equal(loginStartResponse, null) && Caml_obj.equal(assertion, null) ? JsxRuntime.jsx("div", {
+                      children: "Start onboarding to view activity logs",
+                      className: "text-sm text-gray-500"
+                    }) : JsxRuntime.jsxs("div", {
+                      children: [
+                        Caml_obj.notequal(loginStartResponse, null) ? JsxRuntime.jsx(AccordionItem.make, {
+                                summary: "User Login",
+                                detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                      summary: JsxRuntime.jsxs("div", {
+                                            children: [
+                                              "POST https://selfnode.codecrane.com/auth-0/issue_authentication_challenge?user-id=mywallet",
+                                              JsxRuntime.jsx("br", {}),
+                                              "POST https://selfnode.codecrane.com/auth-1/issue_authentication_challenge?user-id=mywallet",
+                                              JsxRuntime.jsx("br", {}),
+                                              "POST https://selfnode.codecrane.com/auth-2/issue_authentication_challenge?user-id=mywallet"
+                                            ]
+                                          }),
+                                      detailsContent: JsxRuntime.jsx("pre", {
+                                            children: prettyLoginStartResponse,
+                                            className: "whitespace-pre-wrap"
+                                          }),
+                                      detailsClassName: "text-sm overflow-auto"
+                                    })
+                              }) : null,
+                        Caml_obj.notequal(assertion, null) ? JsxRuntime.jsx("div", {
+                                children: JsxRuntime.jsx(AccordionItem.make, {
+                                      summary: "User Login Finish",
+                                      detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                            summary: JsxRuntime.jsx("div", {
+                                                  children: "POST https://selfnode.codecrane.com/store-result"
+                                                }),
+                                            detailsContent: JsxRuntime.jsx("pre", {
+                                                  children: prettyAssertion,
+                                                  className: "whitespace-pre-wrap"
+                                                }),
+                                            detailsClassName: "text-sm overflow-auto"
+                                          })
+                                    })
+                              }) : null,
+                        props.tokenizeAccount ? JsxRuntime.jsx(AccordionItem.make, {
+                                summary: "Tokenization",
+                                detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                      summary: "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets",
+                                      detailsContent: JsxRuntime.jsx("pre", {
+                                            children: prettyTokenizeAccountPostBody,
+                                            className: "whitespace-pre-wrap"
+                                          }),
+                                      detailsClassName: "text-sm overflow-auto"
+                                    }),
+                                summaryClassName: ""
+                              }) : null
+                      ]
+                    })
+            });
+        break;
     default:
       accordionContent = null;
   }
@@ -375,6 +667,8 @@ var make = Accordion$1;
 
 export {
   toJson ,
+  tokenizedBodyToJson ,
+  tokenizedPropertyBodyToJson ,
   toJsonJwtBody ,
   toJsonKeyGenResponse ,
   make ,

@@ -16,7 +16,7 @@ let make = (~handleNavigate) => {
         <div className=" text-[#797979] text-xs"> {React.string("Property Registrar")} </div>
         <Input
           placeholder="State Property Registrar"
-          className=" p-3 border border-[#E6E6E6] rounded-lg text-sm placeholder-text-sm"
+          className=" p-3 border border-[#E6E6E6] rounded-lg text-sm placeholder-text-sm "
         />
       </div>
     </div>

@@ -38,7 +38,7 @@ function PropertyDetailsForm(props) {
                                     }),
                                 JsxRuntime.jsx(Input.make, {
                                       placeholder: "State Property Registrar",
-                                      className: " p-3 border border-[#E6E6E6] rounded-lg text-sm placeholder-text-sm"
+                                      className: " p-3 border border-[#E6E6E6] rounded-lg text-sm placeholder-text-sm "
                                     })
                               ],
                               className: "flex flex-col gap-2"

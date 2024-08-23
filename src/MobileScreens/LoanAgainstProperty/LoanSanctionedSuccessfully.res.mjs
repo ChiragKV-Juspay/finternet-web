@@ -60,7 +60,7 @@ function LoanSanctionedSuccessfully(props) {
                 JsxRuntime.jsxs("div", {
                       children: [
                         JsxRuntime.jsx("button", {
-                              children: "Go back to Dashboard",
+                              children: "View in Wallet",
                               className: " bg-[" + Colors.colors.propertyBlue + "] text-white rounded-lg w-full h-10 text-sm",
                               onClick: (function (param) {
                                   handleNavigate();
