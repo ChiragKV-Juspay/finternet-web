@@ -65,7 +65,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
 
   let onButtonPress = () => {
     switch flow {
-    | FinternetOnboarding => handleNavigate()
+    | FinternetOnboarding | MoneyTransferOnboarding => handleNavigate()
     | PropertyOnboarding => toggleModal()
     }
   }

@@ -69,22 +69,13 @@ function Login(props) {
   var color = match$1[1];
   var onButtonPress = function () {
     switch (flow) {
-      case "FinternetOnboarding" :
-          return handleNavigate();
       case "PropertyOnboarding" :
           return setShowModal(function (prev) {
                       return !prev;
                     });
+      case "FinternetOnboarding" :
       case "MoneyTransferOnboarding" :
-          throw {
-                RE_EXN_ID: "Match_failure",
-                _1: [
-                  "Login.res",
-                  67,
-                  4
-                ],
-                Error: new Error()
-              };
+          return handleNavigate();
       
     }
   };
