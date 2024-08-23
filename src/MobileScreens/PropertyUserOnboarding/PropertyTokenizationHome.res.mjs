@@ -27,7 +27,7 @@ function PropertyTokenizationHome(props) {
                                 JsxRuntime.jsx(CardWithButton.make, {
                                       title: "Link your property",
                                       description: "Link your property to apply for credit with collateral",
-                                      buttonColor: "#0090FF",
+                                      buttonColor: "primaryBlue",
                                       onClick: (function (param) {
                                           handleNavigate();
                                         })
@@ -35,7 +35,7 @@ function PropertyTokenizationHome(props) {
                                 JsxRuntime.jsx(CardWithButton.make, {
                                       title: "Apply for loan?",
                                       description: "Access quick financing by leveraging your property today!",
-                                      buttonColor: "#D5D5D5",
+                                      buttonColor: "disabledGray",
                                       onClick: (function (param) {
                                           handleNavigate();
                                         })

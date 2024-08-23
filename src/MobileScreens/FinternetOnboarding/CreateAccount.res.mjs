@@ -50,7 +50,7 @@ function CreateAccount(props) {
                       className: "flex flex-col gap-4"
                     })
               ],
-              className: "flex flex-col h-full justify-between"
+              className: "relative flex flex-col h-full justify-between"
             });
 }
 

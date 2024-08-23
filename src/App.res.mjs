@@ -13,6 +13,7 @@ import * as SelectBank from "./MobileScreens/UserOnboarding/SelectBank.res.mjs";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as EnterAmount from "./MobileScreens/DomesticMoneyTransfer/EnterAmount.res.mjs";
+import * as FaceIDModal from "./Components/FaceIDModal.res.mjs";
 import * as KeyFactSheet from "./MobileScreens/LoanAgainstProperty/KeyFactSheet.res.mjs";
 import * as CreateAccount from "./MobileScreens/FinternetOnboarding/CreateAccount.res.mjs";
 import * as FinternetHome from "./MobileScreens/FinternetHome.res.mjs";
@@ -79,7 +80,6 @@ function App(props) {
   var match$10 = React.useState(function () {
         return false;
       });
-  var setShowAuthInitiated = match$10[1];
   var match$11 = React.useState(function () {
         return false;
       });
@@ -95,7 +95,16 @@ function App(props) {
   var match$14 = React.useState(function () {
         return false;
       });
-  var setIsCollapsed = match$14[1];
+  var setShowFaceIDModal = match$14[1];
+  var toggleFaceIDModal = function () {
+    setShowFaceIDModal(function (prev) {
+          return !prev;
+        });
+  };
+  var match$15 = React.useState(function () {
+        return false;
+      });
+  var setIsCollapsed = match$15[1];
   var handlePrevScreen = function () {
     switch (currentTransferScreen) {
       case "Home" :
@@ -343,8 +352,11 @@ function App(props) {
     }
   };
   var simpleWebAuthn = async function () {
+    setShowFaceIDModal(function (prev) {
+          return !prev;
+        });
     var transferBody = {
-      username: "arnab.b"
+      username: "siddharth"
     };
     var response = await fetch("https://webauthn-fin-production.up.railway.app/api/passkey/registerStart", {
           method: "POST",
@@ -368,6 +380,9 @@ function App(props) {
                     "Content-type": "application/json"
                   }))
         });
+    return setShowFaceIDModal(function (prev) {
+                return !prev;
+              });
   };
   var performTransfer = function () {
     var postTransfer = async function () {
@@ -404,53 +419,28 @@ function App(props) {
         });
     performTransfer();
   };
-  var handleNavigateToFaceID = function (flow) {
-    switch (flow) {
-      case "FinternetOnboarding" :
-          setCurrentFinternetOnboardingScreen(function (param) {
-                return "FaceID";
-              });
-          break;
-      case "Onboarding" :
-          setCurrentOnboardingScreen(function (param) {
-                return "FaceID";
-              });
-          break;
-      case "Transfer" :
-          setShowAuthInitiated(function (param) {
-                return true;
-              });
-          setCurrentTransferScreen(function (param) {
-                return "FaceID";
-              });
-          break;
-      default:
-        throw {
-              RE_EXN_ID: "Match_failure",
-              _1: [
-                "App.res",
-                304,
-                4
-              ],
-              Error: new Error()
-            };
-    }
+  var handleNavigateToFaceID = function () {
     simpleWebAuthn().then(function () {
-          switch (flow) {
-            case "FinternetOnboarding" :
+          switch (selectedOption) {
+            case "Domestic Money Transfer" :
+                handleNavigateToTransactionCompleted();
+                setCurrentTransferScreen(function (param) {
+                      return "TransactionCompleted";
+                    });
+                break;
+            case "Finternet Onboarding" :
                 setCurrentFinternetOnboardingScreen(function (param) {
                       return "QRScreen";
                     });
                 break;
-            case "Onboarding" :
-                setCurrentOnboardingScreen(function (param) {
-                      return "BankAccountLinked";
+            case "Property User Onboarding" :
+                setCurrentPropertyUserOnboardingScreen(function (param) {
+                      return "PropertyTokenizationHome";
                     });
                 break;
-            case "Transfer" :
-                handleNavigateToTransactionCompleted();
-                setCurrentTransferScreen(function (param) {
-                      return "TransactionCompleted";
+            case "User Onboarding" :
+                setCurrentOnboardingScreen(function (param) {
+                      return "LinkBankAccount";
                     });
                 break;
             default:
@@ -458,7 +448,7 @@ function App(props) {
                     RE_EXN_ID: "Match_failure",
                     _1: [
                       "App.res",
-                      314,
+                      323,
                       6
                     ],
                     Error: new Error()
@@ -466,6 +456,30 @@ function App(props) {
           }
           return Promise.resolve();
         });
+  };
+  var renderFinternetOnboardingContent = function () {
+    switch (currentFinternetOnboardingScreen) {
+      case "FinternetLogin" :
+          return JsxRuntime.jsx(Login.make, {
+                      handleNavigate: (function () {
+                          setCurrentFinternetOnboardingScreen(function (param) {
+                                return "CreateAccount";
+                              });
+                        }),
+                      flow: "FinternetOnboarding"
+                    });
+      case "CreateAccount" :
+          return JsxRuntime.jsx(CreateAccount.make, {
+                      handleNavigate: (function () {
+                          handleNavigateToFaceID();
+                        })
+                    });
+      case "FaceID" :
+          return JsxRuntime.jsx(FaceID.make, {});
+      case "QRScreen" :
+          return JsxRuntime.jsx(QRScreen.make, {});
+      
+    }
   };
   var renderTransferContent = function () {
     switch (currentTransferScreen) {
@@ -480,7 +494,7 @@ function App(props) {
       case "EnterAmount" :
           return JsxRuntime.jsx(EnterAmount.make, {
                       handleNavigate: (function (param) {
-                          handleNavigateToFaceID("Transfer");
+                          handleNavigateToFaceID();
                         })
                     });
       case "FaceID" :
@@ -517,9 +531,7 @@ function App(props) {
       case "OnboardingLogin" :
           return JsxRuntime.jsx(Login.make, {
                       handleNavigate: (function () {
-                          setCurrentOnboardingScreen(function (param) {
-                                return "LinkBankAccount";
-                              });
+                          handleNavigateToFaceID();
                         }),
                       flow: "MoneyTransferOnboarding"
                     });
@@ -551,30 +563,6 @@ function App(props) {
           return JsxRuntime.jsx(FaceID.make, {});
       case "BankAccountLinked" :
           return JsxRuntime.jsx(BankAccountLinked.make, {});
-      
-    }
-  };
-  var renderFinternetOnboardingContent = function () {
-    switch (currentFinternetOnboardingScreen) {
-      case "FinternetLogin" :
-          return JsxRuntime.jsx(Login.make, {
-                      handleNavigate: (function () {
-                          setCurrentFinternetOnboardingScreen(function (param) {
-                                return "CreateAccount";
-                              });
-                        }),
-                      flow: "FinternetOnboarding"
-                    });
-      case "CreateAccount" :
-          return JsxRuntime.jsx(CreateAccount.make, {
-                      handleNavigate: (function () {
-                          handleNavigateToFaceID("FinternetOnboarding");
-                        })
-                    });
-      case "FaceID" :
-          return JsxRuntime.jsx(FaceID.make, {});
-      case "QRScreen" :
-          return JsxRuntime.jsx(QRScreen.make, {});
       
     }
   };
@@ -636,9 +624,7 @@ function App(props) {
       case "PropertyLogin" :
           return JsxRuntime.jsx(Login.make, {
                       handleNavigate: (function () {
-                          setCurrentPropertyUserOnboardingScreen(function (param) {
-                                return "PropertyTokenizationHome";
-                              });
+                          handleNavigateToFaceID();
                         }),
                       flow: "PropertyOnboarding"
                     });
@@ -746,7 +732,7 @@ function App(props) {
         });
   } else {
     var tmp$1;
-    if (match$14[0]) {
+    if (match$15[0]) {
       tmp$1 = JsxRuntime.jsx("div", {
             children: JsxRuntime.jsx("button", {
                   children: "<<<",
@@ -813,9 +799,17 @@ function App(props) {
           children: [
             JsxRuntime.jsxs("div", {
                   children: [
-                    JsxRuntime.jsx("div", {
-                          children: renderContent(),
-                          className: "bg-white h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto"
+                    JsxRuntime.jsxs("div", {
+                          children: [
+                            renderContent(),
+                            JsxRuntime.jsx(FaceIDModal.make, {
+                                  showModal: match$14[0],
+                                  toggleModal: toggleFaceIDModal,
+                                  text: "Link your Finternet account with the the MyProp app",
+                                  buttonText: "Link"
+                                })
+                          ],
+                          className: "relative bg-white h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto"
                         }),
                     JsxRuntime.jsxs("div", {
                           children: [

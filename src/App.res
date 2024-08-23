@@ -71,6 +71,11 @@ let make = () => {
   let (registerStartResponse, setRegisterStartResponse) = React.useState(() => Js.Json.null)
   let (attestation, setAttestation) = React.useState(() => Js.Json.null)
 
+  let (showFaceIDModal, setShowFaceIDModal) = React.useState(_ => false)
+
+  let toggleFaceIDModal = () => {
+    setShowFaceIDModal(prev => !prev)
+  }
   let (isCollapsed, setIsCollapsed) = React.useState(_ => false)
 
   let toggleCollapse = () => {
@@ -203,8 +208,9 @@ let make = () => {
 
   let simpleWebAuthn = async () => {
     open Fetch
+    toggleFaceIDModal()
     // https://webauthn-fin-production.up.railway.app/api/passkey/registerStart
-    let transferBody = {"username": "arnab.b"}
+    let transferBody = {"username": "siddharth"}
     let response = await fetch(
       "https://webauthn-fin-production.up.railway.app/api/passkey/registerStart",
       {
@@ -232,6 +238,7 @@ let make = () => {
         }),
       },
     )
+    toggleFaceIDModal()
     // Console.log(registerFinishResponse)
   }
   let fetchUserTransactionsHistory = async () => {
@@ -300,21 +307,25 @@ let make = () => {
   //   })
   //   ->ignore
   // }
-  let handleNavigateToFaceID = (~flow) => {
-    switch flow {
-    | `FinternetOnboarding` => setCurrentFinternetOnboardingScreen(_ => FaceID)
-    | `Onboarding` => setCurrentOnboardingScreen(_ => FaceID)
-    | `Transfer` => {
-        setShowAuthInitiated(_ => true)
-        setCurrentTransferScreen(_ => FaceID)
-      }
-    }
+  let handleNavigateToFaceID = () => {
+    // toggleFaceIDModal()
+
+    // switch flow {
+    // | `FinternetOnboarding` => setCurrentFinternetOnboardingScreen(_ => FaceID)
+    // | `Onboarding` => setCurrentOnboardingScreen(_ => FaceID)
+    // | `Transfer` => {
+    //     setShowAuthInitiated(_ => true)
+    //     setCurrentTransferScreen(_ => FaceID)
+    //   }
+    // }
     simpleWebAuthn()
     ->Promise.then(_ => {
-      switch flow {
-      | `FinternetOnboarding` => setCurrentFinternetOnboardingScreen(_ => QRScreen)
-      | `Onboarding` => setCurrentOnboardingScreen(_ => BankAccountLinked)
-      | `Transfer` => {
+      switch selectedOption {
+      | `Finternet Onboarding` => setCurrentFinternetOnboardingScreen(_ => QRScreen)
+      | `User Onboarding` => setCurrentOnboardingScreen(_ => LinkBankAccount)
+      | `Property User Onboarding` =>
+        setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizationHome)
+      | `Domestic Money Transfer` => {
           handleNavigateToTransactionCompleted()
           setCurrentTransferScreen(_ => TransactionCompleted)
         }
@@ -322,13 +333,31 @@ let make = () => {
       Js.Promise.resolve()
     })
     ->ignore
+    // toggleFaceIDModal()
+  }
+
+  let renderFinternetOnboardingContent = () => {
+    switch currentFinternetOnboardingScreen {
+    | FinternetLogin =>
+      <Login
+        handleNavigate={_ => setCurrentFinternetOnboardingScreen(_ => CreateAccount)}
+        flow={FinternetOnboarding}
+      />
+    // <FinternetLogin
+    //   handleNavigate={_ => setCurrentFinternetOnboardingScreen(_ => CreateAccount)}
+    // />
+    | CreateAccount => <CreateAccount handleNavigate={_ => handleNavigateToFaceID()} />
+
+    | FaceID => <FaceID />
+    | QRScreen => <QRScreen />
+    }
   }
 
   let renderTransferContent = () => {
     switch currentTransferScreen {
     | Home => <Home handleNavigate={_ => setCurrentTransferScreen(_ => Transfer)} />
     | Transfer => <Transfer handleNavigate={_ => setCurrentTransferScreen(_ => EnterAmount)} />
-    | EnterAmount => <EnterAmount handleNavigate={_ => handleNavigateToFaceID(~flow="Transfer")} />
+    | EnterAmount => <EnterAmount handleNavigate={_ => handleNavigateToFaceID()} />
     | FaceID => <FaceID />
     | TransactionCompleted =>
       <TransactionCompleted handleNavigate={_ => setCurrentTransferScreen(_ => FinternetHome)} />
@@ -341,7 +370,8 @@ let make = () => {
     | OnboardingLogin =>
       // <OnboardingLogin handleNavigate={_ => setCurrentOnboardingScreen(_ => LinkBankAccount)} />
       <Login
-        handleNavigate={_ => setCurrentOnboardingScreen(_ => LinkBankAccount)}
+        // handleNavigate={_ => setCurrentOnboardingScreen(_ => LinkBankAccount)}
+        handleNavigate={_ => handleNavigateToFaceID()}
         flow={MoneyTransferOnboarding}
       />
     | LinkBankAccount =>
@@ -355,24 +385,6 @@ let make = () => {
     | FaceID => <FaceID />
 
     | BankAccountLinked => <BankAccountLinked />
-    }
-  }
-
-  let renderFinternetOnboardingContent = () => {
-    switch currentFinternetOnboardingScreen {
-    | FinternetLogin =>
-      <Login
-        handleNavigate={_ => setCurrentFinternetOnboardingScreen(_ => CreateAccount)}
-        flow={FinternetOnboarding}
-      />
-    // <FinternetLogin
-    //   handleNavigate={_ => setCurrentFinternetOnboardingScreen(_ => CreateAccount)}
-    // />
-    | CreateAccount =>
-      <CreateAccount handleNavigate={_ => handleNavigateToFaceID(~flow="FinternetOnboarding")} />
-
-    | FaceID => <FaceID />
-    | QRScreen => <QRScreen />
     }
   }
 
@@ -435,7 +447,8 @@ let make = () => {
     switch currentPropertyUserOnboardingScreen {
     | PropertyLogin =>
       <Login
-        handleNavigate={_ => setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizationHome)}
+        handleNavigate={_ => handleNavigateToFaceID()}
+        // handleNavigate={_ => setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizationHome)}
         flow={PropertyOnboarding}
       />
     // <PropertyLogin
@@ -526,8 +539,15 @@ let make = () => {
               <div
                 //     className="h-full w-full border-8 border-black shadow-lg rounded-lg p-4 "
                 // className="bg-white h-full sm:h-4/5 self-center w-full p-4 border-2 border-black border-t-4 shadow-lg rounded-lg overflow-auto ">
-                className="bg-white h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto">
+                className="relative bg-white h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto">
                 {renderContent()}
+                <FaceIDModal
+                  showModal={showFaceIDModal}
+                  toggleModal={toggleFaceIDModal}
+                  // handleNavigate={handleNavigate}
+                  text="Link your Finternet account with the the MyProp app"
+                  buttonText="Link"
+                />
               </div>
               // </div>
               <div className="flex flex-row justify-around text-xl text-gray-400">

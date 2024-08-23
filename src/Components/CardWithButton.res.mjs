@@ -3,6 +3,14 @@
 import * as JsxRuntime from "react/jsx-runtime";
 
 function CardWithButton(props) {
+  var buttonClass;
+  switch (props.buttonColor) {
+    case "primaryBlue" :
+        buttonClass = "bg-primaryBlue";
+        break;
+    default:
+      buttonClass = "bg-disabledGray";
+  }
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsx("div", {
@@ -15,7 +23,7 @@ function CardWithButton(props) {
                     }),
                 JsxRuntime.jsx("button", {
                       children: "Get Started",
-                      className: "bg-[" + props.buttonColor + "] text-white rounded-lg w-2/6 h-9 text-xs",
+                      className: buttonClass + " text-white rounded-lg w-2/6 h-9 text-xs",
                       onClick: props.onClick
                     })
               ],

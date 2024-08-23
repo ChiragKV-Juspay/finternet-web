@@ -12,13 +12,13 @@ let make = (~handleNavigate) => {
         <CardWithButton
           title="Link your property"
           description="Link your property to apply for credit with collateral"
-          buttonColor="#0090FF"
+          buttonColor="primaryBlue"
           onClick={_ => handleNavigate()}
         />
         <CardWithButton
           title="Apply for loan?"
           description="Access quick financing by leveraging your property today!"
-          buttonColor="#D5D5D5"
+          buttonColor="disabledGray"
           onClick={_ => handleNavigate()}
         />
       </div>

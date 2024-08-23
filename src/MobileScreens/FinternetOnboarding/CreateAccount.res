@@ -1,7 +1,7 @@
 open Colors
 @react.component
 let make = (~handleNavigate) => {
-  <div className="flex flex-col h-full justify-between">
+  <div className="relative flex flex-col h-full justify-between">
     <div className="flex flex-col gap-10">
       <Header isFinternet={true} />
       <div className="">
@@ -16,6 +16,13 @@ let make = (~handleNavigate) => {
         {React.string("Get Started")}
       </button>
       <SecuredByFinterest color=colors.black />
+      // <FaceIDModal
+      //   showModal={showFaceIDModal}
+      //   toggleModal={toggleFaceIDModal}
+      //   handleNavigate={handleNavigate}
+      //   text="Link your Finternet account with the the MyProp app"
+      //   buttonText="Link"
+      // />
     </div>
   </div>
 }
