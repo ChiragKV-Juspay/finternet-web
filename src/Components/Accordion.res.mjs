@@ -274,7 +274,7 @@ function Accordion$1(props) {
                     })
             });
         break;
-    case "User Onboarding" :
+    case "Finternet Onboarding" :
         accordionContent = JsxRuntime.jsx("div", {
               children: Caml_obj.equal(registerStartResponse, null) && Caml_obj.equal(attestation, null) ? JsxRuntime.jsx("div", {
                       children: "Start onboarding to view activity logs",

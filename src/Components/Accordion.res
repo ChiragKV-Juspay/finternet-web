@@ -250,7 +250,7 @@ let make = (
           </div>}
     </div>
 
-  | "User Onboarding" =>
+  | "Finternet Onboarding" =>
     <div>
       {registerStartResponse == Js.Json.null && attestation == Js.Json.null
         ? <div className="text-sm text-gray-500">
