@@ -11,7 +11,7 @@ function Header(props) {
                 isFinternet ? JsxRuntime.jsx("img", {
                         className: " h-1/12 w-1/12",
                         alt: "Description of image",
-                        src: "/finternetLogo.png"
+                        src: "/FinternetLogoWhite.png"
                       }) : JsxRuntime.jsxs("svg", {
                         children: [
                           JsxRuntime.jsx("path", {
@@ -72,7 +72,7 @@ function Header(props) {
                       children: [
                         JsxRuntime.jsx("path", {
                               d: "M6.44101 11.1056C6.44101 7.62135 9.26548 4.79688 12.7497 4.79688C16.2338 4.79688 19.0583 7.62136 19.0583 11.1055V13.8987C19.0583 15.785 19.6317 17.6267 20.7025 19.1797H4.79688C5.86761 17.6267 6.44101 15.785 6.44101 13.8987V11.1056Z",
-                              stroke: isFinternet ? Colors.colors.black : "#00B76A",
+                              stroke: isFinternet ? Colors.colors.white : "#00B76A",
                               strokeWidth: "1.5"
                             }),
                         JsxRuntime.jsx("path", {
@@ -84,7 +84,7 @@ function Header(props) {
                         JsxRuntime.jsx("path", {
                               d: "M15.9785 19.1797V19.4101C15.9785 21.1932 14.5331 22.6386 12.75 22.6386C10.9669 22.6386 9.52148 21.1932 9.52148 19.4101V19.1797",
                               opacity: "0.4",
-                              stroke: isFinternet ? Colors.colors.black : "#00B76A",
+                              stroke: isFinternet ? Colors.colors.white : "#00B76A",
                               strokeWidth: "1.5"
                             })
                       ],

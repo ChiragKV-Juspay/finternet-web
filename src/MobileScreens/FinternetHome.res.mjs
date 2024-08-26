@@ -20,11 +20,12 @@ function FinternetHome(props) {
                 JsxRuntime.jsxs("div", {
                       children: [
                         JsxRuntime.jsx("div", {
-                              children: "No apps linked"
+                              children: "No apps linked",
+                              className: "text-white"
                             }),
                         JsxRuntime.jsx("button", {
                               children: "Link Account",
-                              className: "bg-black text-white text-xs rounded-lg w-1/3 h-8",
+                              className: "bg-white text-black text-xs rounded-lg w-1/3 h-8",
                               onClick: (function (param) {
                                   if (handleNavigate !== undefined) {
                                     return handleNavigate();
@@ -44,7 +45,7 @@ function FinternetHome(props) {
     case "HomeWithMyFin" :
         tmp = JsxRuntime.jsx(AppCard.make, {
               app: "MyFin",
-              amount: "₹ 4800"
+              amount: "₹ 3000"
             });
         break;
     case "HomeWithMyFinAndMyProp" :
@@ -52,7 +53,7 @@ function FinternetHome(props) {
               children: [
                 JsxRuntime.jsx(AppCard.make, {
                       app: "MyFin",
-                      amount: "₹ 80,04,800"
+                      amount: "₹ 80,03,000"
                     }),
                 JsxRuntime.jsx(AppCard.make, {
                       app: "MyProp",
@@ -70,11 +71,11 @@ function FinternetHome(props) {
                       isFinternet: true
                     }),
                 JsxRuntime.jsx(AccountCard.make, {
-                      iconColor: Colors.colors.black
+                      iconColor: Colors.colors.white
                     }),
                 JsxRuntime.jsx("div", {
                       children: "Linked Applications",
-                      className: "my-2"
+                      className: "my-2 text-white"
                     }),
                 tmp
               ],

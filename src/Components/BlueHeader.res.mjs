@@ -67,7 +67,8 @@ function BlueHeader(props) {
                         JsxRuntime.jsx("rect", {
                               height: "32",
                               width: "32",
-                              fill: "#E6FFF4",
+                              fill: "#30A4FC",
+                              fillOpacity: "0.3",
                               rx: "16"
                             }),
                         JsxRuntime.jsx("path", {
@@ -77,17 +78,16 @@ function BlueHeader(props) {
                               strokeWidth: "1.5"
                             }),
                         JsxRuntime.jsx("path", {
-                              d: "M15.7498 7.79724V5.63867",
+                              d: "M15.75 7.79724V5.63867",
                               opacity: "0.4",
                               stroke: "#0091FF",
                               strokeOpacity: "0.8",
                               strokeWidth: "1.5"
                             }),
                         JsxRuntime.jsx("path", {
-                              d: "M18.9787 22.1797V22.4101C18.9787 24.1932 17.5333 25.6386 15.7502 25.6386C13.9671 25.6386 12.5217 24.1932 12.5217 22.4101V22.1797",
+                              d: "M18.9785 22.1797V22.4101C18.9785 24.1932 17.5331 25.6386 15.75 25.6386C13.9669 25.6386 12.5215 24.1932 12.5215 22.4101V22.1797",
                               opacity: "0.4",
-                              stroke: "#0091FF",
-                              strokeOpacity: "0.8",
+                              stroke: "#30A4FC",
                               strokeWidth: "1.5"
                             })
                       ],

@@ -1,5 +1,5 @@
 @react.component
-let make = () => {
+let make = (~handleNavigate) => {
   <div className="flex flex-col justify-between py-10 h-full ">
     <SuccessStatusWithText text="Bank account linked Successfully!" />
     // <img
@@ -10,8 +10,7 @@ let make = () => {
     <div>
       <button
         className=" bg-[#00B76A] text-white rounded-lg w-full h-10 text-sm"
-        // onClick={onNavigateToHome}
-      >
+        onClick={handleNavigate}>
         {React.string("Next")}
       </button>
     </div>

@@ -32,7 +32,7 @@ let make = (~handleNavigate) => {
                 onClick={_ => handleBankOptionClick(option)}
                 showBankDetails={false}
                 // bankIcon={option.imagePath}
-                bankDetails={option}
+                options={BankOptions(option)}
               />
               {isSelected
                 ? <button

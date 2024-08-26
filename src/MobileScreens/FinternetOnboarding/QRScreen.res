@@ -3,20 +3,20 @@ open Colors
 let make = (~handleNavigate=?) => {
   <div className="flex flex-col h-full gap-7">
     <Header isFinternet={true} />
-    <div className="font-bold text-lg"> {React.string("Identity verified successfully!")} </div>
+    <div className="font-bold text-lg text-white">
+      {React.string("Identity verified successfully!")}
+    </div>
     <div
       className="flex flex-col justify-between items-center w-full border border-gray-100 drop-shadow-md rounded-2xl py-3 gap-4 py-5">
       <div className="w-11/12">
-        <div className=" font-light text-[#797979] text-xs">
-          {React.string("Account Address")}
-        </div>
+        <div className=" font-light text-white text-xs"> {React.string("Account Address")} </div>
         <div className="flex flex-row justify-between">
           <div className=" text-base "> {React.string("siddharth@finternet")} </div>
           // <img src="/CopyIcon.svg" alt="Description of image" />
         </div>
       </div>
       <img src="/QRCode.svg" alt="Description of image" className="w-11/12 self-center" />
-      <div className="font-light text-[#797979] text-base">
+      <div className="font-light text-white  text-base">
         {React.string("Welcome to the Finternet!")}
       </div>
       <button
@@ -28,7 +28,7 @@ let make = (~handleNavigate=?) => {
           }}>
         {React.string("Go to Home")}
       </button>
-      <SecuredByFinterest color=colors.black />
+      <SecuredByFinterest color=colors.white />
     </div>
   </div>
 }

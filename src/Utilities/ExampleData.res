@@ -6,6 +6,19 @@ type bankOptionsType = {
   imagePath: string,
   cardNumber: string,
 }
+type transactionType =
+  | Credited
+  | Debited
+
+type contactOptionsType = {
+  id: string,
+  name: string,
+  finternetId: string,
+  imagePath: string,
+  amount: string,
+  transactionType: transactionType,
+}
+
 let bankOptions = [
   {
     id: "1",
@@ -65,5 +78,32 @@ let bankAccountOptions = [
     interestRate: "10%",
     imagePath: "/RoundedPinkRectangle.svg",
     cardNumber: "**** **** 5682",
+  },
+]
+
+let contactOptions = [
+  {
+    id: "1",
+    name: "Nandan Nilekani",
+    finternetId: "nandan@finternet",
+    imagePath: "/ProfilePicNandan.svg",
+    amount: "100.00",
+    transactionType: Debited,
+  },
+  {
+    id: "2",
+    name: "Christina Aldecra",
+    finternetId: "christina.a@finternet",
+    imagePath: "/ProfilePic1.svg",
+    amount: "200.00",
+    transactionType: Credited,
+  },
+  {
+    id: "3",
+    name: "Nicki Taylor",
+    finternetId: "nicki.t@finternet",
+    imagePath: "/ProfilePic2.svg",
+    amount: "200.00",
+    transactionType: Credited,
   },
 ]

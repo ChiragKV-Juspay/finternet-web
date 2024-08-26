@@ -2,7 +2,7 @@ open Colors
 
 @react.component
 let make = (~handleNavigate) => {
-  <div className="flex flex-col h-full justify-between">
+  <div className=" flex flex-col h-full justify-between">
     <div className="flex flex-col gap-5">
       <HeaderWithBack title="Home" backButtonStrokeColor=colors.propertyBlue />
       <div className="flex flex-col gap-2">

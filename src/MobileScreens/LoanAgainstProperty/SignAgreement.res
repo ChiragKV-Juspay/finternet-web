@@ -6,7 +6,7 @@ let make = (~handleNavigate) => {
       <HeaderWithBack title="Sign Agreement" backButtonStrokeColor=colors.propertyBlue />
       <div className="flex flex-col  gap-6 items-center h-full">
         <div> {React.string("Pledge Deed")} </div>
-        <img src="/Agreement.svg" alt="Description of image" className=" scale-105 " />
+        <img src="/Agreement1.webp" alt="Description of image" className=" scale-105 " />
       </div>
     </div>
     <div className="flex flex-col gap-4 ">

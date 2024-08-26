@@ -38,16 +38,16 @@ type flow =
 let make = (~handleNavigate=?, ~flow: flow) => {
   <div className="flex flex-col gap-4">
     <Header isFinternet={true} />
-    <AccountCard iconColor=colors.black />
-    <div className="my-2"> {React.string("Linked Applications")} </div>
+    <AccountCard iconColor=colors.white />
+    <div className="my-2 text-white"> {React.string("Linked Applications")} </div>
     {switch flow {
     | EmptyHome =>
       <div className="flex flex-col items-center border border-gray-100 rounded-2xl p-5">
         <img src="/NoAppsLinkedImage.svg" alt="Background Image" />
         <div className="flex flex-col gap-4 w-full items-center">
-          <div> {React.string("No apps linked")} </div>
+          <div className="text-white"> {React.string("No apps linked")} </div>
           <button
-            className="bg-black text-white text-xs rounded-lg w-1/3 h-8"
+            className="bg-white text-black text-xs rounded-lg w-1/3 h-8"
             onClick={_ =>
               switch handleNavigate {
               | Some(callback) => callback()
@@ -57,11 +57,11 @@ let make = (~handleNavigate=?, ~flow: flow) => {
           </button>
         </div>
       </div>
-    | HomeWithMyFin => <AppCard app={MyFin} amount="₹ 4800" />
+    | HomeWithMyFin => <AppCard app={MyFin} amount="₹ 3000" />
 
     | HomeWithMyFinAndMyProp =>
       <div className="flex flex-col gap-3">
-        <AppCard app={MyFin} amount="₹ 80,04,800" />
+        <AppCard app={MyFin} amount="₹ 80,03,000" />
         <AppCard app={MyProp} amount="₹ 80,00,000" />
       </div>
     }}

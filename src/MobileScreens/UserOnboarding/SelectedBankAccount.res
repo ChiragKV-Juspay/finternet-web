@@ -28,7 +28,7 @@ let make = (~handleNavigate) => {
               onClick={_ => handleBankOptionClick(option)}
               showCardNumber={true}
               showBankDetails={false}
-              bankDetails={option}
+              options={BankOptions(option)}
             />
             <div className="border-t border-dashed w-full mt-6 border-[#E6E6E6]" />
           </div>

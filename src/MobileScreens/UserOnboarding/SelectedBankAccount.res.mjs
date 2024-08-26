@@ -36,7 +36,10 @@ function SelectedBankAccount(props) {
                                                                   });
                                                             }),
                                                           isSelected: isSelected,
-                                                          bankDetails: option,
+                                                          options: {
+                                                            TAG: "BankOptions",
+                                                            _0: option
+                                                          },
                                                           showBankDetails: false,
                                                           showCardNumber: true
                                                         }),

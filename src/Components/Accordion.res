@@ -1,141 +1,9 @@
-open Belt.Int
+open Utils
+open Types
 
-@val
-external stringifyWithSpacing: (Js.Json.t, option<int>, option<int>) => string = "JSON.stringify"
-
-type asset = {
-  currency: string,
-  unit: int,
-  token_manager: string,
-}
-
-type record = {
-  sender: string,
-  recipient: string,
-  asset: asset,
-  signature: string,
-}
-type accountDetailsType = {account_number: string}
-type tokenizeBodyType = {
-  token_manager: string,
-  asset_type: string,
-  currency: string,
-  account_details: accountDetailsType,
-}
-
-type attestationType = {certificate: string}
-
-type propertyDetailsType = {
-  property_id: string,
-  property_registrar: string,
-}
-
-type tokenizePropertyBodyType = {
-  asset_type: string,
-  property_details: propertyDetailsType,
-  attestations: array<attestationType>,
-}
-
-type slMpcSetup = {keygen: Js.Json.t}
-
-type payload = {
-  slMpcSetup: slMpcSetup,
-  timeout: int,
-  time: string,
-}
-
-type jwtBody = {
-  token: string,
-  payload: payload,
-  uuid: string,
-}
-
-type keygenResponse = {
-  public_key: string,
-  total_send: int,
-  total_recv: int,
-  total_wait: int,
-  total_time: int,
-}
-
-let toJson = (record: record) => {
-  let assetDict = Js.Dict.fromArray([
-    ("currency", Js.Json.string(record.asset.currency)),
-    ("unit", Js.Json.number(record.asset.unit->toFloat)),
-    ("token_manager", Js.Json.string(record.asset.token_manager)),
-  ])
-
-  let dict = Js.Dict.fromArray([
-    ("sender", Js.Json.string(record.sender)),
-    ("recipient", Js.Json.string(record.recipient)),
-    ("asset", Js.Json.object_(assetDict)),
-    ("signature", Js.Json.string(record.signature)),
-  ])
-
-  Js.Json.object_(dict)
-}
-let tokenizedBodyToJson = (record: tokenizeBodyType) => {
-  let accountDetailsDict = Js.Dict.fromArray([
-    ("account_number", Js.Json.string(record.account_details.account_number)),
-  ])
-  let dict = Js.Dict.fromArray([
-    ("token_manager", Js.Json.string(record.token_manager)),
-    ("asset_type", Js.Json.string(record.asset_type)),
-    ("currency", Js.Json.string(record.currency)),
-    ("account_details", Js.Json.object_(accountDetailsDict)),
-  ])
-
-  Js.Json.object_(dict)
-}
-
-let tokenizedPropertyBodyToJson = (record: tokenizePropertyBodyType) => {
-  let propertyDetailsDict = Js.Dict.fromArray([
-    ("property_id", Js.Json.string(record.property_details.property_id)),
-    ("property_registrar", Js.Json.string(record.property_details.property_registrar)),
-  ])
-
-  let attestationsArray = Belt.Array.map(record.attestations, attestation =>
-    Js.Dict.fromArray([("certificate", Js.Json.string(attestation.certificate))])->Js.Json.object_
-  )
-
-  let dict = Js.Dict.fromArray([
-    ("asset_type", Js.Json.string(record.asset_type)),
-    ("property_details", Js.Json.object_(propertyDetailsDict)),
-    ("attestations", Js.Json.array(attestationsArray)),
-  ])
-
-  Js.Json.object_(dict)
-}
-
-let toJsonJwtBody = (jwtBody: jwtBody) => {
-  let slMpcSetupDict = Js.Dict.fromArray([("keygen", Js.Json.object_(Js.Dict.empty()))])
-
-  let payloadDict = Js.Dict.fromArray([
-    ("slMpcSetup", Js.Json.object_(slMpcSetupDict)),
-    ("timeout", Js.Json.number(jwtBody.payload.timeout->toFloat)),
-    ("time", Js.Json.string(jwtBody.payload.time)),
-  ])
-
-  let dict = Js.Dict.fromArray([
-    ("token", Js.Json.string(jwtBody.token)),
-    ("payload", Js.Json.object_(payloadDict)),
-    ("uuid", Js.Json.string(jwtBody.uuid)),
-  ])
-
-  Js.Json.object_(dict)
-}
-
-let toJsonKeyGenResponse = (stats: keygenResponse) => {
-  let dict = Js.Dict.fromArray([
-    ("public_key", Js.Json.string(stats.public_key)),
-    ("total_send", Js.Json.number(stats.total_send->toFloat)),
-    ("total_recv", Js.Json.number(stats.total_recv->toFloat)),
-    ("total_wait", Js.Json.number(stats.total_wait->toFloat)),
-    ("total_time", Js.Json.number(stats.total_time->toFloat)),
-  ])
-
-  Js.Json.object_(dict)
-}
+type data = {transaction_id: string}
+@scope("JSON") @val
+external parseIntoMyData: string => data = "parse"
 
 @react.component
 let make = (
@@ -188,10 +56,10 @@ let make = (
   }
   let body: record = {
     sender: "siddharth@finternet",
-    recipient: "nandan@ledger",
+    recipient: "nandan@finternet",
     asset: {
       currency: "INR",
-      unit: 200,
+      unit: 2000,
       token_manager: "ABC Bank",
     },
     signature: "AWoqX7bTaHtIyGQzgs9_c8jYdhN7sC2ascAE9hsC",
@@ -239,7 +107,11 @@ let make = (
   let prettyJson = stringifyWithSpacing(userData, None, Some(2))
   let prettyTransactionsHistory = stringifyWithSpacing(transactionsHistory, None, Some(2))
   let prettyAssets = stringifyWithSpacing(userAssets, None, Some(2))
+
   let prettyTransactionResult = stringifyWithSpacing(transactionResult, None, Some(2))
+
+  let parsedTransactionResult = parseIntoMyData(prettyTransactionResult)
+
   let prettyPostBody = stringifyWithSpacing(bodyJson, None, Some(2))
   let prettyRegisterStartResponse = stringifyWithSpacing(registerStartResponse, None, Some(2))
   let prettyLoginStartResponse = stringifyWithSpacing(loginStartResponse, None, Some(2))
@@ -345,9 +217,18 @@ let make = (
             {transactionResult != Js.Json.null
               ? <AccordionItem
                   summary={React.string("GET Transaction Details")}
-                  detailsContent={<pre className="whitespace-pre-wrap">
-                    {React.string(prettyTransactionResult)}
-                  </pre>}
+                  detailsContent={<div className="text-sm overflow-auto">
+                    <pre className="whitespace-pre-wrap">
+                      {React.string(prettyTransactionResult)}
+                    </pre>
+                    <a
+                      href={`https://explorer.solana.com/tx/${parsedTransactionResult.transaction_id}?cluster=devnet`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-blue-500  hover:text-blue-700 transition duration-300">
+                      {React.string("View in Solana")}
+                    </a>
+                  </div>}
                   detailsClassName="text-sm overflow-auto"
                 />
               : React.null}
@@ -413,18 +294,6 @@ let make = (
                       detailsClassName="text-sm overflow-auto"
                     />}
                   />
-                  // <AccordionItem
-                  //   summary={React.string("Verify JWT")}
-                  //   detailsContent={<AccordionItem
-                  //     summary={React.string(
-                  //       "POST https://selfnode.codecrane.com/auth-0/verify_google_jwt",
-                  //     )}
-                  //     detailsContent={<pre className="whitespace-pre-wrap">
-                  //       {React.string(prettyJwtBody)}
-                  //     </pre>}
-                  //     detailsClassName="text-sm overflow-auto"
-                  //   />}
-                  // />
                   <AccordionItem
                     summary={React.string("Generate Public Key")}
                     detailsContent={<div>

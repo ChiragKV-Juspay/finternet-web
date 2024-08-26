@@ -64,7 +64,7 @@ let make = () => {
     setCurrentPropertyUserOnboardingScreen,
   ) = React.useState(_ => PropertyLogin)
 
-  let (selectedOption, setSelectedOption) = React.useState(_ => "Hello World!")
+  let (selectedOption, setSelectedOption) = React.useState(_ => "Finternet Onboarding")
 
   let (userData, setUserData) = React.useState(() => Js.Json.null)
   let (transactionsHistory, setTransactionsHistory) = React.useState(() => Js.Json.null)
@@ -354,11 +354,11 @@ let make = () => {
       open Fetch
 
       let transferBody = {
-        "sender": "arnab.d@unifiedledger1",
-        "recipient": "ales@ledger",
+        "sender": "siddharth@finternet",
+        "recipient": "nandan@finternet",
         "asset": {
-          "currency": "USD",
-          "unit": 200,
+          "currency": "INR",
+          "unit": 2000,
           "token_manager": "tokenManagerAddress",
         },
         "signature": "signature",
@@ -376,6 +376,7 @@ let make = () => {
       )
 
       let json = await response->Fetch.Response.json
+
       setTransactionResult(_ => json)
     }
 
@@ -541,7 +542,13 @@ let make = () => {
 
     // | FaceID => <FaceID />
 
-    | BankAccountLinked => <BankAccountLinked />
+    | BankAccountLinked =>
+      <BankAccountLinked
+        handleNavigate={_ => {
+          setSelectedOption(_ => "Domestic Money Transfer")
+          setCurrentTransferScreen(_ => Home)
+        }}
+      />
     }
   }
 
@@ -629,7 +636,13 @@ let make = () => {
 
         // handleNavigate={_ => setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizedStatus)}
       />
-    | PropertyTokenizedStatus => <PropertyTokenizedStatus handleNavigate={_ => ()} />
+    | PropertyTokenizedStatus =>
+      <PropertyTokenizedStatus
+        handleNavigate={_ => {
+          setSelectedOption(_ => "Loan Against Property")
+          setCurrentLoanAgainstPropertyScreen(_ => PropertyDashboard)
+        }}
+      />
     }
   }
 
@@ -684,7 +697,7 @@ let make = () => {
         <Drawer handleDrawerSelection={handleDrawerSelection} selectedOption={selectedOption} />
       </div>
       {selectedOption == "Hello World!"
-        ? <div className="flex flex-col h-full w-full  items-center  my-40">
+        ? <div className="flex flex-col h-full w-full  items-center gap-3  my-40">
             <img src="/finternetLogo.png" alt="Description of image" className=" h-4/12 w-1/12" />
             <div className="w-5/12 text-center ">
               {React.string(
@@ -700,7 +713,13 @@ let make = () => {
               <div
                 //     className="h-full w-full border-8 border-black shadow-lg rounded-lg p-4 "
                 // className="bg-white h-full sm:h-4/5 self-center w-full p-4 border-2 border-black border-t-4 shadow-lg rounded-lg overflow-auto ">
-                className="relative bg-white h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto">
+                className={`relative ${(selectedOption == "Domestic Money Transfer" &&
+                    currentTransferScreen == FinternetHome) ||
+                  selectedOption == "Loan Against Property" &&
+                    currentLoanAgainstPropertyScreen == FinternetHomeMyProp ||
+                  selectedOption == "Finternet Onboarding"
+                    ? "bg-black"
+                    : "bg-white"} h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto`}>
                 {renderContent()}
                 <FaceIDModal
                   showModal={showFaceIDModal}

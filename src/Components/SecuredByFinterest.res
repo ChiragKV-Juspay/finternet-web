@@ -69,7 +69,14 @@ let make = (~className=?, ~color=colors.finternetGreen) => {
         </clipPath>
       </defs>
     </svg>
-    <div className="font-extralight text-[#797979] text-xs"> {React.string("Secured by")} </div>
-    <div className="font-medium text-[#797979] text-xs"> {React.string("Finternet")} </div>
+    <div
+      className={`font-extralight ${color == colors.white ? `text-white` : `text-[#797979]`}
+          text-xs`}>
+      {React.string("Secured by")}
+    </div>
+    <div
+      className={`font-medium ${color == colors.white ? `text-white` : `text-[#797979]`} text-xs`}>
+      {React.string("Finternet")}
+    </div>
   </div>
 }

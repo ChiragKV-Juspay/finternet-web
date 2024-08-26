@@ -4,6 +4,8 @@ import * as JsxRuntime from "react/jsx-runtime";
 
 function SuccessStatusWithText(props) {
   var __color = props.color;
+  var __descriptionText = props.descriptionText;
+  var descriptionText = __descriptionText !== undefined ? __descriptionText : "";
   var color = __color !== undefined ? __color : "Green";
   var pathName;
   pathName = color === "Green" ? "/Success.svg" : "/SuccessBlue.svg";
@@ -16,7 +18,11 @@ function SuccessStatusWithText(props) {
                     }),
                 JsxRuntime.jsx("div", {
                       children: props.text,
-                      className: "font-bold self-center text-center "
+                      className: "font-bold text-xl self-center text-center "
+                    }),
+                JsxRuntime.jsx("div", {
+                      children: descriptionText,
+                      className: "text-textGray self-center text-center "
                     })
               ],
               className: "flex flex-col gap-2 self-center w-9/12"

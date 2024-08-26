@@ -1,11 +1,17 @@
 @react.component
 let make = (~handleNavigate) => {
-  <div className="flex flex-col justify-between h-full ">
-    <img
-      src="/TransactionSuccessful.svg"
-      alt="Description of image"
-      className="w-full h-auto max-w-xs md:max-w-md lg:max-w-lg"
-    />
+  <div className="flex flex-col justify-between h-full  ">
+    // <img
+    //   src="/TransactionSuccessful.svg"
+    //   alt="Description of image"
+    //   className="w-full h-auto max-w-xs md:max-w-md lg:max-w-lg"
+    // />
+    // <div className=>
+    <div className="flex flex-col justify-end h-1/2 items-center">
+      <SuccessStatusWithText
+        text="Transaction Successful" descriptionText="Your transfer of ₹2000 is completed"
+      />
+    </div>
     <div>
       <button
         className=" bg-[#00B76A] text-white rounded-lg w-full h-10 text-sm"
@@ -16,5 +22,6 @@ let make = (~handleNavigate) => {
         {React.string("View Transaction History")}
       </div>
     </div>
+    // </div>
   </div>
 }

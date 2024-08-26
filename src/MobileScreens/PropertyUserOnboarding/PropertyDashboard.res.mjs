@@ -62,7 +62,7 @@ function PropertyDashboard(props) {
                       color: Colors.colors.propertyBlue
                     })
               ],
-              className: "flex flex-col h-full justify-between"
+              className: " flex flex-col h-full justify-between"
             });
 }
 

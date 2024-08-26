@@ -55,7 +55,8 @@ let make = (~handleNavigate) => {
                 isSelected={isSelected}
                 onClick={_ => handleBankOptionClick(option)}
                 // bankIcon={option.imagePath}
-                bankDetails={option}
+                options={BankOptions(option)}
+                showBankDetails={true}
               />
               {isSelected
                 ? <button

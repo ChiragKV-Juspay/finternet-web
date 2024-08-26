@@ -100,7 +100,11 @@ function SelectBankForLoan(props) {
                                                                           });
                                                                     }),
                                                                   isSelected: isSelected,
-                                                                  bankDetails: option
+                                                                  options: {
+                                                                    TAG: "BankOptions",
+                                                                    _0: option
+                                                                  },
+                                                                  showBankDetails: true
                                                                 }),
                                                             isSelected ? JsxRuntime.jsx("button", {
                                                                     children: "View Key Fact Sheet",

@@ -11,6 +11,13 @@ function PropertyTokenizationHome(props) {
   var handleNavigate = props.handleNavigate;
   return JsxRuntime.jsxs("div", {
               children: [
+                JsxRuntime.jsx("div", {
+                      children: JsxRuntime.jsx("img", {
+                            alt: "Description of image",
+                            src: "/BackgroundBlueGradient.svg"
+                          }),
+                      className: "absolute z-0 -m-4"
+                    }),
                 JsxRuntime.jsxs("div", {
                       children: [
                         JsxRuntime.jsx(BlueHeader.make, {}),
@@ -41,16 +48,16 @@ function PropertyTokenizationHome(props) {
                                         })
                                     })
                               ],
-                              className: "flex flex-col gap-4 "
+                              className: "flex flex-col gap-4 z-10"
                             })
                       ],
-                      className: "flex flex-col gap-10"
+                      className: "flex flex-col gap-10 z-10"
                     }),
                 JsxRuntime.jsx(SecuredByFinterest.make, {
                       color: Colors.colors.propertyBlue
                     })
               ],
-              className: "flex flex-col h-full justify-between "
+              className: "relative flex flex-col h-full justify-between "
             });
 }
 

@@ -60,7 +60,7 @@ function App(props) {
   var setCurrentPropertyUserOnboardingScreen = match$4[1];
   var currentPropertyUserOnboardingScreen = match$4[0];
   var match$5 = React.useState(function () {
-        return "Hello World!";
+        return "Finternet Onboarding";
       });
   var setSelectedOption = match$5[1];
   var selectedOption = match$5[0];
@@ -495,11 +495,11 @@ function App(props) {
   var performTransfer = function () {
     var postTransfer = async function () {
       var transferBody = {
-        sender: "arnab.d@unifiedledger1",
-        recipient: "ales@ledger",
+        sender: "siddharth@finternet",
+        recipient: "nandan@finternet",
         asset: {
-          currency: "USD",
-          unit: 200,
+          currency: "INR",
+          unit: 2000,
           token_manager: "tokenManagerAddress"
         },
         signature: "signature"
@@ -579,7 +579,7 @@ function App(props) {
                     RE_EXN_ID: "Match_failure",
                     _1: [
                       "App.res",
-                      439,
+                      440,
                       6
                     ],
                     Error: new Error()
@@ -621,7 +621,7 @@ function App(props) {
                     RE_EXN_ID: "Match_failure",
                     _1: [
                       "App.res",
-                      459,
+                      460,
                       6
                     ],
                     Error: new Error()
@@ -680,7 +680,7 @@ function App(props) {
                     });
       case "Transfer" :
           return JsxRuntime.jsx(Transfer.make, {
-                      handleNavigate: (function (param) {
+                      handleNavigate: (function () {
                           setCurrentTransferScreen(function (param) {
                                 return "EnterAmount";
                               });
@@ -733,7 +733,16 @@ function App(props) {
                         })
                     });
       case "BankAccountLinked" :
-          return JsxRuntime.jsx(BankAccountLinked.make, {});
+          return JsxRuntime.jsx(BankAccountLinked.make, {
+                      handleNavigate: (function (param) {
+                          setSelectedOption(function (param) {
+                                return "Domestic Money Transfer";
+                              });
+                          setCurrentTransferScreen(function (param) {
+                                return "Home";
+                              });
+                        })
+                    });
       
     }
   };
@@ -826,7 +835,12 @@ function App(props) {
       case "PropertyTokenizedStatus" :
           return JsxRuntime.jsx(PropertyTokenizedStatus.make, {
                       handleNavigate: (function () {
-                          
+                          setSelectedOption(function (param) {
+                                return "Loan Against Property";
+                              });
+                          setCurrentLoanAgainstPropertyScreen(function (param) {
+                                return "PropertyDashboard";
+                              });
                         })
                     });
       
@@ -899,7 +913,7 @@ function App(props) {
                   className: "w-5/12 text-center "
                 })
           ],
-          className: "flex flex-col h-full w-full  items-center  my-40"
+          className: "flex flex-col h-full w-full  items-center gap-3  my-40"
         });
   } else {
     var tmp$1;
@@ -987,7 +1001,9 @@ function App(props) {
                                   buttonText: "Link"
                                 })
                           ],
-                          className: "relative bg-white h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto"
+                          className: "relative " + (
+                            selectedOption === "Domestic Money Transfer" && currentTransferScreen === "FinternetHome" || selectedOption === "Loan Against Property" && currentLoanAgainstPropertyScreen === "FinternetHomeMyProp" || selectedOption === "Finternet Onboarding" ? "bg-black" : "bg-white"
+                          ) + " h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto"
                         }),
                     JsxRuntime.jsxs("div", {
                           children: [

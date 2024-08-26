@@ -22,13 +22,17 @@ function AccountCard(props) {
                               children: [
                                 JsxRuntime.jsx("div", {
                                       children: "Account Address",
-                                      className: "text-sm text-[#797979] font-normal"
+                                      className: "text-sm " + (
+                                        iconColor === Colors.colors.white ? "text-white" : "text-textGray"
+                                      ) + " font-normal"
                                     }),
                                 JsxRuntime.jsxs("div", {
                                       children: [
                                         JsxRuntime.jsx("div", {
                                               children: id,
-                                              className: "text-xl font-semibold"
+                                              className: "text-xl " + (
+                                                iconColor === Colors.colors.white ? "text-white" : ""
+                                              ) + " font-semibold"
                                             }),
                                         JsxRuntime.jsx("div", {
                                               children: JsxRuntime.jsxs("svg", {

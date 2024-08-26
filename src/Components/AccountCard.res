@@ -14,11 +14,16 @@ let make = (~id="siddharth@finternet", ~iconColor=colors.finternetGreen) => {
     />
     <div className="h-full justify-between z-10">
       <div>
-        <div className="text-sm text-[#797979] font-normal">
+        <div
+          className={`text-sm ${iconColor == colors.white
+              ? `text-white`
+              : `text-textGray`} font-normal`}>
           {React.string("Account Address")}
         </div>
         <div className="flex flex-row justify-between">
-          <div className="text-xl font-semibold"> {React.string(id)} </div>
+          <div className={`text-xl ${iconColor == colors.white ? `text-white` : ``} font-semibold`}>
+            {React.string(id)}
+          </div>
           <div className="self-center z-10">
             <svg
               width="16"

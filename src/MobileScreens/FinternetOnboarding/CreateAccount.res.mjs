@@ -18,18 +18,18 @@ function CreateAccount(props) {
                               children: [
                                 JsxRuntime.jsx("div", {
                                       children: "Create account on the Finternet",
-                                      className: "font-bold text-xl"
+                                      className: "font-bold text-xl text-white"
                                     }),
                                 JsxRuntime.jsx("div", {
                                       children: "Follow the below steps",
-                                      className: "font-light text-sm mt-4"
+                                      className: "font-light text-sm text-white mt-4"
                                     })
                               ],
                               className: ""
                             }),
                         JsxRuntime.jsx("img", {
                               alt: "Description of image",
-                              src: "/VerifyIdentityStepper.svg"
+                              src: "/VerifyIdentityStepper1.svg"
                             })
                       ],
                       className: "flex flex-col gap-10"
@@ -38,13 +38,13 @@ function CreateAccount(props) {
                       children: [
                         JsxRuntime.jsx("button", {
                               children: "Get Started",
-                              className: " bg-black text-white rounded-lg w-full h-10",
+                              className: " bg-white text-black rounded-lg w-full h-10",
                               onClick: (function (param) {
                                   handleNavigate();
                                 })
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {
-                              color: Colors.colors.black
+                              color: Colors.colors.white
                             })
                       ],
                       className: "flex flex-col gap-4"

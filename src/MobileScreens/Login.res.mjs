@@ -25,7 +25,7 @@ function Login(props) {
     case "FinternetOnboarding" :
         match$1 = [
           "/BackgroundImage.svg",
-          Colors.colors.black,
+          Colors.colors.white,
           "#292929",
           "#474747",
           "#666666",
@@ -38,7 +38,7 @@ function Login(props) {
         break;
     case "PropertyOnboarding" :
         match$1 = [
-          "BackgroundBlueGradient",
+          "/BackgroundBlueGradient.svg",
           "#0091FF",
           "#F0FFF9",
           "#EAFFF6",
@@ -47,7 +47,7 @@ function Login(props) {
           "MyProp",
           "Welcome to MyProp",
           "Access your property via a unified interface and unlock the power of seamless transactability.",
-          ""
+          "absolute z-0 -m-4"
         ];
         break;
     case "MoneyTransferOnboarding" :
@@ -66,6 +66,7 @@ function Login(props) {
         break;
     
   }
+  var imageClass = match$1[9];
   var color = match$1[1];
   var onButtonPress = function () {
     switch (flow) {
@@ -79,61 +80,80 @@ function Login(props) {
       
     }
   };
+  var tmp;
+  switch (flow) {
+    case "FinternetOnboarding" :
+        tmp = null;
+        break;
+    case "PropertyOnboarding" :
+        tmp = JsxRuntime.jsx("div", {
+              children: JsxRuntime.jsx("img", {
+                    alt: "Description of image",
+                    src: match$1[0]
+                  }),
+              className: imageClass
+            });
+        break;
+    case "MoneyTransferOnboarding" :
+        tmp = JsxRuntime.jsx("div", {
+              children: JsxRuntime.jsxs("svg", {
+                    children: [
+                      JsxRuntime.jsxs("g", {
+                            children: [
+                              JsxRuntime.jsx("path", {
+                                    d: "M442.469 -10.0171L239.271 -190L-97.8634 231.191L442.469 -10.0171Z",
+                                    fill: match$1[2],
+                                    fillOpacity: "0.6"
+                                  }),
+                              JsxRuntime.jsx("path", {
+                                    d: "M268.073 -12.3014L81.292 -132.288L-144.49 259.888L268.073 -12.3014Z",
+                                    fill: match$1[3],
+                                    fillOpacity: "0.6"
+                                  }),
+                              JsxRuntime.jsx("path", {
+                                    d: "M142.265 -12.5122L-74.1484 -62L-147.554 357.697L142.265 -12.5122Z",
+                                    fill: match$1[4]
+                                  }),
+                              JsxRuntime.jsx("path", {
+                                    d: "M79 0H-143L-121 425.5L79 0Z",
+                                    fill: match$1[5]
+                                  })
+                            ],
+                            clipPath: "url(#clip0_1137_2884)"
+                          }),
+                      JsxRuntime.jsx("defs", {
+                            children: JsxRuntime.jsx("clipPath", {
+                                  children: JsxRuntime.jsx("rect", {
+                                        height: "178",
+                                        width: "390",
+                                        fill: "white"
+                                      }),
+                                  id: "clip0_1137_2884"
+                                })
+                          })
+                    ],
+                    height: "178",
+                    width: "390",
+                    fill: "none",
+                    viewBox: "0 0 390 178",
+                    xmlns: "http://www.w3.org/2000/svg"
+                  }),
+              className: imageClass
+            });
+        break;
+    
+  }
   return JsxRuntime.jsxs("div", {
               children: [
-                flow === "MoneyTransferOnboarding" ? JsxRuntime.jsx("div", {
-                        children: JsxRuntime.jsxs("svg", {
-                              children: [
-                                JsxRuntime.jsxs("g", {
-                                      children: [
-                                        JsxRuntime.jsx("path", {
-                                              d: "M442.469 -10.0171L239.271 -190L-97.8634 231.191L442.469 -10.0171Z",
-                                              fill: match$1[2],
-                                              fillOpacity: "0.6"
-                                            }),
-                                        JsxRuntime.jsx("path", {
-                                              d: "M268.073 -12.3014L81.292 -132.288L-144.49 259.888L268.073 -12.3014Z",
-                                              fill: match$1[3],
-                                              fillOpacity: "0.6"
-                                            }),
-                                        JsxRuntime.jsx("path", {
-                                              d: "M142.265 -12.5122L-74.1484 -62L-147.554 357.697L142.265 -12.5122Z",
-                                              fill: match$1[4]
-                                            }),
-                                        JsxRuntime.jsx("path", {
-                                              d: "M79 0H-143L-121 425.5L79 0Z",
-                                              fill: match$1[5]
-                                            })
-                                      ],
-                                      clipPath: "url(#clip0_1137_2884)"
-                                    }),
-                                JsxRuntime.jsx("defs", {
-                                      children: JsxRuntime.jsx("clipPath", {
-                                            children: JsxRuntime.jsx("rect", {
-                                                  height: "178",
-                                                  width: "390",
-                                                  fill: "white"
-                                                }),
-                                            id: "clip0_1137_2884"
-                                          })
-                                    })
-                              ],
-                              height: "178",
-                              width: "390",
-                              fill: "none",
-                              viewBox: "0 0 390 178",
-                              xmlns: "http://www.w3.org/2000/svg"
-                            }),
-                        className: match$1[9]
-                      }) : null,
+                tmp,
                 JsxRuntime.jsxs("div", {
                       children: [
                         JsxRuntime.jsxs("div", {
                               children: [
                                 flow === "FinternetOnboarding" ? JsxRuntime.jsx("img", {
-                                        className: " h-6/12 w-3/12",
+                                        className: "h-6/12 w-3/12",
                                         alt: "Description of image",
-                                        src: "/finternetLogo.png"
+                                        src: "/FinternetLogoWhite.png"
                                       }) : JsxRuntime.jsx("div", {
                                         children: match$1[6],
                                         className: "font-bold text-4xl text-[" + color + "]"
@@ -143,15 +163,17 @@ function Login(props) {
                                         JsxRuntime.jsx("div", {
                                               children: match$1[7],
                                               className: "font-bold " + (
-                                                flow === "FinternetOnboarding" ? "text-2xl" : "text-xl"
+                                                flow === "FinternetOnboarding" ? "text-2xl text-white" : "text-xl"
                                               )
                                             }),
                                         JsxRuntime.jsx("div", {
                                               children: match$1[8],
-                                              className: "font-light text-sm mt-4"
+                                              className: "font-light text-sm mt-4 " + (
+                                                flow === "FinternetOnboarding" ? "text-white" : ""
+                                              )
                                             })
                                       ],
-                                      className: "mt-10 "
+                                      className: "mt-10"
                                     })
                               ]
                             }),
@@ -159,7 +181,7 @@ function Login(props) {
                                 children: [
                                   JsxRuntime.jsx("div", {
                                         children: "Enter your mobile number",
-                                        className: "font-medium text-base"
+                                        className: "font-medium text-base text-white"
                                       }),
                                   JsxRuntime.jsxs("div", {
                                         children: [
@@ -171,7 +193,7 @@ function Login(props) {
                                                       }),
                                                   JsxRuntime.jsx("div", {
                                                         children: "+91",
-                                                        className: "font-normal text-base"
+                                                        className: "font-normal text-base text-white"
                                                       }),
                                                   JsxRuntime.jsx("svg", {
                                                         children: JsxRuntime.jsx("path", {
@@ -188,7 +210,8 @@ function Login(props) {
                                                 className: "flex flex-row ml-4 gap-2 items-center "
                                               }),
                                           JsxRuntime.jsx(Input.make, {
-                                                placeholder: "Enter your mobile number"
+                                                placeholder: "Enter your mobile number",
+                                                className: "bg-black flex-1 p-2 text-base outline-none rounded-lg w-4/5 text-sm text-white placeholder-white"
                                               })
                                         ],
                                         className: "flex flex-row border border-[#E6E6E6] rounded-lg"
@@ -214,19 +237,27 @@ function Login(props) {
                                       children: [
                                         JsxRuntime.jsx("div", {
                                               children: "By registering, you accept our",
-                                              className: "font-normal text-sm"
+                                              className: "font-normal text-sm " + (
+                                                flow === "FinternetOnboarding" ? "text-white" : ""
+                                              )
                                             }),
                                         JsxRuntime.jsx("div", {
                                               children: "Terms of Use",
-                                              className: "font-normal text-sm text-[" + color + "]"
+                                              className: "font-normal text-sm " + (
+                                                flow === "FinternetOnboarding" ? "text-white" : "text-[${color}]"
+                                              ) + " "
                                             }),
                                         JsxRuntime.jsx("div", {
                                               children: "&",
-                                              className: "font-normal text-sm"
+                                              className: "font-normal text-sm " + (
+                                                flow === "FinternetOnboarding" ? "text-white" : ""
+                                              )
                                             }),
                                         JsxRuntime.jsx("div", {
                                               children: "Privacy Policy",
-                                              className: "font-normal text-sm text-[" + color + "]"
+                                              className: "font-normal text-sm " + (
+                                                flow === "FinternetOnboarding" ? "text-white" : "text-[${color}]"
+                                              ) + " "
                                             })
                                       ],
                                       className: "flex flew-row flex-wrap gap-1 "
@@ -237,7 +268,7 @@ function Login(props) {
                         JsxRuntime.jsx("button", {
                               children: "Sign in with Finternet",
                               className: (
-                                flow === "FinternetOnboarding" ? "bg-black" : "bg-[" + color + "]"
+                                flow === "FinternetOnboarding" ? "bg-white text-black" : "bg-[" + color + "]"
                               ) + " text-white rounded-lg w-full h-12",
                               onClick: (function (param) {
                                   onButtonPress();
@@ -247,7 +278,7 @@ function Login(props) {
                               showModal: match[0],
                               toggleModal: toggleModal,
                               handleNavigate: handleNavigate,
-                              text: "Link your Finternet account with the the MyProp app",
+                              text: "Link your Finternet account with the MyProp app",
                               buttonText: "Link"
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {

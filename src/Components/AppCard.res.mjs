@@ -43,11 +43,11 @@ function AppCard(props) {
                             children: [
                               JsxRuntime.jsx("div", {
                                     children: match[2],
-                                    className: "text-lg  text-[#797979]"
+                                    className: "text-lg  text-white"
                                   }),
                               JsxRuntime.jsx("div", {
                                     children: props.amount,
-                                    className: "font-bold text-2xl"
+                                    className: "font-bold text-white text-2xl"
                                   })
                             ],
                             className: "flex flex-col gap-1"

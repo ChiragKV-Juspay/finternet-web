@@ -14,7 +14,7 @@ function QRScreen(props) {
                     }),
                 JsxRuntime.jsx("div", {
                       children: "Identity verified successfully!",
-                      className: "font-bold text-lg"
+                      className: "font-bold text-lg text-white"
                     }),
                 JsxRuntime.jsxs("div", {
                       children: [
@@ -22,7 +22,7 @@ function QRScreen(props) {
                               children: [
                                 JsxRuntime.jsx("div", {
                                       children: "Account Address",
-                                      className: " font-light text-[#797979] text-xs"
+                                      className: " font-light text-white text-xs"
                                     }),
                                 JsxRuntime.jsx("div", {
                                       children: JsxRuntime.jsx("div", {
@@ -41,7 +41,7 @@ function QRScreen(props) {
                             }),
                         JsxRuntime.jsx("div", {
                               children: "Welcome to the Finternet!",
-                              className: "font-light text-[#797979] text-base"
+                              className: "font-light text-white  text-base"
                             }),
                         JsxRuntime.jsx("button", {
                               children: "Go to Home",
@@ -56,7 +56,7 @@ function QRScreen(props) {
                                 })
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {
-                              color: Colors.colors.black
+                              color: Colors.colors.white
                             })
                       ],
                       className: "flex flex-col justify-between items-center w-full border border-gray-100 drop-shadow-md rounded-2xl py-3 gap-4 py-5"

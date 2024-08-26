@@ -23,7 +23,7 @@ function SignAgreement(props) {
                                 JsxRuntime.jsx("img", {
                                       className: " scale-105 ",
                                       alt: "Description of image",
-                                      src: "/Agreement.svg"
+                                      src: "/Agreement1.webp"
                                     })
                               ],
                               className: "flex flex-col  gap-6 items-center h-full"

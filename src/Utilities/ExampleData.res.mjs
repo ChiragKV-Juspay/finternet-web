@@ -63,8 +63,36 @@ var bankAccountOptions = [
   }
 ];
 
+var contactOptions = [
+  {
+    id: "1",
+    name: "Nandan Nilekani",
+    finternetId: "nandan@finternet",
+    imagePath: "/ProfilePicNandan.svg",
+    amount: "100.00",
+    transactionType: "Debited"
+  },
+  {
+    id: "2",
+    name: "Christina Aldecra",
+    finternetId: "christina.a@finternet",
+    imagePath: "/ProfilePic1.svg",
+    amount: "200.00",
+    transactionType: "Credited"
+  },
+  {
+    id: "3",
+    name: "Nicki Taylor",
+    finternetId: "nicki.t@finternet",
+    imagePath: "/ProfilePic2.svg",
+    amount: "200.00",
+    transactionType: "Credited"
+  }
+];
+
 export {
   bankOptions ,
   bankAccountOptions ,
+  contactOptions ,
 }
 /* No side effect */

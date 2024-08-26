@@ -12,6 +12,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
   let toggleModal = () => {
     setShowModal(prev => !prev)
   }
+
   let (
     backgroundImagePath,
     color,
@@ -26,7 +27,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
   ) = switch flow {
   | FinternetOnboarding => (
       "/BackgroundImage.svg",
-      colors.black,
+      colors.white,
       "#292929",
       "#474747",
       "#666666",
@@ -37,7 +38,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
       "absolute z-0 -m-4",
     )
   | PropertyOnboarding => (
-      "BackgroundBlueGradient",
+      "/BackgroundBlueGradient.svg",
       "#0091FF",
       "#F0FFF9",
       "#EAFFF6",
@@ -46,8 +47,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
       "MyProp",
       "Welcome to MyProp",
       "Access your property via a unified interface and unlock the power of seamless transactability.",
-      "",
-      //   "absolute top-0 left-1/2 transform -translate-x-1/2 object-cover -m-4",
+      "absolute z-0 -m-4",
     )
   | MoneyTransferOnboarding => (
       "/BackgroundImage.svg",
@@ -70,60 +70,78 @@ let make = (~handleNavigate, ~flow: flowType) => {
     }
   }
 
-  <div className={`relative flex flex-col h-full justify-between`}>
-    {flow == MoneyTransferOnboarding
-      ? <div className=imageClass>
-          <svg
-            width="390"
-            height="178"
-            viewBox="0 0 390 178"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <g clipPath="url(#clip0_1137_2884)">
-              <path
-                d="M442.469 -10.0171L239.271 -190L-97.8634 231.191L442.469 -10.0171Z"
-                fill=bgShade1
-                fillOpacity="0.6"
-              />
-              <path
-                d="M268.073 -12.3014L81.292 -132.288L-144.49 259.888L268.073 -12.3014Z"
-                fill=bgShade2
-                fillOpacity="0.6"
-              />
-              <path
-                d="M142.265 -12.5122L-74.1484 -62L-147.554 357.697L142.265 -12.5122Z" fill=bgShade3
-              />
-              <path d="M79 0H-143L-121 425.5L79 0Z" fill=bgShade4 />
-            </g>
-            <defs>
-              <clipPath id="clip0_1137_2884">
-                <rect width="390" height="178" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-        </div>
-      : React.null}
+  <div className="relative flex flex-col h-full justify-between">
+    {switch flow {
+    | MoneyTransferOnboarding =>
+      <div className=imageClass>
+        <svg
+          width="390"
+          height="178"
+          viewBox="0 0 390 178"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <g clipPath="url(#clip0_1137_2884)">
+            <path
+              d="M442.469 -10.0171L239.271 -190L-97.8634 231.191L442.469 -10.0171Z"
+              fill=bgShade1
+              fillOpacity="0.6"
+            />
+            <path
+              d="M268.073 -12.3014L81.292 -132.288L-144.49 259.888L268.073 -12.3014Z"
+              fill=bgShade2
+              fillOpacity="0.6"
+            />
+            <path
+              d="M142.265 -12.5122L-74.1484 -62L-147.554 357.697L142.265 -12.5122Z" fill=bgShade3
+            />
+            <path d="M79 0H-143L-121 425.5L79 0Z" fill=bgShade4 />
+          </g>
+          <defs>
+            <clipPath id="clip0_1137_2884">
+              <rect width="390" height="178" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+
+    | PropertyOnboarding =>
+      <div className=imageClass>
+        <img src=backgroundImagePath alt="Description of image" />
+      </div>
+
+    | _ => React.null
+    }}
     <div className="z-10 h-1">
       <div>
         {flow == FinternetOnboarding
-          ? <img src="/finternetLogo.png" alt="Description of image" className=" h-6/12 w-3/12" />
-          : <div className={`font-bold text-4xl text-[${color}]`}> {React.string({appName})} </div>}
-        <div className="mt-10 ">
-          <div className={`font-bold ${flow == FinternetOnboarding ? "text-2xl" : "text-xl"}`}>
+          ? <img
+              src="/FinternetLogoWhite.png" alt="Description of image" className="h-6/12 w-3/12"
+            />
+          : <div className={`font-bold text-4xl text-[${color}]`}> {React.string(appName)} </div>}
+        <div className="mt-10">
+          <div
+            className={`font-bold ${flow == FinternetOnboarding
+                ? "text-2xl text-white"
+                : "text-xl"}`}>
             {React.string(welcomeMessage)}
           </div>
-          <div className="font-light text-sm mt-4"> {React.string({descriptionMessage})} </div>
+          <div
+            className={`font-light text-sm mt-4 ${flow == FinternetOnboarding
+                ? "text-white"
+                : ""}`}>
+            {React.string(descriptionMessage)}
+          </div>
         </div>
       </div>
       {flow == FinternetOnboarding
         ? <div className="mt-14 gap-4 flex flex-col">
-            <div className="font-medium text-base">
+            <div className="font-medium text-base text-white">
               {React.string("Enter your mobile number")}
             </div>
             <div className="flex flex-row border border-[#E6E6E6] rounded-lg">
               <div className="flex flex-row ml-4 gap-2 items-center ">
                 <img src="/IndiaFlag.svg" alt="Description of image" />
-                <div className="font-normal text-base"> {React.string("+91")} </div>
+                <div className="font-normal text-base text-white"> {React.string("+91")} </div>
                 <svg
                   width="12"
                   height="8"
@@ -136,11 +154,11 @@ let make = (~handleNavigate, ~flow: flowType) => {
                   />
                 </svg>
               </div>
-              <Input placeholder="Enter your mobile number" />
+              <Input
+                placeholder="Enter your mobile number"
+                className="bg-black flex-1 p-2 text-base outline-none rounded-lg w-4/5 text-sm text-white placeholder-white"
+              />
             </div>
-            // <div className="font-light text-sm">
-            //   {React.string("An OTP will be sent to the linked mobile number for verification")}
-            // </div>
           </div>
         : React.null}
     </div>
@@ -154,23 +172,30 @@ let make = (~handleNavigate, ~flow: flowType) => {
           size=Small
         />
         <div className="flex flew-row flex-wrap gap-1 ">
-          <div className="font-normal text-sm">
+          <div className={`font-normal text-sm ${flow == FinternetOnboarding ? "text-white" : ""}`}>
             {React.string("By registering, you accept our")}
           </div>
-          <div className={`font-normal text-sm text-[${color}]`}>
+          <div
+            className={`font-normal text-sm ${flow == FinternetOnboarding
+                ? "text-white"
+                : "text-[${color}]"} `}>
             {React.string("Terms of Use")}
           </div>
-          <div className="font-normal text-sm"> {React.string("&")} </div>
-          <div className={`font-normal text-sm text-[${color}]`}>
+          <div className={`font-normal text-sm ${flow == FinternetOnboarding ? "text-white" : ""}`}>
+            {React.string("&")}
+          </div>
+          <div
+            className={`font-normal text-sm ${flow == FinternetOnboarding
+                ? "text-white"
+                : "text-[${color}]"} `}>
             {React.string("Privacy Policy")}
           </div>
         </div>
       </div>
       <button
         className={`${flow == FinternetOnboarding
-            ? "bg-black"
+            ? "bg-white text-black"
             : `bg-[${color}]`} text-white rounded-lg w-full h-12`}
-        // className={`bg-[${color}] text-white rounded-lg w-full h-12`}
         onClick={_ => onButtonPress()}>
         {React.string("Sign in with Finternet")}
       </button>
@@ -178,7 +203,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
         showModal={showModal}
         toggleModal={toggleModal}
         handleNavigate={handleNavigate}
-        text="Link your Finternet account with the the MyProp app"
+        text="Link your Finternet account with the MyProp app"
         buttonText="Link"
       />
       <SecuredByFinterest color={color} />

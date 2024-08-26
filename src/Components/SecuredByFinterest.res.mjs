@@ -45,11 +45,15 @@ function SecuredByFinterest(props) {
                     }),
                 JsxRuntime.jsx("div", {
                       children: "Secured by",
-                      className: "font-extralight text-[#797979] text-xs"
+                      className: "font-extralight " + (
+                        color === Colors.colors.white ? "text-white" : "text-[#797979]"
+                      ) + "\n          text-xs"
                     }),
                 JsxRuntime.jsx("div", {
                       children: "Finternet",
-                      className: "font-medium text-[#797979] text-xs"
+                      className: "font-medium " + (
+                        color === Colors.colors.white ? "text-white" : "text-[#797979]"
+                      ) + " text-xs"
                     })
               ],
               className: Belt_Option.getWithDefault(props.className, "flex flew-row justify-center items-center gap-1")

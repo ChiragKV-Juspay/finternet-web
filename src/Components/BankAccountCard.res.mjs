@@ -13,20 +13,27 @@ function BankAccountCard(props) {
                     }),
                 JsxRuntime.jsxs("div", {
                       children: [
-                        JsxRuntime.jsx("img", {
-                              className: "p-5",
-                              alt: "Description of image",
-                              src: "/Balance.svg"
+                        JsxRuntime.jsxs("div", {
+                              children: [
+                                JsxRuntime.jsx("div", {
+                                      children: "Balance",
+                                      className: "font-extralight text-textGray"
+                                    }),
+                                JsxRuntime.jsx("div", {
+                                      children: "₹ 5000",
+                                      className: "font-bold  text-xl"
+                                    })
+                              ]
                             }),
                         JsxRuntime.jsx("button", {
                               children: "Transfer",
-                              className: "bg-[#00B76A] text-white rounded-lg m-5 h-10 w-32 ",
+                              className: "bg-[#00B76A] text-white rounded-lg  h-10 w-32 ",
                               onClick: (function (param) {
                                   handleNavigate();
                                 })
                             })
                       ],
-                      className: "flex flex-row justify-between"
+                      className: "flex flex-row justify-between items-center mx-5 pb-5"
                     })
               ],
               className: "border border-gray-100  rounded-2xl "

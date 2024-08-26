@@ -31,8 +31,8 @@ let make = (~app, ~iconColor=colors.finternetGreen, ~amount) => {
         <div> {React.string(">")} </div>
       </div>
       <div className="flex flex-col gap-1">
-        <div className="text-lg  text-[#797979]"> {React.string(bankDescription)} </div>
-        <div className="font-bold text-2xl"> {React.string(amount)} </div>
+        <div className="text-lg  text-white"> {React.string(bankDescription)} </div>
+        <div className="font-bold text-white text-2xl"> {React.string(amount)} </div>
       </div>
     </div>
   </div>

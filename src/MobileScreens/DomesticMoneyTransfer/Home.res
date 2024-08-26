@@ -55,9 +55,26 @@ let make = (~handleNavigate) => {
     // </svg>
     // </div>
     <AccountCard />
-    <div className="my-2"> {React.string("Bank Accounts")} </div>
+    <div> {React.string("Bank Accounts")} </div>
     <BankAccountCard handleNavigate={_ => handleNavigate()} />
-    <div className="my-2"> {React.string("All Transactions")} </div>
-    <TransactionsList />
+    <div>
+      <div> {React.string("All Transactions")} </div>
+      <div>
+        {ExampleData.contactOptions
+        ->Belt.Array.map(option => {
+          <div key={option.id} className="mt-6">
+            <TransactionHistoryItem
+              // bankIcon={option.imagePath}
+              // contactOptions={option}
+
+              contact={option}
+            />
+            <div className="border-t border-dashed w-full mt-6 border-[#E6E6E6]" />
+          </div>
+        })
+        ->React.array}
+      </div>
+    </div>
+    // <TransactionsList />
   </div>
 }
