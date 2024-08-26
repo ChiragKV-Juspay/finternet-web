@@ -27,7 +27,7 @@ function QRScreen(props) {
                                 JsxRuntime.jsx("div", {
                                       children: JsxRuntime.jsx("div", {
                                             children: "siddharth@finternet",
-                                            className: " text-base "
+                                            className: "text-white text-base "
                                           }),
                                       className: "flex flex-row justify-between"
                                     })
@@ -45,7 +45,7 @@ function QRScreen(props) {
                             }),
                         JsxRuntime.jsx("button", {
                               children: "Go to Home",
-                              className: " bg-black text-white text-xs rounded-lg w-3/5 h-10",
+                              className: " bg-white text-black text-xs rounded-lg w-3/5 h-10",
                               onClick: (function (param) {
                                   if (handleNavigate !== undefined) {
                                     return handleNavigate();

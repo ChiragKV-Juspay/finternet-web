@@ -2,7 +2,7 @@ open Colors
 
 @react.component
 let make = (~isFinternet=false) => {
-  <div className="flex flex-row justify-between">
+  <div className="flex flex-row justify-between z-10">
     {isFinternet
       ? <img src="/FinternetLogoWhite.png" alt="Description of image" className=" h-1/12 w-1/12" />
       : <svg

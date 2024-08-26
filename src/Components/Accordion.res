@@ -48,7 +48,7 @@ let make = (
       property_registrar: "Some Registrar",
     },
     attestations: [
-      {certificate: "MOC"},
+      {certificate: "NOC"},
       {certificate: "Ownership"},
       {certificate: "Value"},
       {certificate: "Personal Details"},
@@ -318,7 +318,7 @@ let make = (
               : React.null}
           </div>}
     </div>
-  | "User Onboarding" =>
+  | "Bank Account Tokenization" =>
     <div>
       {loginStartResponse == Js.Json.null && assertion == Js.Json.null
         ? <div className="text-sm text-gray-500">
@@ -403,7 +403,7 @@ let make = (
               : React.null}
           </div>}
     </div>
-  | "Property User Onboarding" =>
+  | "Property Tokenization" =>
     <div>
       {loginPropertyStartResponse == Js.Json.null && propertyLoginAssertion == Js.Json.null
         ? <div className="text-sm text-gray-500">
@@ -492,7 +492,7 @@ let make = (
     <div>
       {userData == Js.Json.null && userAssets == Js.Json.null && transactionsHistory == Js.Json.null
         ? <div className="text-sm text-gray-500">
-            {React.string("Start onboarding to view activity logs")}
+            {React.string("Initiate loan request to view activity logs")}
           </div>
         : <div>
             <Mui.Accordion>

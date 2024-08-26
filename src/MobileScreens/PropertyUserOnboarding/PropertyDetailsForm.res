@@ -9,14 +9,14 @@ let make = (~handleNavigate) => {
         <div className=" text-[#797979] text-xs"> {React.string("Property ID")} </div>
         <Input
           placeholder="AXMD1EED"
-          className=" p-3 border border-[#E6E6E6] rounded-lg text-sm placeholder-text-sm"
+          className=" p-3 border border-[#E6E6E6] rounded-lg text-sm placeholder-text-sm placeholder-black"
         />
       </div>
       <div className="flex flex-col gap-2">
         <div className=" text-[#797979] text-xs"> {React.string("Property Registrar")} </div>
         <Input
           placeholder="State Property Registrar"
-          className=" p-3 border border-[#E6E6E6] rounded-lg text-sm placeholder-text-sm "
+          className=" p-3 border border-[#E6E6E6] rounded-lg text-sm placeholder-text-sm  placeholder-black"
         />
       </div>
     </div>
@@ -38,8 +38,8 @@ let make = (~handleNavigate) => {
         </div>
       </div>
       <button
-        className=" bg-[#0091FF] text-white rounded-lg w-full h-12" onClick={_ => handleNavigate()}>
-        {React.string("Attest verifiable credentials")}
+        className="bg-[#0091FF] text-white rounded-lg w-full h-12" onClick={_ => handleNavigate()}>
+        {React.string("Add Property Documents")}
       </button>
       <SecuredByFinterest color={colors.propertyBlue} />
     </div>

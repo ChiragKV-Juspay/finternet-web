@@ -11,7 +11,7 @@ let make = (~handleNavigate=?) => {
       <div className="w-11/12">
         <div className=" font-light text-white text-xs"> {React.string("Account Address")} </div>
         <div className="flex flex-row justify-between">
-          <div className=" text-base "> {React.string("siddharth@finternet")} </div>
+          <div className="text-white text-base "> {React.string("siddharth@finternet")} </div>
           // <img src="/CopyIcon.svg" alt="Description of image" />
         </div>
       </div>
@@ -20,7 +20,7 @@ let make = (~handleNavigate=?) => {
         {React.string("Welcome to the Finternet!")}
       </div>
       <button
-        className=" bg-black text-white text-xs rounded-lg w-3/5 h-10"
+        className=" bg-white text-black text-xs rounded-lg w-3/5 h-10"
         onClick={_ =>
           switch handleNavigate {
           | Some(callback) => callback()

@@ -15,6 +15,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
 
   let (
     backgroundImagePath,
+    logoPath,
     color,
     bgShade1,
     bgShade2,
@@ -27,6 +28,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
   ) = switch flow {
   | FinternetOnboarding => (
       "/BackgroundImage.svg",
+      "",
       colors.white,
       "#292929",
       "#474747",
@@ -39,6 +41,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
     )
   | PropertyOnboarding => (
       "/BackgroundBlueGradient.svg",
+      "/MyPropLogo.svg",
       "#0091FF",
       "#F0FFF9",
       "#EAFFF6",
@@ -51,6 +54,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
     )
   | MoneyTransferOnboarding => (
       "/BackgroundImage.svg",
+      "/MyFinLogo.svg",
       "#00B76A",
       "#F0FFF9",
       "#EAFFF6",
@@ -117,7 +121,10 @@ let make = (~handleNavigate, ~flow: flowType) => {
           ? <img
               src="/FinternetLogoWhite.png" alt="Description of image" className="h-6/12 w-3/12"
             />
-          : <div className={`font-bold text-4xl text-[${color}]`}> {React.string(appName)} </div>}
+          : <div className="flex flex-row gap-2">
+              <img src=logoPath alt="Description of image" className="h-3/12 w-1/12 self-center" />
+              <div className={`font-bold text-4xl text-[${color}]`}> {React.string(appName)} </div>
+            </div>}
         <div className="mt-10">
           <div
             className={`font-bold ${flow == FinternetOnboarding
@@ -194,8 +201,8 @@ let make = (~handleNavigate, ~flow: flowType) => {
       </div>
       <button
         className={`${flow == FinternetOnboarding
-            ? "bg-white text-black"
-            : `bg-[${color}]`} text-white rounded-lg w-full h-12`}
+            ? `bg-white text-black`
+            : `bg-[${color}] text-white`}  rounded-lg w-full h-12`}
         onClick={_ => onButtonPress()}>
         {React.string("Sign in with Finternet")}
       </button>

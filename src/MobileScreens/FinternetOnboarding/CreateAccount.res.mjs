@@ -29,7 +29,7 @@ function CreateAccount(props) {
                             }),
                         JsxRuntime.jsx("img", {
                               alt: "Description of image",
-                              src: "/VerifyIdentityStepper1.svg"
+                              src: "/VerifyIdentityStepperDark.svg"
                             })
                       ],
                       className: "flex flex-col gap-10"

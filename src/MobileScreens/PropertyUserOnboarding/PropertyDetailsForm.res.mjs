@@ -25,7 +25,7 @@ function PropertyDetailsForm(props) {
                                     }),
                                 JsxRuntime.jsx(Input.make, {
                                       placeholder: "AXMD1EED",
-                                      className: " p-3 border border-[#E6E6E6] rounded-lg text-sm placeholder-text-sm"
+                                      className: " p-3 border border-[#E6E6E6] rounded-lg text-sm placeholder-text-sm placeholder-black"
                                     })
                               ],
                               className: "flex flex-col gap-2"
@@ -38,7 +38,7 @@ function PropertyDetailsForm(props) {
                                     }),
                                 JsxRuntime.jsx(Input.make, {
                                       placeholder: "State Property Registrar",
-                                      className: " p-3 border border-[#E6E6E6] rounded-lg text-sm placeholder-text-sm "
+                                      className: " p-3 border border-[#E6E6E6] rounded-lg text-sm placeholder-text-sm  placeholder-black"
                                     })
                               ],
                               className: "flex flex-col gap-2"
@@ -68,8 +68,8 @@ function PropertyDetailsForm(props) {
                               className: "flex flew-row "
                             }),
                         JsxRuntime.jsx("button", {
-                              children: "Attest verifiable credentials",
-                              className: " bg-[#0091FF] text-white rounded-lg w-full h-12",
+                              children: "Add Property Documents",
+                              className: "bg-[#0091FF] text-white rounded-lg w-full h-12",
                               onClick: (function (param) {
                                   handleNavigate();
                                 })

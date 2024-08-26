@@ -8,7 +8,7 @@ let make = (~id="siddharth@finternet", ~iconColor=colors.finternetGreen) => {
   //     src="/GrayGradientBackground.svg" alt="Background Image" className="absolute right-0 z-0 -m-5"
   //   />
 
-  <div className="relative border border-gray-100 rounded-2xl p-5 overflow-hidden">
+  <div className="relative border border-gray-100 rounded-2xl p-5 overflow-hidden  ">
     <img
       src="/GrayGradientBackground.svg" alt="Background Image" className="absolute right-0 z-0 -m-5"
     />

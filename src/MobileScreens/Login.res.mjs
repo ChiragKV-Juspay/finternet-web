@@ -25,6 +25,7 @@ function Login(props) {
     case "FinternetOnboarding" :
         match$1 = [
           "/BackgroundImage.svg",
+          "",
           Colors.colors.white,
           "#292929",
           "#474747",
@@ -39,6 +40,7 @@ function Login(props) {
     case "PropertyOnboarding" :
         match$1 = [
           "/BackgroundBlueGradient.svg",
+          "/MyPropLogo.svg",
           "#0091FF",
           "#F0FFF9",
           "#EAFFF6",
@@ -53,6 +55,7 @@ function Login(props) {
     case "MoneyTransferOnboarding" :
         match$1 = [
           "/BackgroundImage.svg",
+          "/MyFinLogo.svg",
           "#00B76A",
           "#F0FFF9",
           "#EAFFF6",
@@ -66,8 +69,8 @@ function Login(props) {
         break;
     
   }
-  var imageClass = match$1[9];
-  var color = match$1[1];
+  var imageClass = match$1[10];
+  var color = match$1[2];
   var onButtonPress = function () {
     switch (flow) {
       case "PropertyOnboarding" :
@@ -102,21 +105,21 @@ function Login(props) {
                             children: [
                               JsxRuntime.jsx("path", {
                                     d: "M442.469 -10.0171L239.271 -190L-97.8634 231.191L442.469 -10.0171Z",
-                                    fill: match$1[2],
-                                    fillOpacity: "0.6"
-                                  }),
-                              JsxRuntime.jsx("path", {
-                                    d: "M268.073 -12.3014L81.292 -132.288L-144.49 259.888L268.073 -12.3014Z",
                                     fill: match$1[3],
                                     fillOpacity: "0.6"
                                   }),
                               JsxRuntime.jsx("path", {
+                                    d: "M268.073 -12.3014L81.292 -132.288L-144.49 259.888L268.073 -12.3014Z",
+                                    fill: match$1[4],
+                                    fillOpacity: "0.6"
+                                  }),
+                              JsxRuntime.jsx("path", {
                                     d: "M142.265 -12.5122L-74.1484 -62L-147.554 357.697L142.265 -12.5122Z",
-                                    fill: match$1[4]
+                                    fill: match$1[5]
                                   }),
                               JsxRuntime.jsx("path", {
                                     d: "M79 0H-143L-121 425.5L79 0Z",
-                                    fill: match$1[5]
+                                    fill: match$1[6]
                                   })
                             ],
                             clipPath: "url(#clip0_1137_2884)"
@@ -154,20 +157,30 @@ function Login(props) {
                                         className: "h-6/12 w-3/12",
                                         alt: "Description of image",
                                         src: "/FinternetLogoWhite.png"
-                                      }) : JsxRuntime.jsx("div", {
-                                        children: match$1[6],
-                                        className: "font-bold text-4xl text-[" + color + "]"
+                                      }) : JsxRuntime.jsxs("div", {
+                                        children: [
+                                          JsxRuntime.jsx("img", {
+                                                className: "h-3/12 w-1/12 self-center",
+                                                alt: "Description of image",
+                                                src: match$1[1]
+                                              }),
+                                          JsxRuntime.jsx("div", {
+                                                children: match$1[7],
+                                                className: "font-bold text-4xl text-[" + color + "]"
+                                              })
+                                        ],
+                                        className: "flex flex-row gap-2"
                                       }),
                                 JsxRuntime.jsxs("div", {
                                       children: [
                                         JsxRuntime.jsx("div", {
-                                              children: match$1[7],
+                                              children: match$1[8],
                                               className: "font-bold " + (
                                                 flow === "FinternetOnboarding" ? "text-2xl text-white" : "text-xl"
                                               )
                                             }),
                                         JsxRuntime.jsx("div", {
-                                              children: match$1[8],
+                                              children: match$1[9],
                                               className: "font-light text-sm mt-4 " + (
                                                 flow === "FinternetOnboarding" ? "text-white" : ""
                                               )
@@ -268,8 +281,8 @@ function Login(props) {
                         JsxRuntime.jsx("button", {
                               children: "Sign in with Finternet",
                               className: (
-                                flow === "FinternetOnboarding" ? "bg-white text-black" : "bg-[" + color + "]"
-                              ) + " text-white rounded-lg w-full h-12",
+                                flow === "FinternetOnboarding" ? "bg-white text-black" : "bg-[" + color + "] text-white"
+                              ) + "  rounded-lg w-full h-12",
                               onClick: (function (param) {
                                   onButtonPress();
                                 })

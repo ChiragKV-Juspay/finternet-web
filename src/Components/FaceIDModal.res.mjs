@@ -13,11 +13,11 @@ function FaceIDModal(props) {
                         JsxRuntime.jsxs("div", {
                               children: [
                                 JsxRuntime.jsx("div", {
-                                      children: "Face ID",
+                                      children: "Touch ID",
                                       className: "text-base text-center"
                                     }),
                                 JsxRuntime.jsx("div", {
-                                      children: "look at your camera for verifying your identity",
+                                      children: "Place your finger on the screen below to verify your identity",
                                       className: "text-sm text-textGray text-center"
                                     })
                               ],
@@ -26,7 +26,7 @@ function FaceIDModal(props) {
                         JsxRuntime.jsx("img", {
                               className: "w-1/3 h-1/3",
                               alt: "Description of image",
-                              src: "/FaceIDImage.svg"
+                              src: "/FingerprintIDImage.svg"
                             }),
                         JsxRuntime.jsx(SecuredByFinterest.make, {
                               color: Colors.colors.black

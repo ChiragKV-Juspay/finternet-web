@@ -2,10 +2,7 @@ open Colors
 
 @react.component
 let make = (~handleNavigate) => {
-  <div className="relative flex flex-col h-full justify-between ">
-    <div className="absolute z-0 -m-4">
-      <img src="/BackgroundBlueGradient.svg" alt="Description of image" />
-    </div>
+  <div className=" flex flex-col h-full justify-between ">
     <div className="flex flex-col gap-10 z-10">
       <BlueHeader />
       <div className="flex flex-col gap-4 z-10">

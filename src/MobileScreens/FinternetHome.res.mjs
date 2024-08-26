@@ -25,7 +25,7 @@ function FinternetHome(props) {
                             }),
                         JsxRuntime.jsx("button", {
                               children: "Link Account",
-                              className: "bg-white text-black text-xs rounded-lg w-1/3 h-8",
+                              className: "bg-white text-black text-xs rounded-lg w-36 h-8",
                               onClick: (function (param) {
                                   if (handleNavigate !== undefined) {
                                     return handleNavigate();

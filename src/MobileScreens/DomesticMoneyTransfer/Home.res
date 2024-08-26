@@ -54,6 +54,7 @@ let make = (~handleNavigate) => {
     //   />
     // </svg>
     // </div>
+
     <AccountCard />
     <div> {React.string("Bank Accounts")} </div>
     <BankAccountCard handleNavigate={_ => handleNavigate()} />

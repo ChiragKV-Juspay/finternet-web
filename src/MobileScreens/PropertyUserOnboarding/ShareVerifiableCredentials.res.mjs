@@ -70,7 +70,7 @@ function ShareVerifiableCredentials(props) {
                                               size: "small"
                                             }),
                                         JsxRuntime.jsx("div", {
-                                              children: "MOC",
+                                              children: "NOC",
                                               className: "font-bold self-center text-xs text-[" + Colors.colors.darkGray + "]"
                                             })
                                       ],
@@ -119,7 +119,7 @@ function ShareVerifiableCredentials(props) {
                       showModal: match[0],
                       toggleModal: toggleModal,
                       handleNavigate: props.handleNavigate,
-                      text: "By proceeding your consent to sharing the selected verifiable credentials to a third party.",
+                      text: "By proceeding, you are consenting to share your property documents with a third party.",
                       buttonText: "Proceed"
                     })
               ],

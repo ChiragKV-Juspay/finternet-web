@@ -10,7 +10,7 @@ let make = (~app, ~iconColor=colors.finternetGreen, ~amount) => {
   | MyFin => (
       "/MyFinLogo.svg",
       "MyFin",
-      "ABC Bank Account Balance",
+      "ABC Bank Total Balance",
       `text-[${colors.finternetGreen}]`,
     )
   | MyProp => (
@@ -28,10 +28,10 @@ let make = (~app, ~iconColor=colors.finternetGreen, ~amount) => {
           <img src=imagePath />
           <div className={`${color} text-2xl font-medium`}> {React.string(appName)} </div>
         </div>
-        <div> {React.string(">")} </div>
+        <div className="text-white"> {React.string(">")} </div>
       </div>
       <div className="flex flex-col gap-1">
-        <div className="text-lg  text-white"> {React.string(bankDescription)} </div>
+        <div className="text-lg  text-[#E6E6E6]"> {React.string(bankDescription)} </div>
         <div className="font-bold text-white text-2xl"> {React.string(amount)} </div>
       </div>
     </div>

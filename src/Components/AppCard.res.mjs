@@ -8,7 +8,7 @@ function AppCard(props) {
   match = props.app === "MyFin" ? [
       "/MyFinLogo.svg",
       "MyFin",
-      "ABC Bank Account Balance",
+      "ABC Bank Total Balance",
       "text-[" + Colors.colors.finternetGreen + "]"
     ] : [
       "/MyPropLogo.svg",
@@ -34,7 +34,8 @@ function AppCard(props) {
                                     className: " flex flex-row gap-2"
                                   }),
                               JsxRuntime.jsx("div", {
-                                    children: ">"
+                                    children: ">",
+                                    className: "text-white"
                                   })
                             ],
                             className: "flex flex-row justify-between"
@@ -43,7 +44,7 @@ function AppCard(props) {
                             children: [
                               JsxRuntime.jsx("div", {
                                     children: match[2],
-                                    className: "text-lg  text-white"
+                                    className: "text-lg  text-[#E6E6E6]"
                                   }),
                               JsxRuntime.jsx("div", {
                                     children: props.amount,

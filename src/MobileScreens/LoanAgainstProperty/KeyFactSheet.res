@@ -3,7 +3,7 @@ open Colors
 let make = (~handleNavigate) => {
   <div className="flex flex-col h-full  justify-between">
     <div className="flex flex-col gap-7">
-      <HeaderWithBack title="Key Fact Sheet" backButtonStrokeColor=colors.propertyBlue />
+      <HeaderWithBack title="View Loan Offer" backButtonStrokeColor=colors.propertyBlue />
       <img src="/KeyFactCard.svg" alt="Description of image" />
     </div>
     <div className="flex flex-col gap-4">

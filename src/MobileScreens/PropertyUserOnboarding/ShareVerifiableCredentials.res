@@ -49,7 +49,7 @@ let make = (~handleNavigate) => {
             size=Small
           />
           <div className={`font-bold self-center text-xs text-[${colors.darkGray}]`}>
-            {React.string("MOC")}
+            {React.string("NOC")}
           </div>
         </div>
         <div className="flex flew-row">
@@ -78,7 +78,7 @@ let make = (~handleNavigate) => {
       showModal={showModal}
       toggleModal={toggleModal}
       handleNavigate={handleNavigate}
-      text="By proceeding your consent to sharing the selected verifiable credentials to a third party."
+      text="By proceeding, you are consenting to share your property documents with a third party."
       buttonText="Proceed"
     />
   </div>

@@ -12,7 +12,7 @@ let make = (~handleNavigate) => {
           {React.string("Follow the below steps")}
         </div>
       </div>
-      <img src="/VerifyIdentityStepper1.svg" alt="Description of image" />
+      <img src="/VerifyIdentityStepperDark.svg" alt="Description of image" />
     </div>
     <div className="flex flex-col gap-4">
       <button

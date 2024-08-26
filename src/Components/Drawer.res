@@ -49,9 +49,14 @@
 
 @react.component
 let make = (~handleDrawerSelection, ~selectedOption) => {
-  let moneyUseCases = ["User Onboarding", "Domestic Money Transfer"]
-  let propertyUseCases = ["Property User Onboarding", "Loan Against Property"]
-  let home = ["Hello World!", "Finternet Onboarding"]
+  // let moneyUseCases = [bankAccountTokenization, domesticMoneyTransfer]
+  // let propertyUseCases = [propertyTokenization, loanAgainstProperty]
+  // let home = [helloWorld, finternetOnboarding]
+  // let tokenManager = [adminDashboard]
+  let moneyUseCases = Strings.MoneyUseCases.all
+  let propertyUseCases = Strings.PropertyUseCases.all
+  let home = Strings.WebHome.all
+  let tokenManager = Strings.TokenManager.all
 
   let renderSection = (title, items) => {
     <div className="flex flex-col gap-2">
@@ -78,7 +83,8 @@ let make = (~handleDrawerSelection, ~selectedOption) => {
     // <Mui.StyledEngineProvider injectFirst=true>
     {renderSection("Home", home)}
     {renderSection("Money use cases", moneyUseCases)}
-    {renderSection("Property use cases (Coming Soon)", propertyUseCases)}
+    {renderSection("Property use cases", propertyUseCases)}
+    {renderSection("Token Manager", tokenManager)}
 
     // </Mui.StyledEngineProvider>
   </div>

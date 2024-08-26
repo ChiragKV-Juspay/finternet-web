@@ -107,7 +107,7 @@ function SelectBankForLoan(props) {
                                                                   showBankDetails: true
                                                                 }),
                                                             isSelected ? JsxRuntime.jsx("button", {
-                                                                    children: "View Key Fact Sheet",
+                                                                    children: "View Loan Offer",
                                                                     className: "bg-[" + Colors.colors.propertyBlue + "] text-white rounded-lg w-full h-10 mt-4",
                                                                     onClick: (function (param) {
                                                                         handleNavigate();
@@ -133,7 +133,7 @@ function SelectBankForLoan(props) {
                               src: "/Info.svg"
                             }),
                         JsxRuntime.jsx("div", {
-                              children: "By clicking continue, I agree to share any additional verifiable credentials to the selected bank, as may be required.",
+                              children: "By clicking continue, I agree to share any additional property documents to the selected bank, as may be required.",
                               className: "text-xs font-light text-[" + Colors.colors.gray + "]"
                             })
                       ],

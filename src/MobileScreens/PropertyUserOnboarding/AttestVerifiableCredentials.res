@@ -4,9 +4,7 @@ open Colors
 let make = (~handleNavigate) => {
   <div className="flex flex-col h-full justify-between">
     <div className="flex flex-col gap-5">
-      <HeaderWithBack
-        title="Attesting verifiable credentials" backButtonStrokeColor=colors.propertyBlue
-      />
+      <HeaderWithBack title="Add Property Documents" backButtonStrokeColor=colors.propertyBlue />
       <div className="flex flex-col gap-5">
         <div className="flex flew-row">
           <Mui.Checkbox
@@ -41,7 +39,7 @@ let make = (~handleNavigate) => {
             size=Small
           />
           <div className={`font-bold self-center text-xs text-[${colors.darkGray}]`}>
-            {React.string("MOC")}
+            {React.string("NOC")}
           </div>
         </div>
       </div>
@@ -57,7 +55,7 @@ let make = (~handleNavigate) => {
       <button
         className={` bg-[${colors.propertyBlue}] text-white rounded-lg w-full h-12`}
         onClick={_ => handleNavigate()}>
-        {React.string("Attest verifiable credentials")}
+        {React.string("Add Property Documents")}
       </button>
       <SecuredByFinterest color={colors.propertyBlue} />
     </div>

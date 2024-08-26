@@ -1,5 +1,15 @@
 @new external urlSearchParams: 'a = "URLSearchParams"
 @val external window: 'a = "window"
+open Strings
+
+type optionTypes =
+  | BankAccountTokenization
+  | DomesticMoneyTransfer
+  | PropertyTokenization
+  | LoanAgainstProperty
+  | HelloWorld
+  | FinternetOnboarding
+  | AdminDashboard
 
 type domesticMoneyTransferScreens =
   | Home
@@ -64,7 +74,11 @@ let make = () => {
     setCurrentPropertyUserOnboardingScreen,
   ) = React.useState(_ => PropertyLogin)
 
-  let (selectedOption, setSelectedOption) = React.useState(_ => "Finternet Onboarding")
+  // let (currentDashboardScreen, setCurrentDashboardScreen) = React.useState(_ =>
+  //   AdminLogin
+  // )
+
+  let (selectedOption, setSelectedOption) = React.useState(_ => HelloWorld)
 
   let (userData, setUserData) = React.useState(() => Js.Json.null)
   let (transactionsHistory, setTransactionsHistory) = React.useState(() => Js.Json.null)
@@ -223,27 +237,6 @@ let make = () => {
 
     setUserAssets(_ => json)
   }
-  // let postUserAssets = async () => {
-  //   let assetsEndpoint = `https://finternet-app-api.shuttleapp.rs/v1/users/exampleUserId/assets`
-
-  //   let transferBody = {"username": "mywallet"}
-  //   let response = await Fetch.fetch(
-  //     assetsEndpoint,
-  //     {
-  //       method: #POST,
-  //       body: transferBody->Js.Json.stringifyAny->Belt.Option.getExn->Body.string,
-  //       headers: Headers.fromObject({
-  //         "Content-type": "application/json",
-  //       }),
-  //       // credentials: #omit,
-  //     },
-  //   )
-  //   let response = await Fetch.get(assetsEndpoint)
-  //   let json = await response->Fetch.Response.json
-  //   Js.log(json)
-
-  //   setUserAssets(_ => json)
-  // }
 
   let authenticate = async () => {
     // let urlParams = urlSearchParams(window["location"]["search"])
@@ -315,15 +308,15 @@ let make = () => {
     )
     let json = await response->Fetch.Response.json
     switch selectedOption {
-    | "User Onboarding" => setLoginStartResponse(_ => json)
-    | "Property User Onboarding" => setLoginPropertyStartResponse(_ => json)
+    | BankAccountTokenization => setLoginStartResponse(_ => json)
+    | PropertyTokenization => setLoginPropertyStartResponse(_ => json)
     | _ => ()
     }
 
     let assertionResponse = await SimpleWebAuthnTypes.startAuthentication(json)
     switch selectedOption {
-    | "User Onboarding" => setAssertion(_ => assertionResponse)
-    | "Property User Onboarding" => setPropertyLoginAssertion(_ => assertionResponse)
+    | BankAccountTokenization => setAssertion(_ => assertionResponse)
+    | PropertyTokenization => setPropertyLoginAssertion(_ => assertionResponse)
     | _ => ()
     }
     // Console.log(attestationResponse)
@@ -395,19 +388,6 @@ let make = () => {
     performTransfer()->ignore
   }
 
-  // let handleNavigateToFaceID = (~isFinternetOnboarding=false) => {
-  //   isFinternetOnboarding
-  //     ? setCurrentFinternetOnboardingScreen(_ => FaceID)
-  //     : setCurrentOnboardingScreen(_ => FaceID)
-  //   simpleWebAuthnRegister()
-  //   ->Promise.then(_ => {
-  //     isFinternetOnboarding
-  //       ? setCurrentFinternetOnboardingScreen(_ => QRScreen)
-  //       : setCurrentOnboardingScreen(_ => QRScreen)
-  //     Js.Promise.resolve()
-  //   })
-  //   ->ignore
-  // }
   let handleTokenizeAccount = () => {
     setTokenizeAccount(_ => true)
     setCurrentOnboardingScreen(_ => BankAccountLinked)
@@ -424,6 +404,7 @@ let make = () => {
   }
   let handleRegister = () => {
     // authenticate()->ignore
+
     simpleWebAuthnRegister()
     // simpleWebAuthnLogin()
     ->Promise.then(_ => {
@@ -438,28 +419,27 @@ let make = () => {
     // simpleWebAuthnLogin()
     ->Promise.then(_ => {
       switch selectedOption {
-      | `Property User Onboarding` => handleTokenizeProperty()
+      | PropertyTokenization => handleTokenizeProperty()
 
       // setCurrentPropertyUserOnboardingScreen(_ =>
-      | `User Onboarding` => handleTokenizeAccount()
+      | BankAccountTokenization => handleTokenizeAccount()
       // | `Domestic Money Transfer` => {
       //     handleNavigateToTransactionCompleted()
       //     setCurrentTransferScreen(_ => TransactionCompleted)
       //   }
-      | `Loan Against Property` => handleSignAgreement()
+      | LoanAgainstProperty => handleSignAgreement()
       }
       Js.Promise.resolve()
     })
     ->ignore
   }
   let handleNavigateToFaceID = (~id=1) => {
-    // authenticate()->ignore
     simpleWebAuthnLogin()
     // simpleWebAuthnLogin()
     ->Promise.then(_ => {
       switch selectedOption {
       // | `Finternet Onboarding` => setCurrentFinternetOnboardingScreen(_ => QRScreen)
-      | `User Onboarding` =>
+      | BankAccountTokenization =>
         id == 1
           ? {
               handleFetchUser()
@@ -467,11 +447,11 @@ let make = () => {
             }
           : setCurrentOnboardingScreen(_ => BankAccountLinked)
       // setCurrentOnboardingScreen(_ => id == 1 ? LinkBankAccount : BankAccountLinked)
-      | `Property User Onboarding` =>
+      | PropertyTokenization =>
         handleFetchUser()
 
         setCurrentPropertyUserOnboardingScreen(_ => PropertyTokenizationHome)
-      | `Domestic Money Transfer` => {
+      | DomesticMoneyTransfer => {
           handleNavigateToTransactionCompleted()
           setCurrentTransferScreen(_ => TransactionCompleted)
         }
@@ -498,7 +478,15 @@ let make = () => {
       <QRScreen
         handleNavigate={_ => setCurrentFinternetOnboardingScreen(_ => FinternetEmptyHome)}
       />
-    | FinternetEmptyHome => <FinternetHome flow={EmptyHome} />
+    | FinternetEmptyHome =>
+      <FinternetHome
+        flow={EmptyHome}
+        handleNavigate={_ => {
+          setSelectedOption(_ => BankAccountTokenization)
+
+          setCurrentTransferScreen(_ => Home)
+        }}
+      />
     }
   }
 
@@ -545,7 +533,7 @@ let make = () => {
     | BankAccountLinked =>
       <BankAccountLinked
         handleNavigate={_ => {
-          setSelectedOption(_ => "Domestic Money Transfer")
+          setSelectedOption(_ => DomesticMoneyTransfer)
           setCurrentTransferScreen(_ => Home)
         }}
       />
@@ -581,30 +569,6 @@ let make = () => {
       />
     | FinternetHomeMyProp => <FinternetHome flow={HomeWithMyFinAndMyProp} />
 
-    // | PropertyHome =>
-    //   <PropertyHome handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkProperty)} />
-    // | LinkProperty =>
-    //   <LinkProperty handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkedHome)} />
-    // | LinkedHome =>
-    //   <LinkedHome handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LoanSteps)} />
-    // | LoanSteps =>
-    //   <LoanSteps
-    //     handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => SelectBankForLoan)}
-    //   />
-
-    // | FillLoanApplication =>
-    //   <FillLoanApplication
-    //     handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkCredentials)}
-    //   />
-    // | LinkCredentials =>
-    //   <LinkCredentials
-    //     handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => KeyFactSheet)}
-    //   />
-
-    // | LoanSanctionedSuccessfully =>
-    //   <LoanSanctionedSuccessfully
-    //     handleNavigate={_ => setCurrentLoanAgainstPropertyScreen(_ => LinkedHome)}
-    //   />
     | _ => <div> {React.string("Unexpected Screen")} </div>
     }
   }
@@ -639,7 +603,7 @@ let make = () => {
     | PropertyTokenizedStatus =>
       <PropertyTokenizedStatus
         handleNavigate={_ => {
-          setSelectedOption(_ => "Loan Against Property")
+          setSelectedOption(_ => LoanAgainstProperty)
           setCurrentLoanAgainstPropertyScreen(_ => PropertyDashboard)
         }}
       />
@@ -648,32 +612,46 @@ let make = () => {
 
   let handleDrawerSelection = selectedOption => {
     switch selectedOption {
-    | "User Onboarding" => setSelectedOption(_ => "User Onboarding")
-    | "Domestic Money Transfer" => setSelectedOption(_ => "Domestic Money Transfer")
-    | "Loan Against Property" => setSelectedOption(_ => "Loan Against Property")
-    | "Finternet Onboarding" => setSelectedOption(_ => "Finternet Onboarding")
-    | "Property User Onboarding" => setSelectedOption(_ => "Property User Onboarding")
+    | "Bank Account Tokenization" => setSelectedOption(_ => BankAccountTokenization)
+    | "Domestic Money Transfer" => setSelectedOption(_ => DomesticMoneyTransfer)
+    | "Loan Against Property" => setSelectedOption(_ => LoanAgainstProperty)
+    | "Finternet Onboarding" => setSelectedOption(_ => FinternetOnboarding)
+    | "Property Tokenization" => setSelectedOption(_ => PropertyTokenization)
+    | "Admin Dashboard" => setSelectedOption(_ => AdminDashboard)
 
-    | "Hello World!" => setSelectedOption(_ => "Hello World!")
+    | "Hello World !" => setSelectedOption(_ => HelloWorld)
     | _ => Js.log("Unexpected drawer selection: " ++ selectedOption)
     }
   }
 
   let renderContent = () => {
     switch selectedOption {
-    | "User Onboarding" => renderOnboardingContent()
-    | "Domestic Money Transfer" => renderTransferContent()
-    | "Loan Against Property" => renderLoanAgainstPropertyContent()
-    | "Finternet Onboarding" => renderFinternetOnboardingContent()
-    | "Property User Onboarding" => renderPropertyUserOnboardingContent()
+    | BankAccountTokenization => renderOnboardingContent()
+    | DomesticMoneyTransfer => renderTransferContent()
+    | LoanAgainstProperty => renderLoanAgainstPropertyContent()
+    | FinternetOnboarding => renderFinternetOnboardingContent()
+    | PropertyTokenization => renderPropertyUserOnboardingContent()
 
-    | "Hello World" =>
+    | HelloWorld =>
       <div className="h-full w-full flex justify-center items-center text-2xl">
         {React.string("Welcome to the Home Page")}
       </div>
     | _ =>
-      Js.log("Unhandled case in renderContent: " ++ selectedOption)
+      Js.log("Unhandled case in renderContent: ")
       React.null
+    }
+  }
+
+  // Convert a strings variant to its corresponding string
+  let variantToStrings = option => {
+    switch option {
+    | BankAccountTokenization => "Bank Account Tokenization"
+    | DomesticMoneyTransfer => "Domestic Money Transfer"
+    | PropertyTokenization => "Property Tokenization"
+    | LoanAgainstProperty => "Loan Against Property"
+    | HelloWorld => "Hello World!"
+    | FinternetOnboarding => "Finternet Onboarding"
+    | AdminDashboard => "Admin Dashboard"
     }
   }
 
@@ -694,133 +672,143 @@ let make = () => {
     <div
       className="flex flex-col sm:flex-row  h-screen w-screen font-space-grotesk justify-between ">
       <div className="mr-10">
-        <Drawer handleDrawerSelection={handleDrawerSelection} selectedOption={selectedOption} />
+        <Drawer
+          handleDrawerSelection={handleDrawerSelection}
+          selectedOption={variantToStrings(selectedOption)}
+        />
       </div>
-      {selectedOption == "Hello World!"
-        ? <div className="flex flex-col h-full w-full  items-center gap-3  my-40">
-            <img src="/finternetLogo.png" alt="Description of image" className=" h-4/12 w-1/12" />
-            <div className="w-5/12 text-center ">
-              {React.string(
-                "Welcome to the Finternet playground. Explore use cases that demonstrate how the Finternet unlocks transactability across assets. ",
-              )}
+      {switch selectedOption {
+      | HelloWorld =>
+        <div className="flex flex-col h-full w-full items-center gap-3 my-40">
+          <img src="/finternetLogo.png" alt="Description of image" className="h-4/12 w-1/12" />
+          <div className="w-5/12 text-center">
+            {React.string(
+              "Welcome to the Finternet playground. Explore use cases that demonstrate how the Finternet unlocks transactability across assets.",
+            )}
+          </div>
+        </div>
+
+      | AdminDashboard =>
+        <iframe
+          src="https://finternet-token-manager.vercel.app/"
+          className="h-full w-full -ml-10 mt-1"
+          title="Dashboard"
+        /> // Replace with your desired URL
+
+      | _ =>
+        <>
+          <div
+            className="flex flex-col sm:self-auto self-center min-h-[50rem] sm:min-h-full h-full w-4/5 sm:w-1/5  my-4 gap-4 ">
+            // <div
+            //   className="bg-white h-full sm:h-4/5 self-center w-full border-8 border-black shadow-lg rounded-lg overflow-auto ">
+            <div
+              //     className="h-full w-full border-8 border-black shadow-lg rounded-lg p-4 "
+              // className="bg-white h-full sm:h-4/5 self-center w-full p-4 border-2 border-black border-t-4 shadow-lg rounded-lg overflow-auto ">
+              className={`relative ${(selectedOption == DomesticMoneyTransfer &&
+                  currentTransferScreen == FinternetHome) ||
+                selectedOption == LoanAgainstProperty &&
+                  currentLoanAgainstPropertyScreen == FinternetHomeMyProp ||
+                selectedOption == FinternetOnboarding
+                  ? "bg-black"
+                  : "bg-white"} h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto`}>
+              {renderContent()}
+              <FaceIDModal
+                showModal={showFaceIDModal}
+                toggleModal={toggleFaceIDModal}
+                // handleNavigate={handleNavigate}
+                text="Link your Finternet account with the the MyProp app"
+                buttonText="Link"
+              />
+            </div>
+            // </div>
+            <div className="flex flex-row justify-around text-xl text-gray-400">
+              <button
+                onClick={_ => {
+                  switch selectedOption {
+                  | FinternetOnboarding => handlePrevFinternetOnboardingScreen()
+                  | BankAccountTokenization => handlePrevOnboardingScreen()
+                  | DomesticMoneyTransfer => handlePrevScreen()
+                  | PropertyTokenization => handlePropertyUserOnboardingPrevScreen()
+
+                  | LoanAgainstProperty => handlePrevLoanAgainstPropertyScreen()
+
+                  | _ => Js.log("Unhandled case in renderContent: ")
+                  }
+                }}>
+                {React.string("<")}
+              </button>
+              <button
+                onClick={_ => {
+                  switch selectedOption {
+                  | FinternetOnboarding => handleNextFinternetOnboardingScreen()
+                  | BankAccountTokenization => handleNextOnboardingScreen()
+                  | DomesticMoneyTransfer => handleNextScreen()
+                  | PropertyTokenization => handlePropertyUserOnboardingNextScreen()
+
+                  | LoanAgainstProperty => handleNextLoanAgainstPropertyScreen()
+
+                  | _ => Js.log("Unhandled case in renderContent: ")
+                  }
+                }}>
+                {React.string(">")}
+              </button>
             </div>
           </div>
-        : <>
-            <div
-              className="flex flex-col sm:self-auto self-center min-h-[50rem] sm:min-h-full h-full w-4/5 sm:w-1/5  my-4 gap-4 ">
-              // <div
-              //   className="bg-white h-full sm:h-4/5 self-center w-full border-8 border-black shadow-lg rounded-lg overflow-auto ">
-              <div
-                //     className="h-full w-full border-8 border-black shadow-lg rounded-lg p-4 "
-                // className="bg-white h-full sm:h-4/5 self-center w-full p-4 border-2 border-black border-t-4 shadow-lg rounded-lg overflow-auto ">
-                className={`relative ${(selectedOption == "Domestic Money Transfer" &&
-                    currentTransferScreen == FinternetHome) ||
-                  selectedOption == "Loan Against Property" &&
-                    currentLoanAgainstPropertyScreen == FinternetHomeMyProp ||
-                  selectedOption == "Finternet Onboarding"
-                    ? "bg-black"
-                    : "bg-white"} h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto`}>
-                {renderContent()}
-                <FaceIDModal
-                  showModal={showFaceIDModal}
-                  toggleModal={toggleFaceIDModal}
-                  // handleNavigate={handleNavigate}
-                  text="Link your Finternet account with the the MyProp app"
-                  buttonText="Link"
+          // <div
+          //   className="ml-4 p-4  bg-gray-100 rounded-lg w-3/5 h-full flex flex-col gap-3 overflow-auto ">
+          {isCollapsed
+            ? {
+                <div className="mr-5">
+                  <button onClick={_ => setIsCollapsed(_ => false)}> {React.string("<<<")} </button>
+                </div>
+              }
+            : <div
+                className="relative sm:ml-4 p-4 bg-gray-100 rounded-lg w-4/5 min-h-96 sm:self-auto self-center sm:w-2/5 sm:h-5/6 flex flex-col gap-3 overflow-auto my-4 sm:mr-10">
+                <button className="absolute top-3 right-3" onClick={_ => setIsCollapsed(_ => true)}>
+                  {React.string("x")}
+                </button>
+                // <div className="flex flex-row w-full justify-end">
+                //   <button onClick={_ => setIsCollapsed(_ => true)}> {React.string("x")} </button>
+                // </div>
+                <div className="text-2xl">
+                  {switch selectedOption {
+                  | BankAccountTokenization =>
+                    React.string("Bank Account Tokenization Activity Log")
+                  | DomesticMoneyTransfer => React.string("Domestic Transfer Activity Log")
+                  | PropertyTokenization => React.string("Property Tokenization Activity Log")
+                  | LoanAgainstProperty => React.string("Loan Against Property Activity Log")
+                  | FinternetOnboarding => React.string("Finternet Onboarding Activity Log")
+                  | _ => React.string("Unexpected Screen")
+                  }}
+                  // {React.string("Domestic Transfer Activity Log")}
+                </div>
+                // {userData != Js.Json.null
+                // ?
+                <Accordion
+                  userData={userData}
+                  transactionsHistory={transactionsHistory}
+                  userAssets={userAssets}
+                  showAuthInitiated={showAuthInitiated}
+                  showTransactionConfirm={showTransactionConfirm}
+                  transactionResult={transactionResult}
+                  flowType={variantToStrings(selectedOption)}
+                  registerStartResponse={registerStartResponse}
+                  attestation={attestation}
+                  loginStartResponse={loginStartResponse}
+                  assertion={assertion}
+                  tokenizeAccount={tokenizeAccount}
+                  tokenizeProperty={tokenizeProperty}
+                  loginPropertyStartResponse={loginPropertyStartResponse}
+                  propertyLoginAssertion={propertyLoginAssertion}
+                  agreementSigned={agreementSigned}
                 />
-              </div>
-              // </div>
-              <div className="flex flex-row justify-around text-xl text-gray-400">
-                <button
-                  onClick={_ => {
-                    switch selectedOption {
-                    | "Finternet Onboarding" => handlePrevFinternetOnboardingScreen()
-                    | "User Onboarding" => handlePrevOnboardingScreen()
-                    | "Domestic Money Transfer" => handlePrevScreen()
-                    | "Property User Onboarding" => handlePropertyUserOnboardingPrevScreen()
-
-                    | "Loan Against Property" => handlePrevLoanAgainstPropertyScreen()
-
-                    | _ => Js.log("Unhandled case in renderContent: " ++ selectedOption)
-                    }
-                  }}>
-                  {React.string("<")}
-                </button>
-                <button
-                  onClick={_ => {
-                    switch selectedOption {
-                    | "Finternet Onboarding" => handleNextFinternetOnboardingScreen()
-                    | "User Onboarding" => handleNextOnboardingScreen()
-                    | "Domestic Money Transfer" => handleNextScreen()
-                    | "Property User Onboarding" => handlePropertyUserOnboardingNextScreen()
-
-                    | "Loan Against Property" => handleNextLoanAgainstPropertyScreen()
-
-                    | _ => Js.log("Unhandled case in renderContent: " ++ selectedOption)
-                    }
-                  }}>
-                  {React.string(">")}
-                </button>
-              </div>
-            </div>
-            // <div
-            //   className="ml-4 p-4  bg-gray-100 rounded-lg w-3/5 h-full flex flex-col gap-3 overflow-auto ">
-            {isCollapsed
-              ? {
-                  <div className="mr-5">
-                    <button onClick={_ => setIsCollapsed(_ => false)}>
-                      {React.string("<<<")}
-                    </button>
-                  </div>
-                }
-              : <div
-                  className="relative sm:ml-4 p-4 bg-gray-100 rounded-lg w-4/5 min-h-96 sm:self-auto self-center sm:w-2/5 sm:h-5/6 flex flex-col gap-3 overflow-auto my-4 sm:mr-10">
-                  <button
-                    className="absolute top-3 right-3" onClick={_ => setIsCollapsed(_ => true)}>
-                    {React.string("x")}
-                  </button>
-                  // <div className="flex flex-row w-full justify-end">
-                  //   <button onClick={_ => setIsCollapsed(_ => true)}> {React.string("x")} </button>
-                  // </div>
-                  <div className="text-2xl">
-                    {switch selectedOption {
-                    | "User Onboarding" => React.string("User Onboarding Activity Log (WIP)")
-                    | "Domestic Money Transfer" => React.string("Domestic Transfer Activity Log")
-                    | "Property User Onboarding" =>
-                      React.string("Property User Onboarding Activity Log")
-                    | "Loan Against Property" => React.string("Loan Against Property Activity Log")
-                    | "Finternet Onboarding" => React.string("Finternet Onboarding Activity Log")
-                    | _ => React.string("Unexpected Screen")
-                    }}
-                    // {React.string("Domestic Transfer Activity Log")}
-                  </div>
-                  // {userData != Js.Json.null
-                  // ?
-                  <Accordion
-                    userData={userData}
-                    transactionsHistory={transactionsHistory}
-                    userAssets={userAssets}
-                    showAuthInitiated={showAuthInitiated}
-                    showTransactionConfirm={showTransactionConfirm}
-                    transactionResult={transactionResult}
-                    flowType={selectedOption}
-                    registerStartResponse={registerStartResponse}
-                    attestation={attestation}
-                    loginStartResponse={loginStartResponse}
-                    assertion={assertion}
-                    tokenizeAccount={tokenizeAccount}
-                    tokenizeProperty={tokenizeProperty}
-                    loginPropertyStartResponse={loginPropertyStartResponse}
-                    propertyLoginAssertion={propertyLoginAssertion}
-                    agreementSigned={agreementSigned}
-                  />
-                </div>}
-            // :
-            //  <div className="text-sm">
-            // {React.string("Initiate transaction to view activity logs")}
-            // </div>}
-          </>}
-      // <Drawer />
+              </div>}
+          // :
+          //  <div className="text-sm">
+          // {React.string("Initiate transaction to view activity logs")}
+          // </div>}
+        </>
+      }}
     </div>
     // <Drawer
     //   openDrawer={openDrawer}

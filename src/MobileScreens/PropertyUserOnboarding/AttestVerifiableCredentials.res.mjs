@@ -13,7 +13,7 @@ function AttestVerifiableCredentials(props) {
                 JsxRuntime.jsxs("div", {
                       children: [
                         JsxRuntime.jsx(HeaderWithBack.make, {
-                              title: "Attesting verifiable credentials",
+                              title: "Add Property Documents",
                               backButtonStrokeColor: Colors.colors.propertyBlue
                             }),
                         JsxRuntime.jsxs("div", {
@@ -60,7 +60,7 @@ function AttestVerifiableCredentials(props) {
                                               size: "small"
                                             }),
                                         JsxRuntime.jsx("div", {
-                                              children: "MOC",
+                                              children: "NOC",
                                               className: "font-bold self-center text-xs text-[" + Colors.colors.darkGray + "]"
                                             })
                                       ],
@@ -88,7 +88,7 @@ function AttestVerifiableCredentials(props) {
                               className: "flex flex-row gap-2 w-10/12 bg-white p-2 rounded-xl drop-shadow-md self-center"
                             }),
                         JsxRuntime.jsx("button", {
-                              children: "Attest verifiable credentials",
+                              children: "Add Property Documents",
                               className: " bg-[" + Colors.colors.propertyBlue + "] text-white rounded-lg w-full h-12",
                               onClick: (function (param) {
                                   handleNavigate();

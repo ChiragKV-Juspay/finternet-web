@@ -62,7 +62,7 @@ let make = (~handleNavigate) => {
                 ? <button
                     className={`bg-[${colors.propertyBlue}] text-white rounded-lg w-full h-10 mt-4`}
                     onClick={_ => handleNavigate()}>
-                    {React.string("View Key Fact Sheet")}
+                    {React.string("View Loan Offer")}
                   </button>
                 : React.null}
               <div className="border-t border-dashed w-full mt-6 border-[#E6E6E6]" />
@@ -77,7 +77,7 @@ let make = (~handleNavigate) => {
       <img src="/Info.svg" alt="Description of image" />
       <div className={`text-xs font-light text-[${colors.gray}]`}>
         {React.string(
-          "By clicking continue, I agree to share any additional verifiable credentials to the selected bank, as may be required.",
+          "By clicking continue, I agree to share any additional property documents to the selected bank, as may be required.",
         )}
       </div>
     </div>

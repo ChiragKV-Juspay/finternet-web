@@ -114,6 +114,63 @@ function Accordion$1(props) {
   var prettyKeyGenResponse2 = JSON.stringify(keygenResponseJson2, undefined, 2);
   var accordionContent;
   switch (props.flowType) {
+    case "Bank Account Tokenization" :
+        accordionContent = JsxRuntime.jsx("div", {
+              children: Caml_obj.equal(loginStartResponse, null) && Caml_obj.equal(assertion, null) ? JsxRuntime.jsx("div", {
+                      children: "Start onboarding to view activity logs",
+                      className: "text-sm text-gray-500"
+                    }) : JsxRuntime.jsxs("div", {
+                      children: [
+                        Caml_obj.notequal(loginStartResponse, null) ? JsxRuntime.jsx(AccordionItem.make, {
+                                summary: "User Login",
+                                detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                      summary: JsxRuntime.jsxs("div", {
+                                            children: [
+                                              "POST https://selfnode.codecrane.com/auth-0/issue_authentication_challenge?user-id=mywallet",
+                                              JsxRuntime.jsx("br", {}),
+                                              "POST https://selfnode.codecrane.com/auth-1/issue_authentication_challenge?user-id=mywallet",
+                                              JsxRuntime.jsx("br", {}),
+                                              "POST https://selfnode.codecrane.com/auth-2/issue_authentication_challenge?user-id=mywallet"
+                                            ]
+                                          }),
+                                      detailsContent: JsxRuntime.jsx("pre", {
+                                            children: prettyLoginStartResponse,
+                                            className: "whitespace-pre-wrap"
+                                          }),
+                                      detailsClassName: "text-sm overflow-auto"
+                                    })
+                              }) : null,
+                        Caml_obj.notequal(assertion, null) ? JsxRuntime.jsx("div", {
+                                children: JsxRuntime.jsx(AccordionItem.make, {
+                                      summary: "User Login Finish",
+                                      detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                            summary: JsxRuntime.jsx("div", {
+                                                  children: "POST https://selfnode.codecrane.com/store-result"
+                                                }),
+                                            detailsContent: JsxRuntime.jsx("pre", {
+                                                  children: prettyAssertion,
+                                                  className: "whitespace-pre-wrap"
+                                                }),
+                                            detailsClassName: "text-sm overflow-auto"
+                                          })
+                                    })
+                              }) : null,
+                        props.tokenizeAccount ? JsxRuntime.jsx(AccordionItem.make, {
+                                summary: "Tokenization",
+                                detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                      summary: "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets",
+                                      detailsContent: JsxRuntime.jsx("pre", {
+                                            children: prettyTokenizeAccountPostBody,
+                                            className: "whitespace-pre-wrap"
+                                          }),
+                                      detailsClassName: "text-sm overflow-auto"
+                                    }),
+                                summaryClassName: ""
+                              }) : null
+                      ]
+                    })
+            });
+        break;
     case "Domestic Money Transfer" :
         accordionContent = JsxRuntime.jsx("div", {
               children: Caml_obj.equal(userData, null) && Caml_obj.equal(userAssets, null) && Caml_obj.equal(transactionsHistory, null) ? JsxRuntime.jsx("div", {
@@ -312,7 +369,7 @@ function Accordion$1(props) {
     case "Loan Against Property" :
         accordionContent = JsxRuntime.jsx("div", {
               children: Caml_obj.equal(userData, null) && Caml_obj.equal(userAssets, null) && Caml_obj.equal(transactionsHistory, null) ? JsxRuntime.jsx("div", {
-                      children: "Start onboarding to view activity logs",
+                      children: "Initiate loan request to view activity logs",
                       className: "text-sm text-gray-500"
                     }) : JsxRuntime.jsxs("div", {
                       children: [
@@ -400,7 +457,7 @@ function Accordion$1(props) {
                     })
             });
         break;
-    case "Property User Onboarding" :
+    case "Property Tokenization" :
         accordionContent = JsxRuntime.jsx("div", {
               children: Caml_obj.equal(loginPropertyStartResponse, null) && Caml_obj.equal(propertyLoginAssertion, null) ? JsxRuntime.jsx("div", {
                       children: "Start onboarding to view activity logs",
@@ -447,63 +504,6 @@ function Accordion$1(props) {
                                       summary: "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets",
                                       detailsContent: JsxRuntime.jsx("pre", {
                                             children: tokenizedPropertyBodyJson$1,
-                                            className: "whitespace-pre-wrap"
-                                          }),
-                                      detailsClassName: "text-sm overflow-auto"
-                                    }),
-                                summaryClassName: ""
-                              }) : null
-                      ]
-                    })
-            });
-        break;
-    case "User Onboarding" :
-        accordionContent = JsxRuntime.jsx("div", {
-              children: Caml_obj.equal(loginStartResponse, null) && Caml_obj.equal(assertion, null) ? JsxRuntime.jsx("div", {
-                      children: "Start onboarding to view activity logs",
-                      className: "text-sm text-gray-500"
-                    }) : JsxRuntime.jsxs("div", {
-                      children: [
-                        Caml_obj.notequal(loginStartResponse, null) ? JsxRuntime.jsx(AccordionItem.make, {
-                                summary: "User Login",
-                                detailsContent: JsxRuntime.jsx(AccordionItem.make, {
-                                      summary: JsxRuntime.jsxs("div", {
-                                            children: [
-                                              "POST https://selfnode.codecrane.com/auth-0/issue_authentication_challenge?user-id=mywallet",
-                                              JsxRuntime.jsx("br", {}),
-                                              "POST https://selfnode.codecrane.com/auth-1/issue_authentication_challenge?user-id=mywallet",
-                                              JsxRuntime.jsx("br", {}),
-                                              "POST https://selfnode.codecrane.com/auth-2/issue_authentication_challenge?user-id=mywallet"
-                                            ]
-                                          }),
-                                      detailsContent: JsxRuntime.jsx("pre", {
-                                            children: prettyLoginStartResponse,
-                                            className: "whitespace-pre-wrap"
-                                          }),
-                                      detailsClassName: "text-sm overflow-auto"
-                                    })
-                              }) : null,
-                        Caml_obj.notequal(assertion, null) ? JsxRuntime.jsx("div", {
-                                children: JsxRuntime.jsx(AccordionItem.make, {
-                                      summary: "User Login Finish",
-                                      detailsContent: JsxRuntime.jsx(AccordionItem.make, {
-                                            summary: JsxRuntime.jsx("div", {
-                                                  children: "POST https://selfnode.codecrane.com/store-result"
-                                                }),
-                                            detailsContent: JsxRuntime.jsx("pre", {
-                                                  children: prettyAssertion,
-                                                  className: "whitespace-pre-wrap"
-                                                }),
-                                            detailsClassName: "text-sm overflow-auto"
-                                          })
-                                    })
-                              }) : null,
-                        props.tokenizeAccount ? JsxRuntime.jsx(AccordionItem.make, {
-                                summary: "Tokenization",
-                                detailsContent: JsxRuntime.jsx(AccordionItem.make, {
-                                      summary: "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets",
-                                      detailsContent: JsxRuntime.jsx("pre", {
-                                            children: prettyTokenizeAccountPostBody,
                                             className: "whitespace-pre-wrap"
                                           }),
                                       detailsClassName: "text-sm overflow-auto"

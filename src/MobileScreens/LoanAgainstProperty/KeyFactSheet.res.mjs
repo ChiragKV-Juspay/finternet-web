@@ -12,7 +12,7 @@ function KeyFactSheet(props) {
                 JsxRuntime.jsxs("div", {
                       children: [
                         JsxRuntime.jsx(HeaderWithBack.make, {
-                              title: "Key Fact Sheet",
+                              title: "View Loan Offer",
                               backButtonStrokeColor: Colors.colors.propertyBlue
                             }),
                         JsxRuntime.jsx("img", {

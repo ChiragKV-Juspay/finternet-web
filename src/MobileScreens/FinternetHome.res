@@ -47,7 +47,7 @@ let make = (~handleNavigate=?, ~flow: flow) => {
         <div className="flex flex-col gap-4 w-full items-center">
           <div className="text-white"> {React.string("No apps linked")} </div>
           <button
-            className="bg-white text-black text-xs rounded-lg w-1/3 h-8"
+            className="bg-white text-black text-xs rounded-lg w-36 h-8"
             onClick={_ =>
               switch handleNavigate {
               | Some(callback) => callback()
