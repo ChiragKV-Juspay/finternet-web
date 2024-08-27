@@ -17,14 +17,14 @@ function DomesticMoneyTransferAccordion(props) {
   var userData = props.userData;
   var tokenizePropertybody_property_details = {
     property_id: "1234",
-    property_registrar: "Some Registrar"
+    property_registrar: "State Property Registrar"
   };
   var tokenizePropertybody_attestations = [
     {
-      certificate: "NOC"
+      certificate: "No Objection Certificate"
     },
     {
-      certificate: "Ownership"
+      certificate: "Ownership Certificate"
     },
     {
       certificate: "Value"
@@ -178,7 +178,7 @@ function DomesticMoneyTransferAccordion(props) {
           RE_EXN_ID: "Match_failure",
           _1: [
             "DomesticMoneyTransferAccordion.res",
-            60,
+            64,
             25
           ],
           Error: new Error()

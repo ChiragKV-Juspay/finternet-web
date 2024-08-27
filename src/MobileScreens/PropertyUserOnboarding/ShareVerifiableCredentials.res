@@ -12,9 +12,7 @@ let make = (~handleNavigate) => {
   }
   <div className="flex flex-col h-full justify-between relative">
     <div className="flex flex-col gap-5">
-      <HeaderWithBack
-        title="Attesting verifiable credentials" backButtonStrokeColor=colors.propertyBlue
-      />
+      <HeaderWithBack title="Share Property Documents" backButtonStrokeColor=colors.propertyBlue />
       <div className="flex flex-col gap-5">
         <div className="flex flew-row">
           <Mui.Checkbox
@@ -25,7 +23,7 @@ let make = (~handleNavigate) => {
             size=Small
           />
           <div className={`font-bold self-center text-xs text-[${colors.darkGray}]`}>
-            {React.string("Ownership")}
+            {React.string("Ownership Certificate")}
           </div>
         </div>
         <div className="flex flew-row">
@@ -37,7 +35,7 @@ let make = (~handleNavigate) => {
             size=Small
           />
           <div className={`font-bold self-center text-xs text-[${colors.darkGray}]`}>
-            {React.string("Value")}
+            {React.string("Valuation")}
           </div>
         </div>
         <div className="flex flew-row">

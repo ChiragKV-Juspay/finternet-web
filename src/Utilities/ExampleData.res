@@ -23,8 +23,8 @@ let bankOptions = [
   {
     id: "1",
     name: "ABC Bank",
-    ltvRatio: "80%",
-    interestRate: "10%",
+    ltvRatio: "75%",
+    interestRate: "7%",
     imagePath: "/RoundedPinkRectangle.svg",
     cardNumber: "**** **** 1234",
   },

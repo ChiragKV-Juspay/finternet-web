@@ -23,17 +23,17 @@ function Accordion$1(props) {
   var userData = props.userData;
   var tokenizePropertybody_property_details = {
     property_id: "1234",
-    property_registrar: "Some Registrar"
+    property_registrar: "State Property Registrar"
   };
   var tokenizePropertybody_attestations = [
     {
-      certificate: "NOC"
+      certificate: "No Objection Certificate"
     },
     {
-      certificate: "Ownership"
+      certificate: "Ownership Certificate"
     },
     {
-      certificate: "Value"
+      certificate: "Valuation"
     }
   ];
   var tokenizePropertybody = {
@@ -43,17 +43,17 @@ function Accordion$1(props) {
   };
   var signedTokenizePropertyBody_property_details = {
     property_id: "1234",
-    property_registrar: "Some Registrar"
+    property_registrar: "State Property Registrar"
   };
   var signedTokenizePropertyBody_attestations = [
     {
-      certificate: "NOC"
+      certificate: "No Objection Certificate"
     },
     {
-      certificate: "Ownership"
+      certificate: "Ownership Certificate"
     },
     {
-      certificate: "Value"
+      certificate: "Valuation"
     },
     {
       certificate: "Personal Details"
@@ -308,7 +308,7 @@ function Accordion$1(props) {
                                             }),
                                         JsxRuntime.jsx("a", {
                                               children: "View in Solana",
-                                              className: "w-max items-center text-blue-500 hover:text-blue-700 transition duration-300 border border-blue-500 rounded-lg p-2",
+                                              className: "w-max items-center text-blue-500 font-bold hover:text-blue-700 transition duration-300 border border-blue-500 rounded-lg p-2",
                                               href: "https://explorer.solana.com/tx/" + parsedTransactionResult.transaction_id + "?cluster=devnet",
                                               rel: "noopener noreferrer",
                                               target: "_blank"

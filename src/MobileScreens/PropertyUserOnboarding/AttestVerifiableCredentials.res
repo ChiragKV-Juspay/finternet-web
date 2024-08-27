@@ -15,7 +15,7 @@ let make = (~handleNavigate) => {
             size=Small
           />
           <div className={`font-bold self-center text-xs text-[${colors.darkGray}]`}>
-            {React.string("Ownership")}
+            {React.string("Ownership Certificate")}
           </div>
         </div>
         <div className="flex flew-row">
@@ -27,7 +27,7 @@ let make = (~handleNavigate) => {
             size=Small
           />
           <div className={`font-bold self-center text-xs text-[${colors.darkGray}]`}>
-            {React.string("Value")}
+            {React.string("Valuation")}
           </div>
         </div>
         <div className="flex flew-row">

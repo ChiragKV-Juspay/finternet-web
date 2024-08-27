@@ -28,7 +28,7 @@ function AttestVerifiableCredentials(props) {
                                               size: "small"
                                             }),
                                         JsxRuntime.jsx("div", {
-                                              children: "Ownership",
+                                              children: "Ownership Certificate",
                                               className: "font-bold self-center text-xs text-[" + Colors.colors.darkGray + "]"
                                             })
                                       ],
@@ -44,7 +44,7 @@ function AttestVerifiableCredentials(props) {
                                               size: "small"
                                             }),
                                         JsxRuntime.jsx("div", {
-                                              children: "Value",
+                                              children: "Valuation",
                                               className: "font-bold self-center text-xs text-[" + Colors.colors.darkGray + "]"
                                             })
                                       ],

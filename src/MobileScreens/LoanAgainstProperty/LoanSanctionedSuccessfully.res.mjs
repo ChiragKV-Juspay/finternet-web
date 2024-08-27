@@ -12,7 +12,7 @@ function LoanSanctionedSuccessfully(props) {
                       children: JsxRuntime.jsx("div", {
                             children: JsxRuntime.jsx("img", {
                                   alt: "Description of image",
-                                  src: "/PledgedCard1.svg"
+                                  src: "/LoanDisbursedSuccesfully.svg"
                                 })
                           }),
                       className: "flex flex-col gap-5"

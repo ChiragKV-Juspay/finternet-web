@@ -32,9 +32,13 @@ let make = (
     asset_type: "Property",
     property_details: {
       property_id: "1234",
-      property_registrar: "Some Registrar",
+      property_registrar: "State Property Registrar",
     },
-    attestations: [{certificate: "NOC"}, {certificate: "Ownership"}, {certificate: "Value"}],
+    attestations: [
+      {certificate: "No Objection Certificate"},
+      {certificate: "Ownership Certificate"},
+      {certificate: "Value"},
+    ],
   }
   let body: record = {
     sender: "siddharth@finternet",

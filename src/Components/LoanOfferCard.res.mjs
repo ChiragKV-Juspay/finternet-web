@@ -86,7 +86,7 @@ function LoanOfferCard(props) {
                                                       className: " text-lg font-light text-textGray"
                                                     }),
                                                 JsxRuntime.jsx("div", {
-                                                      children: "10 %",
+                                                      children: "7%",
                                                       className: "font-bold text-lg"
                                                     })
                                               ],
@@ -103,19 +103,6 @@ function LoanOfferCard(props) {
                                             }),
                                         JsxRuntime.jsx("div", {
                                               children: "20 years",
-                                              className: "font-bold text-lg"
-                                            })
-                                      ],
-                                      className: "flex flex-col "
-                                    }),
-                                JsxRuntime.jsxs("div", {
-                                      children: [
-                                        JsxRuntime.jsx("div", {
-                                              children: "Estimated Monthly EMI",
-                                              className: " text-lg font-light text-textGray"
-                                            }),
-                                        JsxRuntime.jsx("div", {
-                                              children: "₹ 33,458",
                                               className: "font-bold text-lg"
                                             })
                                       ],

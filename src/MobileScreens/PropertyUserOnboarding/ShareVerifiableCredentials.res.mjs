@@ -23,7 +23,7 @@ function ShareVerifiableCredentials(props) {
                 JsxRuntime.jsxs("div", {
                       children: [
                         JsxRuntime.jsx(HeaderWithBack.make, {
-                              title: "Attesting verifiable credentials",
+                              title: "Share Property Documents",
                               backButtonStrokeColor: Colors.colors.propertyBlue
                             }),
                         JsxRuntime.jsxs("div", {
@@ -38,7 +38,7 @@ function ShareVerifiableCredentials(props) {
                                               size: "small"
                                             }),
                                         JsxRuntime.jsx("div", {
-                                              children: "Ownership",
+                                              children: "Ownership Certificate",
                                               className: "font-bold self-center text-xs text-[" + Colors.colors.darkGray + "]"
                                             })
                                       ],
@@ -54,7 +54,7 @@ function ShareVerifiableCredentials(props) {
                                               size: "small"
                                             }),
                                         JsxRuntime.jsx("div", {
-                                              children: "Value",
+                                              children: "Valuation",
                                               className: "font-bold self-center text-xs text-[" + Colors.colors.darkGray + "]"
                                             })
                                       ],

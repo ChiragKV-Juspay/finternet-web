@@ -12,7 +12,7 @@ let make = (~handleNavigate) => {
         //     </div>
         //   </div>
         // </div>
-        <img src="/PledgedCard1.svg" alt="Description of image" />
+        <img src="/LoanDisbursedSuccesfully.svg" alt="Description of image" />
       </div>
     </div>
     <div className="flex flex-col gap-5">

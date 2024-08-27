@@ -701,6 +701,7 @@ let make = () => {
             className="flex flex-col sm:self-auto self-center min-h-[50rem] sm:min-h-full h-full w-4/5 sm:w-1/5  my-4 gap-4 ">
             // <div
             //   className="bg-white h-full sm:h-4/5 self-center w-full border-8 border-black shadow-lg rounded-lg overflow-auto ">
+            // <P4Wrapper flag={true}>
             <div
               //     className="h-full w-full border-8 border-black shadow-lg rounded-lg p-4 "
               // className="bg-white h-full sm:h-4/5 self-center w-full p-4 border-2 border-black border-t-4 shadow-lg rounded-lg overflow-auto ">
@@ -710,7 +711,7 @@ let make = () => {
                   currentLoanAgainstPropertyScreen == FinternetHomeMyProp ||
                 selectedOption == FinternetOnboarding
                   ? "bg-black"
-                  : "bg-white"} h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto`}>
+                  : "bg-white"} h-full sm:h-4/5 self-center w-full ring-4 p-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto`}>
               {renderContent()}
               <FaceIDModal
                 showModal={showFaceIDModal}
@@ -720,6 +721,7 @@ let make = () => {
                 buttonText="Link"
               />
             </div>
+            // </P4Wrapper>
             // </div>
             <div className="flex flex-row justify-around text-xl text-gray-400">
               <button

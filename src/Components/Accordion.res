@@ -36,9 +36,13 @@ let make = (
     asset_type: "Property",
     property_details: {
       property_id: "1234",
-      property_registrar: "Some Registrar",
+      property_registrar: "State Property Registrar",
     },
-    attestations: [{certificate: "NOC"}, {certificate: "Ownership"}, {certificate: "Value"}],
+    attestations: [
+      {certificate: "No Objection Certificate"},
+      {certificate: "Ownership Certificate"},
+      {certificate: "Valuation"},
+    ],
   }
 
   let propertyPledgeResult: propertyPledgeResultType = {
@@ -51,12 +55,12 @@ let make = (
     asset_type: "Property",
     property_details: {
       property_id: "1234",
-      property_registrar: "Some Registrar",
+      property_registrar: "State Property Registrar",
     },
     attestations: [
-      {certificate: "NOC"},
-      {certificate: "Ownership"},
-      {certificate: "Value"},
+      {certificate: "No Objection Certificate"},
+      {certificate: "Ownership Certificate"},
+      {certificate: "Valuation"},
       {certificate: "Personal Details"},
     ],
   }
@@ -246,7 +250,7 @@ let make = (
                       href={`https://explorer.solana.com/tx/${parsedTransactionResult.transaction_id}?cluster=devnet`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-max items-center text-blue-500 hover:text-blue-700 transition duration-300 border border-blue-500 rounded-lg p-2">
+                      className="w-max items-center text-blue-500 font-bold hover:text-blue-700 transition duration-300 border border-blue-500 rounded-lg p-2">
                       {React.string("View in Solana")}
                     </a>
 

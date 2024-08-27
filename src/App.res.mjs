@@ -1047,7 +1047,7 @@ function App(props) {
                             ],
                             className: "relative " + (
                               selectedOption === "DomesticMoneyTransfer" && currentTransferScreen === "FinternetHome" || selectedOption === "LoanAgainstProperty" && currentLoanAgainstPropertyScreen === "FinternetHomeMyProp" || selectedOption === "FinternetOnboarding" ? "bg-black" : "bg-white"
-                            ) + " h-full sm:h-4/5 self-center w-full p-4 ring-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto"
+                            ) + " h-full sm:h-4/5 self-center w-full ring-4 p-4 ring-offset-4 ring-black shadow-lg rounded-lg overflow-auto"
                           }),
                       JsxRuntime.jsxs("div", {
                             children: [

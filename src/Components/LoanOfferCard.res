@@ -32,18 +32,12 @@ let make = () => {
           </div>
           <div className="flex flex-col ">
             <div className=" text-lg font-light text-textGray"> {React.string("Interest")} </div>
-            <div className="font-bold text-lg"> {React.string("10 %")} </div>
+            <div className="font-bold text-lg"> {React.string("7%")} </div>
           </div>
         </div>
         <div className="flex flex-col ">
           <div className=" text-lg font-light text-textGray"> {React.string("Tenure")} </div>
           <div className="font-bold text-lg"> {React.string("20 years")} </div>
-        </div>
-        <div className="flex flex-col ">
-          <div className=" text-lg font-light text-textGray">
-            {React.string("Estimated Monthly EMI")}
-          </div>
-          <div className="font-bold text-lg"> {React.string("₹ 33,458")} </div>
         </div>
       </div>
     </div>
