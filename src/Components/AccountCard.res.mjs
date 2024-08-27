@@ -24,7 +24,7 @@ function AccountCard(props) {
                                       children: "Account Address",
                                       className: "text-sm " + (
                                         iconColor === Colors.colors.white ? "text-white" : "text-textGray"
-                                      ) + " font-normal"
+                                      ) + " font-normal z-10"
                                     }),
                                 JsxRuntime.jsxs("div", {
                                       children: [
@@ -32,7 +32,7 @@ function AccountCard(props) {
                                               children: id,
                                               className: "text-xl " + (
                                                 iconColor === Colors.colors.white ? "text-white" : ""
-                                              ) + " font-semibold"
+                                              ) + " font-semibold z-10"
                                             }),
                                         JsxRuntime.jsx("div", {
                                               children: JsxRuntime.jsxs("svg", {
@@ -64,7 +64,7 @@ function AccountCard(props) {
                                               className: "self-center z-10"
                                             })
                                       ],
-                                      className: "flex flex-row justify-between"
+                                      className: "flex flex-row justify-between "
                                     })
                               ]
                             }),

@@ -41,7 +41,13 @@ let make = (
     attestations: [{certificate: "NOC"}, {certificate: "Ownership"}, {certificate: "Value"}],
   }
 
-  let signedTokenizePropertybody: tokenizePropertyBodyType = {
+  let propertyPledgeResult: propertyPledgeResultType = {
+    status: "success",
+    sanctioned_amount: "8000000",
+    id: "2csUM6He8NDmsiAD7Wr3mE3zyipNsyLCJfrJUPvUVsZh2NeCE47wFj5qBEUVq5ajUkVgSSQVsDrJYJYMkMGt9sk1",
+  }
+
+  let signedTokenizePropertyBody: tokenizePropertyBodyType = {
     asset_type: "Property",
     property_details: {
       property_id: "1234",
@@ -99,6 +105,9 @@ let make = (
   let bodyJson = toJson(body)
   let accountTokenizeBodyJson = tokenizedBodyToJson(tokenizeAccountbody)
   let tokenizedPropertyBodyJson = tokenizedPropertyBodyToJson(tokenizePropertybody)
+  let signedTokenizePropertyBodyJson = tokenizedPropertyBodyToJson(signedTokenizePropertyBody)
+  let propertyPledgeResultJson = propertyPledgeResultToJson(propertyPledgeResult)
+
   let jwtBodyJson = toJsonJwtBody(jwtBody)
   let keygenResponseJson0 = toJsonKeyGenResponse(keygenResponse0)
   let keygenResponseJson1 = toJsonKeyGenResponse(keygenResponse1)
@@ -129,6 +138,13 @@ let make = (
   let prettyJwtBody = stringifyWithSpacing(jwtBodyJson, None, Some(2))
   let prettyTokenizeAccountPostBody = stringifyWithSpacing(accountTokenizeBodyJson, None, Some(2))
   let tokenizedPropertyBodyJson = stringifyWithSpacing(tokenizedPropertyBodyJson, None, Some(2))
+  let prettySignedTokenizePropertyBodyJson = stringifyWithSpacing(
+    signedTokenizePropertyBodyJson,
+    None,
+    Some(2),
+  )
+  let prettyPropertyPledgeResultJson = stringifyWithSpacing(propertyPledgeResultJson, None, Some(2))
+
   let prettyKeyGenResponse0 = stringifyWithSpacing(keygenResponseJson0, None, Some(2))
   let prettyKeyGenResponse1 = stringifyWithSpacing(keygenResponseJson1, None, Some(2))
   let prettyKeyGenResponse2 = stringifyWithSpacing(keygenResponseJson2, None, Some(2))
@@ -203,9 +219,13 @@ let make = (
                   summary={React.string("Confirm Transaction")}
                   summaryClassName=""
                   detailsContent={<AccordionItem
-                    summary={React.string(
-                      "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets/123/asset:transfer",
-                    )}
+                    summary={<pre className="whitespace-pre-wrap">
+                      // <div>
+                      {React.string(
+                        "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets/123/asset:transfer",
+                      )}
+                      // </div>
+                    </pre>}
                     // summaryClassName="w-11/12"
                     detailsContent={<pre className="whitespace-pre-wrap">
                       {React.string(prettyPostBody)}
@@ -217,17 +237,20 @@ let make = (
             {transactionResult != Js.Json.null
               ? <AccordionItem
                   summary={React.string("GET Transaction Details")}
-                  detailsContent={<div className="text-sm overflow-auto">
+                  detailsContent={<div className="text-sm overflow-auto flex flex-col gap-2">
                     <pre className="whitespace-pre-wrap">
                       {React.string(prettyTransactionResult)}
                     </pre>
+                    // <div className="border border-text-blue-500 w-auto">
                     <a
                       href={`https://explorer.solana.com/tx/${parsedTransactionResult.transaction_id}?cluster=devnet`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center text-blue-500  hover:text-blue-700 transition duration-300">
+                      className="w-max items-center text-blue-500 hover:text-blue-700 transition duration-300 border border-blue-500 rounded-lg p-2">
                       {React.string("View in Solana")}
                     </a>
+
+                    // </div>
                   </div>}
                   detailsClassName="text-sm overflow-auto"
                 />
@@ -545,20 +568,29 @@ let make = (
               </Mui.AccordionDetails>
             </Mui.Accordion>
             {agreementSigned
-              ? <AccordionItem
-                  summary={React.string("Agreement Signature")}
-                  summaryClassName=""
-                  detailsContent={<AccordionItem
-                    summary={React.string(
-                      "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets/prpWaAX7bTaIyG/asset:pledge",
-                    )}
-                    // summaryClassName="w-11/12"
+              ? <>
+                  <AccordionItem
+                    summary={React.string("Agreement Signature")}
+                    summaryClassName=""
+                    detailsContent={<AccordionItem
+                      summary={React.string(
+                        "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets/prpWaAX7bTaIyG/asset:pledge",
+                      )}
+                      // summaryClassName="w-11/12"
+                      detailsContent={<pre className="whitespace-pre-wrap">
+                        {React.string(tokenizedPropertyBodyJson)}
+                      </pre>}
+                      detailsClassName="text-sm overflow-auto"
+                    />}
+                  />
+                  <AccordionItem
+                    summary={React.string("GET Property Status")}
                     detailsContent={<pre className="whitespace-pre-wrap">
-                      {React.string(tokenizedPropertyBodyJson)}
+                      {React.string(prettyPropertyPledgeResultJson)}
                     </pre>}
                     detailsClassName="text-sm overflow-auto"
-                  />}
-                />
+                  />
+                </>
               : React.null}
           </div>}
     </div>

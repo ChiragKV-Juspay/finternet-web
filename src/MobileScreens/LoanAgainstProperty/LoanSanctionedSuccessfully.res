@@ -17,7 +17,7 @@ let make = (~handleNavigate) => {
     </div>
     <div className="flex flex-col gap-5">
       <button
-        className={` bg-[${colors.propertyBlue}] text-white rounded-lg w-full h-10 text-sm`}
+        className={`bg-[${colors.propertyBlue}] text-white rounded-lg w-full h-10 text-sm`}
         onClick={_ => handleNavigate()}>
         {React.string("View in Wallet")}
       </button>

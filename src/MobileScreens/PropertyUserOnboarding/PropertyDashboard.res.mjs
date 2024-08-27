@@ -39,7 +39,7 @@ function PropertyDashboard(props) {
                                             }),
                                         JsxRuntime.jsx("button", {
                                               children: "Request Loan",
-                                              className: "bg-[" + Colors.colors.propertyBlue + "] text-xs  text-white rounded-lg p-2 w-5/12 ",
+                                              className: "bg-[" + Colors.colors.propertyBlue + "] text-xs  text-white rounded-lg p-2 ",
                                               onClick: (function (param) {
                                                   handleNavigate();
                                                 })

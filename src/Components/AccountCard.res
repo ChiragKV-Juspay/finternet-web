@@ -17,11 +17,14 @@ let make = (~id="siddharth@finternet", ~iconColor=colors.finternetGreen) => {
         <div
           className={`text-sm ${iconColor == colors.white
               ? `text-white`
-              : `text-textGray`} font-normal`}>
+              : `text-textGray`} font-normal z-10`}>
           {React.string("Account Address")}
         </div>
-        <div className="flex flex-row justify-between">
-          <div className={`text-xl ${iconColor == colors.white ? `text-white` : ``} font-semibold`}>
+        <div className="flex flex-row justify-between ">
+          <div
+            className={`text-xl ${iconColor == colors.white
+                ? `text-white`
+                : ``} font-semibold z-10`}>
             {React.string(id)}
           </div>
           <div className="self-center z-10">

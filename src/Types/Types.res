@@ -18,7 +18,11 @@ type tokenizeBodyType = {
   currency: string,
   account_details: accountDetailsType,
 }
-
+type propertyPledgeResultType = {
+  status: string,
+  sanctioned_amount: string,
+  id: string,
+}
 type attestationType = {certificate: string}
 
 type propertyDetailsType = {

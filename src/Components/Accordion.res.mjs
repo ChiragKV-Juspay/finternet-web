@@ -41,6 +41,29 @@ function Accordion$1(props) {
     property_details: tokenizePropertybody_property_details,
     attestations: tokenizePropertybody_attestations
   };
+  var signedTokenizePropertyBody_property_details = {
+    property_id: "1234",
+    property_registrar: "Some Registrar"
+  };
+  var signedTokenizePropertyBody_attestations = [
+    {
+      certificate: "NOC"
+    },
+    {
+      certificate: "Ownership"
+    },
+    {
+      certificate: "Value"
+    },
+    {
+      certificate: "Personal Details"
+    }
+  ];
+  var signedTokenizePropertyBody = {
+    asset_type: "Property",
+    property_details: signedTokenizePropertyBody_property_details,
+    attestations: signedTokenizePropertyBody_attestations
+  };
   var jwtBody_payload = {
     slMpcSetup: {
       keygen: {}
@@ -72,6 +95,12 @@ function Accordion$1(props) {
         }
       });
   var tokenizedPropertyBodyJson = Utils.tokenizedPropertyBodyToJson(tokenizePropertybody);
+  var signedTokenizePropertyBodyJson = Utils.tokenizedPropertyBodyToJson(signedTokenizePropertyBody);
+  var propertyPledgeResultJson = Utils.propertyPledgeResultToJson({
+        status: "success",
+        sanctioned_amount: "8000000",
+        id: "2csUM6He8NDmsiAD7Wr3mE3zyipNsyLCJfrJUPvUVsZh2NeCE47wFj5qBEUVq5ajUkVgSSQVsDrJYJYMkMGt9sk1"
+      });
   var jwtBodyJson = Utils.toJsonJwtBody(jwtBody);
   var keygenResponseJson0 = Utils.toJsonKeyGenResponse({
         public_key: "03823d089f3612a3d4a22223d15283475c20526475cbdca733f9228a11495b9694",
@@ -109,6 +138,8 @@ function Accordion$1(props) {
   JSON.stringify(jwtBodyJson, undefined, 2);
   var prettyTokenizeAccountPostBody = JSON.stringify(accountTokenizeBodyJson, undefined, 2);
   var tokenizedPropertyBodyJson$1 = JSON.stringify(tokenizedPropertyBodyJson, undefined, 2);
+  JSON.stringify(signedTokenizePropertyBodyJson, undefined, 2);
+  var prettyPropertyPledgeResultJson = JSON.stringify(propertyPledgeResultJson, undefined, 2);
   var prettyKeyGenResponse0 = JSON.stringify(keygenResponseJson0, undefined, 2);
   var prettyKeyGenResponse1 = JSON.stringify(keygenResponseJson1, undefined, 2);
   var prettyKeyGenResponse2 = JSON.stringify(keygenResponseJson2, undefined, 2);
@@ -255,7 +286,10 @@ function Accordion$1(props) {
                         props.showTransactionConfirm ? JsxRuntime.jsx(AccordionItem.make, {
                                 summary: "Confirm Transaction",
                                 detailsContent: JsxRuntime.jsx(AccordionItem.make, {
-                                      summary: "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets/123/asset:transfer",
+                                      summary: JsxRuntime.jsx("pre", {
+                                            children: "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets/123/asset:transfer",
+                                            className: "whitespace-pre-wrap"
+                                          }),
                                       detailsContent: JsxRuntime.jsx("pre", {
                                             children: prettyPostBody,
                                             className: "whitespace-pre-wrap"
@@ -274,13 +308,13 @@ function Accordion$1(props) {
                                             }),
                                         JsxRuntime.jsx("a", {
                                               children: "View in Solana",
-                                              className: "flex items-center text-blue-500  hover:text-blue-700 transition duration-300",
+                                              className: "w-max items-center text-blue-500 hover:text-blue-700 transition duration-300 border border-blue-500 rounded-lg p-2",
                                               href: "https://explorer.solana.com/tx/" + parsedTransactionResult.transaction_id + "?cluster=devnet",
                                               rel: "noopener noreferrer",
                                               target: "_blank"
                                             })
                                       ],
-                                      className: "text-sm overflow-auto"
+                                      className: "text-sm overflow-auto flex flex-col gap-2"
                                     }),
                                 detailsClassName: "text-sm overflow-auto"
                               }) : null
@@ -441,17 +475,29 @@ function Accordion$1(props) {
                                     })
                               ]
                             }),
-                        props.agreementSigned ? JsxRuntime.jsx(AccordionItem.make, {
-                                summary: "Agreement Signature",
-                                detailsContent: JsxRuntime.jsx(AccordionItem.make, {
-                                      summary: "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets/prpWaAX7bTaIyG/asset:pledge",
-                                      detailsContent: JsxRuntime.jsx("pre", {
-                                            children: tokenizedPropertyBodyJson$1,
-                                            className: "whitespace-pre-wrap"
-                                          }),
-                                      detailsClassName: "text-sm overflow-auto"
-                                    }),
-                                summaryClassName: ""
+                        props.agreementSigned ? JsxRuntime.jsxs(JsxRuntime.Fragment, {
+                                children: [
+                                  JsxRuntime.jsx(AccordionItem.make, {
+                                        summary: "Agreement Signature",
+                                        detailsContent: JsxRuntime.jsx(AccordionItem.make, {
+                                              summary: "POST https://finternet-app-api.shuttleapp.rs/v1/users/ascWqX7bTaHtIyG/assets/prpWaAX7bTaIyG/asset:pledge",
+                                              detailsContent: JsxRuntime.jsx("pre", {
+                                                    children: tokenizedPropertyBodyJson$1,
+                                                    className: "whitespace-pre-wrap"
+                                                  }),
+                                              detailsClassName: "text-sm overflow-auto"
+                                            }),
+                                        summaryClassName: ""
+                                      }),
+                                  JsxRuntime.jsx(AccordionItem.make, {
+                                        summary: "GET Property Status",
+                                        detailsContent: JsxRuntime.jsx("pre", {
+                                              children: prettyPropertyPledgeResultJson,
+                                              className: "whitespace-pre-wrap"
+                                            }),
+                                        detailsClassName: "text-sm overflow-auto"
+                                      })
+                                ]
                               }) : null
                       ]
                     })

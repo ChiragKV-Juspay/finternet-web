@@ -21,7 +21,7 @@ let make = (~handleNavigate) => {
             {React.string("State Property Registrar")}
           </div>
           <button
-            className={`bg-[${colors.propertyBlue}] text-xs  text-white rounded-lg p-2 w-5/12 `}
+            className={`bg-[${colors.propertyBlue}] text-xs  text-white rounded-lg p-2 `}
             onClick={_ => handleNavigate()}>
             {React.string("Request Loan")}
           </button>

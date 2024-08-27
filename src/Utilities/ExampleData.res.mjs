@@ -74,9 +74,9 @@ var contactOptions = [
   },
   {
     id: "2",
-    name: "Christina Aldecra",
-    finternetId: "christina.a@finternet",
-    imagePath: "/ProfilePic1.svg",
+    name: "Pramod Varma",
+    finternetId: "pramod.v@finternet",
+    imagePath: "/ProfilePicPramod.svg",
     amount: "200.00",
     transactionType: "Credited"
   },

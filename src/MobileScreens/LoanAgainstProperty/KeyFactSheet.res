@@ -4,7 +4,8 @@ let make = (~handleNavigate) => {
   <div className="flex flex-col h-full  justify-between">
     <div className="flex flex-col gap-7">
       <HeaderWithBack title="View Loan Offer" backButtonStrokeColor=colors.propertyBlue />
-      <img src="/KeyFactCard.svg" alt="Description of image" />
+      // <img src="/KeyFactCard.svg" alt="Description of image" />
+      <LoanOfferCard />
     </div>
     <div className="flex flex-col gap-4">
       <button

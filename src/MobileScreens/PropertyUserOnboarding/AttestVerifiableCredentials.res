@@ -39,7 +39,7 @@ let make = (~handleNavigate) => {
             size=Small
           />
           <div className={`font-bold self-center text-xs text-[${colors.darkGray}]`}>
-            {React.string("NOC")}
+            {React.string("No Objection Certificate")}
           </div>
         </div>
       </div>

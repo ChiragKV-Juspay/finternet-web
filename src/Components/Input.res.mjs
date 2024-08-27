@@ -5,7 +5,7 @@ import * as JsxRuntime from "react/jsx-runtime";
 
 function Input(props) {
   return JsxRuntime.jsx("input", {
-              className: Belt_Option.getWithDefault(props.className, "flex-1 p-2 text-base outline-none rounded-lg w-4/5 text-sm"),
+              className: Belt_Option.getWithDefault(props.className, "flex-1 p-2 text-base outline-none rounded-2xl w-4/5 text-sm"),
               placeholder: props.placeholder
             });
 }

@@ -51,6 +51,15 @@ let tokenizedPropertyBodyToJson = (record: tokenizePropertyBodyType) => {
 
   Js.Json.object_(dict)
 }
+let propertyPledgeResultToJson = (record: propertyPledgeResultType) => {
+  let dict = Js.Dict.fromArray([
+    ("status", Js.Json.string(record.status)),
+    ("sanctioned_amount", Js.Json.string(record.sanctioned_amount)),
+    ("id", Js.Json.string(record.id)),
+  ])
+
+  Js.Json.object_(dict)
+}
 
 let toJsonJwtBody = (jwtBody: jwtBody) => {
   let slMpcSetupDict = Js.Dict.fromArray([("keygen", Js.Json.object_(Js.Dict.empty()))])

@@ -10,7 +10,7 @@ function PropertyTokenizedStatus(props) {
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsx(SuccessStatusWithText.make, {
-                      text: "Your have successfully tokenized your Property",
+                      text: "You have successfully tokenized your Property",
                       color: "Blue"
                     }),
                 JsxRuntime.jsx("img", {

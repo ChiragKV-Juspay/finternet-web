@@ -70,7 +70,7 @@ function ShareVerifiableCredentials(props) {
                                               size: "small"
                                             }),
                                         JsxRuntime.jsx("div", {
-                                              children: "NOC",
+                                              children: "No Objection Certificate",
                                               className: "font-bold self-center text-xs text-[" + Colors.colors.darkGray + "]"
                                             })
                                       ],

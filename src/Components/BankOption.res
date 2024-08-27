@@ -68,7 +68,12 @@ let make = (
     <div className="flex flex-row gap-3 w-11/12">
       <div className="flex flex-row gap-2">
         {switch options {
-        | ContactOptions(contact) => <img src={contact.imagePath} alt="Description of image" />
+        | ContactOptions(contact) =>
+          <img
+            src={contact.imagePath}
+            alt="Description of image"
+            className="border border-white rounded-md"
+          />
         | BankOptions(bank) => <img src={bank.imagePath} alt="Description of image" />
         }}
         <div className="w-px h-4 bg-[#E6E6E6] self-center" />

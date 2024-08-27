@@ -14,6 +14,7 @@ function BankOption(props) {
     ) : "/RadioButtonUnselected.svg";
   var tmp;
   tmp = options.TAG === "ContactOptions" ? JsxRuntime.jsx("img", {
+          className: "border border-white rounded-md",
           alt: "Description of image",
           src: options._0.imagePath
         }) : JsxRuntime.jsx("img", {

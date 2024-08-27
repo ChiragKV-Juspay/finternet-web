@@ -96,6 +96,23 @@ function tokenizedPropertyBodyToJson(record) {
             ]);
 }
 
+function propertyPledgeResultToJson(record) {
+  return Js_dict.fromArray([
+              [
+                "status",
+                record.status
+              ],
+              [
+                "sanctioned_amount",
+                record.sanctioned_amount
+              ],
+              [
+                "id",
+                record.id
+              ]
+            ]);
+}
+
 function toJsonJwtBody(jwtBody) {
   var slMpcSetupDict = Js_dict.fromArray([[
           "keygen",
@@ -160,6 +177,7 @@ export {
   toJson ,
   tokenizedBodyToJson ,
   tokenizedPropertyBodyToJson ,
+  propertyPledgeResultToJson ,
   toJsonJwtBody ,
   toJsonKeyGenResponse ,
 }
