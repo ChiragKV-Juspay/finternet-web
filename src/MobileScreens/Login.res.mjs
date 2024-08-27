@@ -49,7 +49,7 @@ function Login(props) {
           "MyProp",
           "Welcome to MyProp",
           "Access your property via a unified interface and unlock the power of seamless transactability.",
-          "absolute z-0 -m-4"
+          "absolute z-0 scale-110 w-full"
         ];
         break;
     case "MoneyTransferOnboarding" :
@@ -91,6 +91,7 @@ function Login(props) {
     case "PropertyOnboarding" :
         tmp = JsxRuntime.jsx("div", {
               children: JsxRuntime.jsx("img", {
+                    className: "w-full",
                     alt: "Description of image",
                     src: match$1[0]
                   }),

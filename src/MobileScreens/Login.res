@@ -50,7 +50,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
       "MyProp",
       "Welcome to MyProp",
       "Access your property via a unified interface and unlock the power of seamless transactability.",
-      "absolute z-0 -m-4",
+      "absolute z-0 scale-110 w-full",
     )
   | MoneyTransferOnboarding => (
       "/BackgroundImage.svg",
@@ -110,7 +110,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
 
     | PropertyOnboarding =>
       <div className=imageClass>
-        <img src=backgroundImagePath alt="Description of image" />
+        <img src=backgroundImagePath alt="Description of image" className="w-full" />
       </div>
 
     | _ => React.null

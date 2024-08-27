@@ -9,13 +9,12 @@ function LoanSanctionedSuccessfully(props) {
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsx("div", {
-                      children: JsxRuntime.jsx("div", {
-                            children: JsxRuntime.jsx("img", {
-                                  alt: "Description of image",
-                                  src: "/LoanDisbursedSuccesfully.svg"
-                                })
+                      children: JsxRuntime.jsx("img", {
+                            className: "h-full w-full",
+                            alt: "Description of image",
+                            src: "/LoanDisbursedSuccesfully.svg"
                           }),
-                      className: "flex flex-col gap-5"
+                      className: "flex justify-center items-center self-center  w-full h-full"
                     }),
                 JsxRuntime.jsxs("div", {
                       children: [

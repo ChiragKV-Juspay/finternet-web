@@ -7,7 +7,7 @@ function BankAccountCard(props) {
   return JsxRuntime.jsxs("div", {
               children: [
                 JsxRuntime.jsx("img", {
-                      className: " h-auto p-5",
+                      className: "h-auto p-5 w-full",
                       alt: "Description of image",
                       src: "/BankAccounts.svg"
                     }),

@@ -1,7 +1,7 @@
 @react.component
 let make = (~handleNavigate) => {
   <div className="border border-gray-100  rounded-2xl ">
-    <img src="/BankAccounts.svg" alt="Description of image" className=" h-auto p-5" />
+    <img src="/BankAccounts.svg" alt="Description of image" className="h-auto p-5 w-full" />
     <div className="flex flex-row justify-between items-center mx-5 pb-5">
       // <img src="/Balance.svg" alt="Description of image" className="p-5" />
       <div>
