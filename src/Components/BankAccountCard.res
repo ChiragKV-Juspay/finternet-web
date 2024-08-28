@@ -9,7 +9,7 @@ let make = (~handleNavigate) => {
         <div className="font-bold  text-xl"> {React.string("₹ 5000")} </div>
       </div>
       <button
-        className="bg-[#00B76A] text-white rounded-lg  h-10 w-32 " onClick={_ => handleNavigate()}>
+        className="bg-[#00B76A] text-white rounded-lg  h-10 w-28 " onClick={_ => handleNavigate()}>
         {React.string("Transfer")}
       </button>
     </div>

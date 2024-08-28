@@ -33,7 +33,7 @@ function PropertyTokenizedStatus(props) {
                       className: "flex flex-col gap-5"
                     })
               ],
-              className: "flex flex-col justify-end  h-full gap-14"
+              className: "flex flex-col justify-end  h-full gap-5"
             });
 }
 

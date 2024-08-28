@@ -5,8 +5,8 @@ let make = (~handleNavigate) => {
     <div className="flex flex-col gap-7 h-full">
       <HeaderWithBack title="Sign Agreement" backButtonStrokeColor=colors.propertyBlue />
       <div className="flex flex-col  gap-6 items-center h-full">
-        <div> {React.string("Pledge Deed")} </div>
-        <img src="/Agreement1.webp" alt="Description of image" className=" scale-105 " />
+        // <div> {React.string("Pledge Deed")} </div>
+        <img src="/Agreement3.svg" alt="Description of image" className=" scale-105 " />
       </div>
     </div>
     <div className="flex flex-col gap-4 ">

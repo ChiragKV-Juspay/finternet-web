@@ -44,7 +44,7 @@ function PropertyTokenizationHome(props) {
                               className: "flex flex-col gap-4 z-10"
                             })
                       ],
-                      className: "flex flex-col gap-10 z-10"
+                      className: "flex flex-col gap-2 z-10"
                     }),
                 JsxRuntime.jsx(SecuredByFinterest.make, {
                       color: Colors.colors.propertyBlue

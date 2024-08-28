@@ -1,6 +1,6 @@
 @react.component
 let make = () => {
-  <div className="flex flex-row justify-between">
+  <div className="flex flex-row justify-between items-center">
     <svg width="26" height="24" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M11.0229 10.4776C12.3525 8.66576 15.2413 7.39603 17.4752 7.64158L20.9807 8.02691C23.2146 8.27246 23.9477 9.94031 22.6181 11.7522L16.0377 20.7192C14.7081 22.531 11.8193 23.8008 9.58536 23.5552L6.07983 23.1699C3.84593 22.9243 3.11285 21.2565 4.44246 19.4447L11.0229 10.4776Z"

@@ -1,7 +1,7 @@
 open Colors
 @react.component
 let make = (~handleNavigate) => {
-  <div className="flex flex-col justify-end  h-full gap-14">
+  <div className="flex flex-col justify-end  h-full gap-5">
     <SuccessStatusWithText text="You have successfully tokenized your Property" color=Blue />
     <img src="/PropertyCardBlue.svg" alt="Description of image" />
     <div className="flex flex-col gap-5">

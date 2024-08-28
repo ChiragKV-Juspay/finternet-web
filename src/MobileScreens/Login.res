@@ -143,7 +143,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
       {flow == FinternetOnboarding
         ? <div className="mt-14 gap-4 flex flex-col">
             <div className="font-medium text-base text-white">
-              {React.string("Enter your mobile number")}
+              {React.string("Mobile number")}
             </div>
             <div className="flex flex-row border border-[#E6E6E6] rounded-lg">
               <div className="flex flex-row ml-4 gap-2 items-center ">
@@ -162,7 +162,7 @@ let make = (~handleNavigate, ~flow: flowType) => {
                 </svg>
               </div>
               <Input
-                placeholder="Enter your mobile number"
+                placeholder="Mobile number"
                 className="bg-black flex-1 p-2 text-base outline-none rounded-lg w-4/5 text-sm text-white placeholder-white"
               />
             </div>

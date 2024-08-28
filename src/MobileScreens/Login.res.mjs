@@ -194,7 +194,7 @@ function Login(props) {
                         flow === "FinternetOnboarding" ? JsxRuntime.jsxs("div", {
                                 children: [
                                   JsxRuntime.jsx("div", {
-                                        children: "Enter your mobile number",
+                                        children: "Mobile number",
                                         className: "font-medium text-base text-white"
                                       }),
                                   JsxRuntime.jsxs("div", {
@@ -224,7 +224,7 @@ function Login(props) {
                                                 className: "flex flex-row ml-4 gap-2 items-center "
                                               }),
                                           JsxRuntime.jsx(Input.make, {
-                                                placeholder: "Enter your mobile number",
+                                                placeholder: "Mobile number",
                                                 className: "bg-black flex-1 p-2 text-base outline-none rounded-lg w-4/5 text-sm text-white placeholder-white"
                                               })
                                         ],

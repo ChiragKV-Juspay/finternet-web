@@ -15,17 +15,12 @@ function SignAgreement(props) {
                               title: "Sign Agreement",
                               backButtonStrokeColor: Colors.colors.propertyBlue
                             }),
-                        JsxRuntime.jsxs("div", {
-                              children: [
-                                JsxRuntime.jsx("div", {
-                                      children: "Pledge Deed"
-                                    }),
-                                JsxRuntime.jsx("img", {
-                                      className: " scale-105 ",
-                                      alt: "Description of image",
-                                      src: "/Agreement1.webp"
-                                    })
-                              ],
+                        JsxRuntime.jsx("div", {
+                              children: JsxRuntime.jsx("img", {
+                                    className: " scale-105 ",
+                                    alt: "Description of image",
+                                    src: "/Agreement3.svg"
+                                  }),
                               className: "flex flex-col  gap-6 items-center h-full"
                             })
                       ],

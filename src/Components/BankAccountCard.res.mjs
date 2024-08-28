@@ -27,7 +27,7 @@ function BankAccountCard(props) {
                             }),
                         JsxRuntime.jsx("button", {
                               children: "Transfer",
-                              className: "bg-[#00B76A] text-white rounded-lg  h-10 w-32 ",
+                              className: "bg-[#00B76A] text-white rounded-lg  h-10 w-28 ",
                               onClick: (function (param) {
                                   handleNavigate();
                                 })

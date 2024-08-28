@@ -3,7 +3,7 @@ open Colors
 @react.component
 let make = (~handleNavigate) => {
   <div className=" flex flex-col h-full justify-between ">
-    <div className="flex flex-col gap-10 z-10">
+    <div className="flex flex-col gap-2 z-10">
       <BlueHeader />
       <div className="flex flex-col gap-4 z-10">
         <AccountCard id="siddharth@finternet" iconColor=colors.propertyBlue />

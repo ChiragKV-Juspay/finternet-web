@@ -369,7 +369,6 @@ let make = () => {
       )
 
       let json = await response->Fetch.Response.json
-
       setTransactionResult(_ => json)
     }
 
